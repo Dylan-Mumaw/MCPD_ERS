@@ -10,6 +10,8 @@ using System.Configuration;
 
 public partial class Home : System.Web.UI.Page
 {
+private string filePath = "~\\LocationPhotos\\";
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -32,6 +34,8 @@ public partial class Home : System.Web.UI.Page
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
+
+            Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0)
             {
