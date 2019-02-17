@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -158,6 +158,37 @@ private string filePath = "~\\LocationPhotos\\";
             connection.Close();
         }
     }
+    private void BindGridViewSearch() {
+        var search = TextBoxSearch.Text;
+        var Alias = TextBoxSearch.Text;
+        var Address = TextBoxSearch.Text;
+        var Name = TextBoxSearch.Text;
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+        
+        try {
+            connection.Open();
+            string sqlStatement = "SELECT * FROM [Buildings] WHERE (([Alias] LIKE '%' "+ @Alias +" '%') OR ([Address] LIKE '%' "+ @Address +" '%') OR ([Name] LIKE '%' "+ @Name +" '%'))";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
+
+            Image1.ImageUrl = filePath + "testPicture.jpg";
+
+            if (dt.Rows.Count > 0) {
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex) {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally {
+            connection.Close();
+        }
+    }
     protected void ButtonTest_Click(object sender, EventArgs e) {
         BindGridViewAll();
     }
@@ -188,5 +219,9 @@ private string filePath = "~\\LocationPhotos\\";
 
     protected void bankButton_Click(object sender, EventArgs e) {
         BindGridViewBanks();
+    }
+
+    protected void ButtonSearch_Click(object sender, EventArgs e) {
+        
     }
 }
