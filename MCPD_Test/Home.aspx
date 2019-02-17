@@ -50,15 +50,16 @@
 <body>
     <form id="searchForm" runat="server">
         <div style="width: 500px">
-            <asp:Button ID="schoolButton" runat="server" Text="Schools" />
-            <asp:Button ID="govButton" runat="server" Text="Government"  />
-            <asp:Button ID ="medButton" runat ="server" Text="Medical Facilities" />
-            <asp:Button ID ="bankButton" runat="server" Text="Banks" />
-            <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" /><asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [LOCATION]" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
+            <asp:Button ID="schoolButton" runat="server" Text="Schools" OnClick="schoolButton_Click" />
+            <asp:Button ID="govButton" runat="server" Text="Government" OnClick="govButton_Click" />
+            <asp:Button ID ="medButton" runat ="server" Text="Medical Facilities" OnClick="medButton_Click" />
+            <asp:Button ID ="bankButton" runat="server" Text="Banks" OnClick="bankButton_Click"/>
+            <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" />
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
             <br />
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
                 <Columns>
-                    <asp:BoundField DataField="LOC_ID"  HeaderText="Id"/>
+                    <asp:BoundField DataField="ID"  HeaderText="Id"/>
                     <asp:BoundField DataField="Name" HeaderText="Name"/>
                     <asp:BoundField DataField="Address" HeaderText="Address"/>
                     <asp:BoundField DataField="Alias" HeaderText="Alias"/>
@@ -72,15 +73,15 @@
             <input id="TestTextbox" type="text" />
         </div>
         <!--<div id="divGallery" style="width: 400px">
-            <asp:GridView ID="GridViewPictures" runat="server" DataSourceID="SqlDataSourcePictures" OnSelectedIndexChanged="GridViewPictures_SelectedIndexChanged" AutoGenerateColumns="False" DataKeyNames="LOC_ID">
+            <asp:GridView ID="GridViewPictures" runat="server" DataSourceID="SqlDataSourcePictures" OnSelectedIndexChanged="GridViewPictures_SelectedIndexChanged" AutoGenerateColumns="False" DataKeyNames="ID">
                 <Columns>
-                    <asp:BoundField DataField="LOC_ID" HeaderText="LOC_ID" ReadOnly="True" SortExpression="LOC_ID" />
+                    <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" />
                     <asp:BoundField DataField="ADDRESS" HeaderText="ADDRESS" SortExpression="ADDRESS" />
                     <asp:BoundField DataField="NAME" HeaderText="NAME" SortExpression="NAME" />
                     <asp:BoundField DataField="ALIAS" HeaderText="ALIAS" SortExpression="ALIAS" />
                 </Columns>
             </asp:GridView>-->
-            <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [LOCATION]"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]"></asp:SqlDataSource>
         </div>
         <div id="divPicture">
             I need to CS to get the two divs to right left >.<
