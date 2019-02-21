@@ -14,6 +14,7 @@
             <asp:TextBox ID="TextBoxUsername" runat="server"></asp:TextBox><br /><br />
             <asp:Label ID="LabelPassword" runat="server" Text="Password"></asp:Label><br />
             <asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password"></asp:TextBox><br /><br />
+            <asp:Button ID="ButtonLogin" runat="server" Text="Login" />
             <asp:SqlDataSource ID="SqlDataSourceLogin" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [UserName] FROM [Logins] WHERE (([UserName] = @UserName) AND ([Password] = @Password))">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="TextBoxUsername" Name="UserName" PropertyName="Text" Type="String" />
