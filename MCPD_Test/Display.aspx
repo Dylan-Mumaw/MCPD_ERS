@@ -55,7 +55,7 @@
             <br />
             <asp:Label ID="LabelSearch" runat="server" Text="Search"></asp:Label>
             <br />
-            <asp:TextBox ID="TextBoxSearch" runat="server" Width="400px"></asp:TextBox>&nbsp<asp:SqlDataSource ID="SqlDataSourceSearch" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings] WHERE (([Alias] LIKE '%' + @Alias + '%') OR ([Address] LIKE '%' + @Address + '%') OR ([Name] LIKE '%' + @Name + '%'))">
+            <asp:TextBox ID="TextBoxSearch" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged" ></asp:TextBox>&nbsp<asp:SqlDataSource ID="SqlDataSourceSearch" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings] WHERE (([Alias] LIKE '%' + @Alias + '%') OR ([Address] LIKE '%' + @Address + '%') OR ([Name] LIKE '%' + @Name + '%'))">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="TextBoxSearch" Name="Alias" PropertyName="Text" Type="String" />
                         <asp:ControlParameter ControlID="TextBoxSearch" Name="Address" PropertyName="Text" Type="String" />
@@ -64,20 +64,13 @@
 
                 </asp:SqlDataSource>
             <br />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
-                <Columns>
-                    <asp:BoundField DataField="ID"  HeaderText="Id"/>
-                    <asp:BoundField DataField="Name" HeaderText="Name"/>
-                    <asp:BoundField DataField="Address" HeaderText="Address"/>
-                    <asp:BoundField DataField="Alias" HeaderText="Alias"/>
-                </Columns>
-            </asp:GridView>
-            <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceSearch">
+            <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                     <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
                     <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
+                    <asp:CommandField ShowSelectButton="True" />
                 </Columns>
             </asp:GridView>
             <div id="imageZoom" style="width:817px;height:626px;overflow:scroll" class="dragscroll" >
