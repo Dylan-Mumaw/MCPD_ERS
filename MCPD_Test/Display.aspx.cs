@@ -9,7 +9,7 @@ using System.Data;
 using System.Configuration;
 
 public partial class Home : System.Web.UI.Page {
-private string filePath = "~\\LocationPhotos\\";
+    private string filePath = "~\\LocationPhotos\\";
 
     protected void Page_Load(object sender, EventArgs e) {
 
@@ -165,10 +165,10 @@ private string filePath = "~\\LocationPhotos\\";
         var Name = TextBoxSearch.Text;
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        
+
         try {
             connection.Open();
-            string sqlStatement = "SELECT * FROM [Buildings] WHERE (([Alias] LIKE '%' "+ @Alias +" '%') OR ([Address] LIKE '%' "+ @Address +" '%') OR ([Name] LIKE '%' "+ @Name +" '%'))";
+            string sqlStatement = "SELECT * FROM [Buildings] WHERE (([Alias] LIKE '%' " + @Alias + " '%') OR ([Address] LIKE '%' " + @Address + " '%') OR ([Name] LIKE '%' " + @Name + " '%'))";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
@@ -222,6 +222,6 @@ private string filePath = "~\\LocationPhotos\\";
     }
 
     protected void ButtonSearch_Click(object sender, EventArgs e) {
-        
+
     }
 }
