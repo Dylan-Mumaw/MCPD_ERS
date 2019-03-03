@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <link rel = "stylesheet" href="HomeStyle.css" />
+    <script type="text/javascript"  src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <title>Login</title>
 </head>
 <body>
