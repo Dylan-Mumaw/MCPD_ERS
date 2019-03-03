@@ -13,6 +13,7 @@ public partial class Home : System.Web.UI.Page {
     private string filePath;
     private string search;
     private int buildID = 0;
+    private int picID = 0;
 
     protected void Page_Load(object sender, EventArgs e) {
 
@@ -32,8 +33,6 @@ public partial class Home : System.Web.UI.Page {
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
@@ -61,8 +60,6 @@ public partial class Home : System.Web.UI.Page {
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
             if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
                 GridViewList.DataBind();
@@ -88,8 +85,6 @@ public partial class Home : System.Web.UI.Page {
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
@@ -173,8 +168,6 @@ public partial class Home : System.Web.UI.Page {
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
             if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
                 GridViewList.DataBind();
@@ -200,7 +193,30 @@ public partial class Home : System.Web.UI.Page {
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
-            Image1.ImageUrl = filePath + "testPicture.jpg";
+            if (dt.Rows.Count > 0) {
+                GridViewGallery.DataSource = dt;
+                GridViewGallery.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex) {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally {
+            connection.Close();
+        }
+    }
+    private void BindGridViewBigPicture() {
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+
+        try {
+            connection.Open();
+            string sqlStatement = "SELECT refLoc FROM pictures WHERE picId='"+picID+"';";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
 
             if (dt.Rows.Count > 0) {
                 GridViewGallery.DataSource = dt;
@@ -260,6 +276,10 @@ public partial class Home : System.Web.UI.Page {
 
     protected void TextBoxSearch_TextChanged(object sender, EventArgs e) {
         BindGridViewSearch();
-        Image1.ImageUrl = filePath + "testPicture.jpg";
+        
+    }
+
+    protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e) {
+        //filePath = GridViewGallery;
     }
 }
