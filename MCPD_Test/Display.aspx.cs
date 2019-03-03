@@ -1,7 +1,4 @@
-﻿
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,29 +8,25 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
-public partial class Home : System.Web.UI.Page
-{
-    private string filePath = "~\\LocationPhotos\\";
+public partial class Home : System.Web.UI.Page {
+    //private string filePath = "~\\LocationPhotos\\";
+    private string filePath;
     private string search;
     private int buildID = 0;
 
-    protected void Page_Load(object sender, EventArgs e)
-    {
+    protected void Page_Load(object sender, EventArgs e) {
 
     }
-    private string GetConnectionString()
-    {
+    private string GetConnectionString() {
         return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
     }
 
-    private void BindGridViewAll()
-    {
+    private void BindGridViewAll() {
 
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
-        try
-        {
+        try {
             connection.Open();
             string sqlStatement = "SELECT * FROM Buildings";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
@@ -42,381 +35,231 @@ public partial class Home : System.Web.UI.Page
 
             Image1.ImageUrl = filePath + "testPicture.jpg";
 
-            if (dt.Rows.Count > 0)
-            {
+            if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
                 GridViewList.DataBind();
             }
         }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
+        catch (System.Data.SqlClient.SqlException ex) {
             string msg = "Fetch Error:";
             msg += ex.Message;
             throw new Exception(msg);
         }
-        finally
-        {
+        finally {
             connection.Close();
         }
     }
+    private void BindGridViewSchools() {
 
-    private void BindGridViewSchools()
-    {
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
-        try
-        {
+        try {
             connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'Government';";
+            string sqlStatement = "SELECT * FROM Buildings WHERE ALIAS='School';";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
             Image1.ImageUrl = filePath + "testPicture.jpg";
 
-            if (dt.Rows.Count > 0)
-            {
+            if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
                 GridViewList.DataBind();
             }
         }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
+        catch (System.Data.SqlClient.SqlException ex) {
             string msg = "Fetch Error:";
             msg += ex.Message;
             throw new Exception(msg);
         }
-        finally
-        {
+        finally {
             connection.Close();
         }
     }
-    /*private void BindGridViewGovernment()
-    {
+    private void BindGridViewGovernment() {
 
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
-        try
-        {
+        try {
             connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'Government';";
+            string sqlStatement = "SELECT * FROM Buildings WHERE ALIAS='Government';";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
             Image1.ImageUrl = filePath + "testPicture.jpg";
 
-            if (dt.Rows.Count > 0)
-            {
+            if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
                 GridViewList.DataBind();
             }
         }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
+        catch (System.Data.SqlClient.SqlException ex) {
             string msg = "Fetch Error:";
             msg += ex.Message;
             throw new Exception(msg);
         }
-        finally
-        {
+        finally {
             connection.Close();
         }
-    }*/
-    private void BindGridViewAllMedical()
-    {
-
-
     }
-    private void BindGridViewBanks()
-    {
+    private void BindGridViewAllMedical() {
 
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
 
+        try {
+            connection.Open();
+            string sqlStatement = "SELECT * FROM Buildings WHERE ALIAS='Medical';";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
+
+            Image1.ImageUrl = filePath + "testPicture.jpg";
+
+            if (dt.Rows.Count > 0) {
+                GridViewList.DataSource = dt;
+                GridViewList.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex) {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally {
+            connection.Close();
+        }
     }
-    private void BindGridViewSearch()
-    {
+    private void BindGridViewBanks() {
+
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+
+        try {
+            connection.Open();
+            string sqlStatement = "SELECT * FROM Buildings WHERE ALIAS='Bank';";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
+
+            Image1.ImageUrl = filePath + "testPicture.jpg";
+
+            if (dt.Rows.Count > 0) {
+                GridViewList.DataSource = dt;
+                GridViewList.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex) {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally {
+            connection.Close();
+        }
+    }
+    private void BindGridViewSearch() {
         search = TextBoxSearch.Text;
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
-        try
-        {
+        try {
             connection.Open();
-            string sqlStatement = "SELECT * FROM buildings WHERE name LIKE '%" + search + "%' OR address LIKE '%" + search + "%' OR alias LIKE '%" + search + "%'";
+            string sqlStatement = "SELECT * FROM buildings WHERE name LIKE '%"+search+"%' OR address LIKE '%"+search+"%' OR alias LIKE '%"+search+"%';";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
             Image1.ImageUrl = filePath + "testPicture.jpg";
 
-            if (dt.Rows.Count > 0)
-            {
+            if (dt.Rows.Count > 0) {
                 GridViewList.DataSource = dt;
                 GridViewList.DataBind();
             }
         }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
+        catch (System.Data.SqlClient.SqlException ex) {
             string msg = "Fetch Error:";
             msg += ex.Message;
             throw new Exception(msg);
         }
-        finally
-        {
+        finally {
             connection.Close();
         }
     }
-    private void BindGridViewGallery()
-    {
+    private void BindGridViewGallery() {
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
-        try
-        {
+        try {
             connection.Open();
-            string sqlStatement = "SELECT refLoc FROM pictures WHERE buildId='" + buildID + "';";
+            string sqlStatement = "SELECT refLoc FROM pictures WHERE buildId='"+buildID+"';";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
             Image1.ImageUrl = filePath + "testPicture.jpg";
 
-            if (dt.Rows.Count > 0)
-            {
+            if (dt.Rows.Count > 0) {
                 GridViewGallery.DataSource = dt;
                 GridViewGallery.DataBind();
             }
         }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
+        catch (System.Data.SqlClient.SqlException ex) {
             string msg = "Fetch Error:";
             msg += ex.Message;
             throw new Exception(msg);
         }
-        finally
-        {
+        finally {
             connection.Close();
         }
     }
-    protected void ButtonTest_Click(object sender, EventArgs e)
-    {
-        //BindGridViewAll();
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings;";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
+    protected void ButtonTest_Click(object sender, EventArgs e) {
+        BindGridViewAll();
     }
 
-    protected void GovButton_Click(object sender, EventArgs e)
-    {
-        //BindGridViewGovernment();
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
+    protected void ListBoxTest_SelectedIndexChanged(object sender, EventArgs e) {
 
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'Government';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
     }
 
-    protected void MedButton_Click(object sender, EventArgs e)
-    {
-        //BindGridViewAllMedical();
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
+    protected void SqlDataSource1_Selecting(object sender, SqlDataSourceSelectingEventArgs e) {
 
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'Medical';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
     }
 
-    protected void BankButton_Click(object sender, EventArgs e)
-    {
-        //BindGridViewBanks();
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
+    protected void GridViewPictures_SelectedIndexChanged(object sender, EventArgs e) {
 
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'Bank';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
     }
 
-    protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
-    {
+    protected void schoolButton_Click(object sender, EventArgs e) {
+        //BindGridViewSchools();
+    }
+
+    protected void govButton_Click(object sender, EventArgs e) {
+        BindGridViewGovernment();
+    }
+
+    protected void medButton_Click(object sender, EventArgs e) {
+        BindGridViewAllMedical();
+    }
+
+    protected void bankButton_Click(object sender, EventArgs e) {
+        BindGridViewBanks();
+    }
+
+    protected void ButtonSearch_Click(object sender, EventArgs e) {
+
+    }
+
+    protected void GridView2_SelectedIndexChanged(object sender, EventArgs e) {
         //buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
         //BindGridViewGallery();
+        //filePath = "~\\Images\\"+fileName;
     }
 
-    protected void TextBoxSearch_TextChanged(object sender, EventArgs e)
-    {
+    protected void TextBoxSearch_TextChanged(object sender, EventArgs e) {
         BindGridViewSearch();
         Image1.ImageUrl = filePath + "testPicture.jpg";
-    }
-
-    protected void PrivateButton_Click(object sender, EventArgs e)
-    {
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'Private';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
-    }
-
-    protected void schoolButton_Click(object sender, EventArgs e)
-    {
-        //BindGridViewSchools();
-        /*DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings WHERE TYPE = 'School';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }*/
-    }
-
-    protected void SchoolButton_Click(object sender, EventArgs e)
-    {
-
     }
 }
