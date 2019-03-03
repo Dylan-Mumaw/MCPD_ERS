@@ -51,26 +51,27 @@
             <asp:Button ID ="medButton" runat ="server" Text="Medical Facilities" OnClick="medButton_Click" />
             <asp:Button ID ="bankButton" runat="server" Text="Banks" OnClick="bankButton_Click"/>
             <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" />
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
             <br />
             <asp:Label ID="LabelSearch" runat="server" Text="Search"></asp:Label>
             <br />
-            <asp:TextBox ID="TextBoxSearch" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged" ></asp:TextBox>&nbsp<asp:SqlDataSource ID="SqlDataSourceSearch" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings] WHERE (([Alias] LIKE '%' + @Alias + '%') OR ([Address] LIKE '%' + @Address + '%') OR ([Name] LIKE '%' + @Name + '%'))">
-                    <SelectParameters>
-                        <asp:ControlParameter ControlID="TextBoxSearch" Name="Alias" PropertyName="Text" Type="String" />
-                        <asp:ControlParameter ControlID="TextBoxSearch" Name="Address" PropertyName="Text" Type="String" />
-                        <asp:ControlParameter ControlID="TextBoxSearch" Name="Name" PropertyName="Text" Type="String" />
-                    </SelectParameters>
-
-                </asp:SqlDataSource>
-            <br />
-            <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
+            <asp:TextBox ID="TextBoxSearch" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged" ></asp:TextBox>&nbsp<br />
+            <asp:GridView ID="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                     <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
                     <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
                     <asp:CommandField ShowSelectButton="True" />
+                </Columns>
+            </asp:GridView>
+            <asp:SqlDataSource ID="SqlDataSourceGallery" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc] FROM [Pictures] WHERE ([buildId] = @buildId)">
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="GridViewList" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+            <asp:GridView ID="GridViewGallery" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery">
+                <Columns>
+                    <asp:BoundField DataField="refLoc" HeaderText="refLoc" SortExpression="refLoc" />
                 </Columns>
             </asp:GridView>
             <div id="imageZoom" style="width:817px;height:626px;overflow:scroll" class="dragscroll" >
