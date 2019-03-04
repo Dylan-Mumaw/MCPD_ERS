@@ -13,6 +13,7 @@ public partial class Home : System.Web.UI.Page
     private string filePath = "~\\LocationPhotos\\";
     private string search;
     private int buildID = 0;
+    private int picID = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -170,21 +171,24 @@ public partial class Home : System.Web.UI.Page
     //<-----------------Begin Data Binding----------------->
 
     //<-----------------Button Click Events----------------->
+
+    protected void ButtonSearch_Click(object sender, EventArgs e)
+    {
+
+    }
+
     protected void ButtonTest_Click(object sender, EventArgs e)
     {
-        //BindGridViewAll();
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
         try
         {
             connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings;";
+            string sqlStatement = "SELECT * FROM Buildings";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0)
             {
@@ -235,16 +239,52 @@ public partial class Home : System.Web.UI.Page
     }
     //<-----------------Begin Data Binding----------------->
 
+    private void BindGridViewBigPicture()
+    {
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+
+        try
+        {
+            connection.Open();
+            string sqlStatement = "SELECT refLoc FROM pictures WHERE picId='" + picID + "';";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                GridViewGallery.DataSource = dt;
+                GridViewGallery.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex)
+        {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
     protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
     {
         //buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
         //BindGridViewGallery();
     }
 
-    protected void TextBoxSearch_TextChanged1(object sender, EventArgs e)
+    protected void TextBoxSearch_TextChanged(object sender, EventArgs e)
     {
         string search = TextBoxSearch.Text;
         BindGridViewSearch(search);
         Image1.ImageUrl = filePath + "testPicture.jpg";
+    }
+
+    protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //filePath = GridViewGallery;
     }
 }
