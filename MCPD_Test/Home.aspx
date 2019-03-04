@@ -4,17 +4,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel = "stylesheet" href="HomeStyle.css" />
-    <script type="text/javascript"  src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <link rel="stylesheet" href="HomeStyle.css" />
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <title>Login</title>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
             <asp:Label ID="LabelUsername" runat="server" Text="Username"></asp:Label><br />
-            <asp:TextBox ID="TextBoxUsername" runat="server"></asp:TextBox><br /><br />
+            <asp:TextBox ID="TextBoxUsername" runat="server"></asp:TextBox><br />
+            <br />
             <asp:Label ID="LabelPassword" runat="server" Text="Password"></asp:Label><br />
-            <asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password"></asp:TextBox><br /><br />
+            <asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password"></asp:TextBox><br />
+            <br />
             <asp:Button ID="ButtonLogin" runat="server" Text="Login" />
             <asp:SqlDataSource ID="SqlDataSourceLogin" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [UserName] FROM [Logins] WHERE (([UserName] = @UserName) AND ([Password] = @Password))">
                 <SelectParameters>
