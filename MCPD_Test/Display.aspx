@@ -67,16 +67,18 @@
                     <asp:CommandField ShowSelectButton="True" />
                 </Columns>
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSourceGallery" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc], [picId] FROM [Pictures] WHERE ([buildId] = @buildId)">
+            <asp:SqlDataSource ID="SqlDataSourceGallery" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT Pictures.[refLoc], Pictures.[picId], Buildings.[type] FROM [Pictures] JOIN [Buildings] ON Pictures.[buildId] = Buildings.[id] WHERE (Pictures.[buildId] = @buildId)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="GridViewList" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
                 </SelectParameters>
             </asp:SqlDataSource>
             <asp:GridView ID="GridViewGallery" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId">
                 <Columns>
-                    <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
-
-                    </asp:ImageField>
+                    <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Image ID="SelectedImage" runat="server" ImageUrl='<%# GetUrlString(Eval("type").ToString(), Eval("refLoc").ToString()) %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
                     <asp:CommandField ShowSelectButton="True" />
                 </Columns>
             </asp:GridView>
