@@ -287,4 +287,9 @@ public partial class Home : System.Web.UI.Page
     {
         //filePath = GridViewGallery;
     }
+
+    protected string GetUrlString(string type, string refLoc)
+    {
+        return filePath + type + "\\" + refLoc + ".jpg";
+    }
 }
