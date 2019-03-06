@@ -23,41 +23,8 @@ public partial class Home : System.Web.UI.Page
     {
         return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
     }
+
     //<-----------------Begin Data Binding----------------->
-    private void BindGridViewAll()
-    {
-
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-
-        try
-        {
-            connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
-            if (dt.Rows.Count > 0)
-            {
-                GridViewList.DataSource = dt;
-                GridViewList.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
-    }
-
     private void BindGridViewType(String t)
     {
 
@@ -72,13 +39,13 @@ public partial class Home : System.Web.UI.Page
                 cn.Open();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Select * From Buildings WHERE Type = @Type";
+                cmd.CommandText = "Select * From Buildings WHERE Type = @Type ORDER BY Type";
                 cmd.Parameters.AddWithValue("@Type", t);
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
                 sqlDa.Fill(dt);
             }
 
-            Image1.ImageUrl = filePath + "testPicture.jpg";
+            //Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0)
             {
@@ -117,7 +84,7 @@ public partial class Home : System.Web.UI.Page
                 sqlDa.Fill(dt);
             }
 
-            Image1.ImageUrl = filePath + "testPicture.jpg";
+            //Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0)
             {
@@ -168,10 +135,15 @@ public partial class Home : System.Web.UI.Page
             connection.Close();
         }
     }
-    //<-----------------Begin Data Binding----------------->
+
+    protected void GridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        
+    }
+    //<-----------------END Data Binding-------------------->
+
 
     //<-----------------Button Click Events----------------->
-
     protected void ButtonSearch_Click(object sender, EventArgs e)
     {
 
@@ -185,7 +157,7 @@ public partial class Home : System.Web.UI.Page
         try
         {
             connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings";
+            string sqlStatement = "SELECT * FROM Buildings ORDER BY TYPE ASC";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
@@ -270,9 +242,10 @@ public partial class Home : System.Web.UI.Page
         }
     }
 
-    protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
+    protected void GridViewList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
+        //buildID = Convert.ToInt16();
+        //List.SelectedDataKey.Value();
         //BindGridViewGallery();
     }
 
@@ -285,7 +258,33 @@ public partial class Home : System.Web.UI.Page
 
     protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //filePath = GridViewGallery;
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+
+        try
+        {
+            connection.Open();
+            string sqlStatement = "SELECT refLoc FROM pictures WHERE picId='" + picID + "';";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                GridViewGallery.DataSource = dt;
+                GridViewGallery.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex)
+        {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
 
     protected string GetUrlString(string type, string refLoc)

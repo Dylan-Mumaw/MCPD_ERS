@@ -57,9 +57,8 @@
             <asp:Label ID="LabelSearch" runat="server" Text="Search"></asp:Label>
             <br />
             <asp:TextBox ID="TextBoxSearch" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
-            <asp:GridView ID="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
+            <asp:GridView ID="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged">
                 <Columns>
-                    <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                     <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
                     <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
@@ -76,7 +75,7 @@
                 <Columns>
                     <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Image ID="SelectedImage" runat="server" ImageUrl='<%# GetUrlString(Eval("type").ToString(), Eval("refLoc").ToString()) %>' />
+                        <asp:Image ID="SelectedImage" runat="server" ImageUrl='<%# GetUrlString(Eval("type").ToString(), Eval("refLoc").ToString()) %>'  />
                     </ItemTemplate>
                 </asp:TemplateField>
                     <asp:CommandField ShowSelectButton="True" />
