@@ -10,7 +10,10 @@
 
     <script>
         function zoomin() {
-            var myImg = document.getElementById("Image1");
+
+            var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
+            var myImg = myImgQuery[0];
+
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
             if (currWidth >= 2500) {
@@ -22,9 +25,13 @@
                 myImg.style.height = (currHeight + 50) + "px";
                 document.getElementById("TestTextbox").value = "Width was within 2500; Value was " + currWidth;
             }
+
         }
         function zoomout() {
-            var myImg = document.getElementById("Image1");
+
+            var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
+            var myImg = myImgQuery[0];
+
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
             if (currWidth <= 100) {
@@ -83,16 +90,18 @@
                     <asp:ControlParameter ControlID="GridViewGallery" Name="picId" PropertyName="SelectedValue" Type="Int32" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:GridView ID="GridViewBigPicture" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceBigPicture">
-                <Columns>
-                    <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
 
-                    </asp:ImageField>
-                </Columns>
-            </asp:GridView>
-            <div id="imageZoom" style="width: 817px; height: 626px; overflow: scroll" class="dragscroll">
-                <asp:Image ID="Image1" runat="server" AlternateText="Test Image" Style="width: 800px; height: 605px;" />
+            <div id="bigImageZoom" style="width: 817px; height: 626px; overflow: scroll" class="dragscroll">
+                <asp:GridView ID="GridViewBigPicture" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceBigPicture">
+                        <Columns>
+                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
+
+                            </asp:ImageField>
+                        </Columns>
+                </asp:GridView>
             </div>
+
+           
             <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" />
             <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" />
             <input id="TestTextbox" type="text" />
