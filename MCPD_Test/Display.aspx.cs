@@ -45,7 +45,6 @@ public partial class Display : System.Web.UI.Page
                     SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
                     sqlDa.Fill(dt);
                 }
-                Image1.ImageUrl = filePath + "testPicture.jpg";
                 if (dt.Rows.Count > 0)
                 {
                     GridViewList.DataSource = dt;
@@ -77,13 +76,13 @@ public partial class Display : System.Web.UI.Page
                 cn.Open();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM buildings WHERE name LIKE %@t% OR address LIKE %@t% OR alias LIKE %@t%";
-                cmd.Parameters.AddWithValue("@t", t);
+                cmd.CommandText = "SELECT * FROM buildings WHERE name LIKE '%" + t + "%' OR address LIKE '%" + t + "%' OR alias LIKE '%" + t + "%'";
+                //cmd.CommandText = "SELECT * FROM buildings WHERE name LIKE %@t% OR address LIKE %@t% OR alias LIKE %@t%";
+                //cmd.Parameters.AddWithValue("@t", t);
+
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
                 sqlDa.Fill(dt);
             }
-
-            //Image1.ImageUrl = filePath + "testPicture.jpg";
 
             if (dt.Rows.Count > 0)
             {
@@ -115,8 +114,6 @@ public partial class Display : System.Web.UI.Page
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
-            Image1.ImageUrl = filePath + "testPicture.jpg";
-
             if (dt.Rows.Count > 0)
             {
                 //GridViewGallery.DataSource = dt;
@@ -137,11 +134,14 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewBigPicture()
     {
+        /*
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
+        TestTextbox.Value = picID.ToString();
 
         try
         {
+            TestTextbox.Value = picID.ToString();
             connection.Open();
             string sqlStatement = "SELECT refLoc FROM pictures WHERE picId='" + picID + "';";
             SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
@@ -150,8 +150,11 @@ public partial class Display : System.Web.UI.Page
 
             if (dt.Rows.Count > 0)
             {
-                GridViewGallery.DataSource = dt;
-                GridViewGallery.DataBind();
+                //GridViewGallery.DataSource = dt;
+                //GridViewGallery.DataBind();
+
+                //TestTextbox.Value = dt.Rows[0]["refLoc"].ToString();
+                
             }
         }
         catch (System.Data.SqlClient.SqlException ex)
@@ -164,6 +167,49 @@ public partial class Display : System.Web.UI.Page
         {
             connection.Close();
         }
+        */
+    }
+
+    protected void SizeDiv()
+    {
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+        using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
+        using (var cmd = new System.Data.SqlClient.SqlCommand())
+
+            try
+            {
+                {
+                    cn.Open();
+                    cmd.Connection = cn;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)";
+                    cmd.Parameters.AddWithValue("@picId", picID);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
+                        int naturalWidth = b.Width;
+                        int naturalHeight = b.Height;
+                        b.Dispose();
+
+                        int adjustedDivWidth = naturalWidth+20;
+                        int adjustedDivHeight = naturalHeight+30;
+
+                        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
+                    }
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
     }
 
     protected void GridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -246,19 +292,25 @@ public partial class Display : System.Web.UI.Page
     {
        buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
        BindGridViewGallery();
-       //filePath = "~\\LocationPhotos\\" + fileName; 
+        //filePath = "~\\LocationPhotos\\" + fileName; 
+
+        bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
     }
 
     protected void TextBoxSearch_TextChanged(object sender, EventArgs e)
     {
         string search = TextBoxSearch.Text;
         BindGridViewSearch(search);
-        Image1.ImageUrl = filePath + "testPicture.jpg";
+        //Image1.ImageUrl = filePath + "testPicture.jpg";
+
+        bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
     }
 
     protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)   {
-        refLoc = GridViewGallery.SelectedDataKey.Value.ToString();
-        BindGridViewBigPicture();
+        picID = (int)GridViewGallery.SelectedDataKey.Value;
+        //BindGridViewBigPicture();
+
+        SizeDiv();
     }
 
     //protected string GetUrlString(string type, string refLoc)
