@@ -48,24 +48,24 @@
 </head>
 <body>
     <form id="searchForm" runat="server">
-        <div style="width: 500px">
-            <asp:Button ID="schoolButton" runat="server" Text="Schools" OnClick="SchoolButton_Click" UseSubmitBehavior="False" />
-            <asp:Button ID="govButton" runat="server" Text="Government" OnClick="GovButton_Click" UseSubmitBehavior="False" />
-            <asp:Button ID="medButton" runat="server" Text="Medical" OnClick="MedButton_Click" UseSubmitBehavior="False" />
-            <asp:Button ID="bankButton" runat="server" Text="Banks" OnClick="BankButton_Click" UseSubmitBehavior="False" />
-            <asp:Button ID="privateButton" runat="server" Text="Private/Commercial" OnClick="PrivateButton_Click" UseSubmitBehavior="False" />
-            <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" UseSubmitBehavior="False" />
+        <div style="width: 50%" class="div">
+            <asp:Button ID="schoolButton" runat="server" Text="Schools" OnClick="SchoolButton_Click" CssClass="button" UseSubmitBehavior="False" />
+            <asp:Button ID="govButton" runat="server" Text="Government" OnClick="GovButton_Click" CssClass="button" UseSubmitBehavior="False" />
+            <asp:Button ID="medButton" runat="server" Text="Medical" OnClick="MedButton_Click" CssClass="button" UseSubmitBehavior="False" />
+            <asp:Button ID="bankButton" runat="server" Text="Banks" OnClick="BankButton_Click" CssClass="button" UseSubmitBehavior="False" />
+            <asp:Button ID="privateButton" runat="server" Text="Private/Commercial" OnClick="PrivateButton_Click" CssClass="button" UseSubmitBehavior="False" />
+            <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" CssClass="button" UseSubmitBehavior="False" />
             <asp:Button ID="searchButton" runat="server" style="display:none;" />
             <br />
-            <asp:Label ID="LabelSearch" runat="server" Text="Search"></asp:Label>
+            <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
             <br />
-            <asp:TextBox ID="TextBoxSearch" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
-            <asp:GridView ID="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged">
+            <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
+            <asp:GridView ID="GridViewList" cssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
                 <Columns>
-                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                    <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
-                    <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
-                    <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
+                    <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
+                    <asp:BoundField DataField="Address" HeaderText="Address" ReadOnly="true" SortExpression="Address" />
+                    <asp:BoundField DataField="Type" HeaderText="Type" ReadOnly="true" SortExpression="Type" />
+                    <asp:BoundField DataField="Alias" HeaderText="Alias" ReadOnly="true" SortExpression="Alias" />
                     <asp:CommandField ShowSelectButton="True" />
                 </Columns>
             </asp:GridView>
@@ -97,14 +97,11 @@
                 </asp:GridView>
             </div>
            
-            <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" />
-            <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" />
-            <input id="TestTextbox" type="text" runat="server" />
+            <input id="ZoomIn"  type="button" value="Zoom In" onclick="zoomin()" class="button" />
+            <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" class="button" />
+            <input id="TestTextbox" class="textbox" type="text" runat="server" />
         </div>
         <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]"></asp:SqlDataSource>
-        <div id="divPicture">
-            I need to CS to get the two divs to right left >.<
-        </div>
     </form>
 </body>
 </html>

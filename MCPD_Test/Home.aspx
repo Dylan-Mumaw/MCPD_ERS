@@ -11,7 +11,7 @@
 </head>
 <body>
     <form id="form1" runat="server">      
-        <div id="LoginDiv" class="dev">        
+        <div id="LoginDiv" class="div">        
             <asp:Image ID="logoImage" runat="server" ImageUrl="~/StylePhotos/black logo png.png" CssClass="background" />
             <br />
             <asp:Label ID="LabelUsername" runat="server" Text="Username" CssClass="label"></asp:Label><br />

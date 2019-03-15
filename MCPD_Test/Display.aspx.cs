@@ -18,8 +18,28 @@ public partial class Display : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //if (!IsPostBack)
+        //{
+        //    BindPage();
+        //}
     }
+
+    public void BindPage()
+    {
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+        SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Buildings ORDER BY Type", connection);
+        da.Fill(dt);
+        GridViewList.DataSource = dt;
+        GridViewList.DataBind();
+    }
+    protected void GridViewList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GridViewList.PageIndex = e.NewPageIndex;
+        BindPage();
+    }
+
+
     private string GetConnectionString()
     {
         return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
@@ -76,9 +96,8 @@ public partial class Display : System.Web.UI.Page
                 cn.Open();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM buildings WHERE name LIKE '%" + t + "%' OR address LIKE '%" + t + "%' OR alias LIKE '%" + t + "%'";
-                //cmd.CommandText = "SELECT * FROM buildings WHERE name LIKE %@t% OR address LIKE %@t% OR alias LIKE %@t%";
-                //cmd.Parameters.AddWithValue("@t", t);
+                cmd.CommandText = "Select * FROM Buildings WHERE Name LIKE '%'+@text+'%' OR Alias LIKE '%'+@text+'%' OR Type LIKE '%'+@text+'%' or Address LIKE '%'+@text+'%' ORDER BY Type";
+                cmd.Parameters.AddWithValue("@text", t);
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
                 sqlDa.Fill(dt);
@@ -134,40 +153,7 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewBigPicture()
     {
-        /*
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-        TestTextbox.Value = picID.ToString();
 
-        try
-        {
-            TestTextbox.Value = picID.ToString();
-            connection.Open();
-            string sqlStatement = "SELECT refLoc FROM pictures WHERE picId='" + picID + "';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            if (dt.Rows.Count > 0)
-            {
-                //GridViewGallery.DataSource = dt;
-                //GridViewGallery.DataBind();
-
-                //TestTextbox.Value = dt.Rows[0]["refLoc"].ToString();
-                
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
-        */
     }
 
     protected void SizeDiv()
@@ -193,8 +179,8 @@ public partial class Display : System.Web.UI.Page
                         int naturalHeight = b.Height;
                         b.Dispose();
 
-                        int adjustedDivWidth = naturalWidth+20;
-                        int adjustedDivHeight = naturalHeight+30;
+                        int adjustedDivWidth = naturalWidth + 20;
+                        int adjustedDivHeight = naturalHeight + 30;
 
                         bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
                     }
@@ -212,10 +198,6 @@ public partial class Display : System.Web.UI.Page
             }
     }
 
-    protected void GridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-
-    }
     //<-----------------END Data Binding-------------------->
 
 
@@ -290,10 +272,8 @@ public partial class Display : System.Web.UI.Page
     //<-----------------Begin SelectedIndexChanged----------------->
     protected void GridViewList_SelectedIndexChanged(object sender, EventArgs e)
     {
-       buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
-       BindGridViewGallery();
-        //filePath = "~\\LocationPhotos\\" + fileName; 
-
+        buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
+        BindGridViewGallery();
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
     }
 
@@ -301,22 +281,15 @@ public partial class Display : System.Web.UI.Page
     {
         string search = TextBoxSearch.Text;
         BindGridViewSearch(search);
-        //Image1.ImageUrl = filePath + "testPicture.jpg";
-
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
     }
 
-    protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)   {
+    protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)
+    {
         picID = (int)GridViewGallery.SelectedDataKey.Value;
         //BindGridViewBigPicture();
-
         SizeDiv();
     }
-
-    //protected string GetUrlString(string type, string refLoc)
-    //{
-    //    return filePath + type + "\\" + refLoc + ".jpg";
-    //}
 
     protected void GridViewBigPicture_SelectedIndexChanged(object sender, EventArgs e)
     {
