@@ -27,7 +27,6 @@
                     <asp:ControlParameter ControlID="TextBoxPassword" Name="Password" PropertyName="Text" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:ListBox ID="ListBoxTest" runat="server" DataSourceID="SqlDataSourceLogin" DataTextField="UserName" DataValueField="UserName" CssClass="#ListBoxTest"></asp:ListBox>
         </div>
     </form>
 </body>

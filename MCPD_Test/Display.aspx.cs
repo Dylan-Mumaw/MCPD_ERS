@@ -10,11 +10,8 @@ using System.Configuration;
 
 public partial class Display : System.Web.UI.Page
 {
-    private string filePath;
-    private string search;
     private int buildID = 0;
     private int picID = 0;
-    private string refLoc;
 
     protected void Page_Load(object sender, EventArgs e)
     {

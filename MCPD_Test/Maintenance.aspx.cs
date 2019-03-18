@@ -28,6 +28,16 @@ public partial class Maintenance : System.Web.UI.Page
         DetailsViewTypes.ChangeMode(DetailsViewMode.Insert);
     }
 
+    protected void newLogin_Click(object sender, EventArgs e)
+    {
+        DetailsViewLogin.ChangeMode(DetailsViewMode.Insert);
+    }
+
+    protected void newPicture_Click(object sender, EventArgs e)
+    {
+        DetailsViewPictures.ChangeMode(DetailsViewMode.Insert);
+    }
+
     protected Int32 GetNextId(string tableName)
     {
         Int32 nextId = 0;
@@ -55,17 +65,16 @@ public partial class Maintenance : System.Web.UI.Page
         return nextId;
     }
 
-    protected void DetailsViewBuildings_ItemUpdated(
-        object sender, DetailsViewUpdatedEventArgs e)
+    protected void DetailsViewBuildings_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
-        if(e.Exception != null)
+        if (e.Exception != null)
         {
             lblError.Text = "A database error has occured. " +
                 "Message: " + e.Exception.Message;
             e.ExceptionHandled = true;
             e.KeepInEditMode = true;
         }
-        else if(e.AffectedRows == 0)
+        else if (e.AffectedRows == 0)
         {
             lblError.Text = "Another user may have updated that building. " +
                 "Please try again.";
@@ -75,8 +84,7 @@ public partial class Maintenance : System.Web.UI.Page
             GridViewBuildings.DataBind();
         }
     }
-    protected void DetailsViewBuildings_ItemDeleted(
-        object sender, DetailsViewDeletedEventArgs e)
+    protected void DetailsViewBuildings_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
     {
         if (e.Exception != null)
         {
@@ -94,8 +102,7 @@ public partial class Maintenance : System.Web.UI.Page
             GridViewBuildings.DataBind();
         }
     }
-    protected void DetailsViewBuildings_ItemInserted(
-        object sender, DetailsViewInsertedEventArgs e)
+    protected void DetailsViewBuildings_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
     {
         if (e.Exception != null)
         {
@@ -110,8 +117,7 @@ public partial class Maintenance : System.Web.UI.Page
         }
     }
 
-    protected void DetailsViewTypes_ItemUpdated(
-        object sender, DetailsViewUpdatedEventArgs e)
+    protected void DetailsViewTypes_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
         if (e.Exception != null)
         {
@@ -130,8 +136,7 @@ public partial class Maintenance : System.Web.UI.Page
             GridViewTypes.DataBind();
         }
     }
-    protected void DetailsViewTypes_ItemDeleted(
-        object sender, DetailsViewDeletedEventArgs e)
+    protected void DetailsViewTypes_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
     {
         if (e.Exception != null)
         {
@@ -149,8 +154,7 @@ public partial class Maintenance : System.Web.UI.Page
             GridViewTypes.DataBind();
         }
     }
-    protected void DetailsViewTypes_ItemInserted(
-        object sender, DetailsViewInsertedEventArgs e)
+    protected void DetailsViewTypes_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
     {
         if (e.Exception != null)
         {
@@ -162,6 +166,112 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewTypes.DataBind();
+        }
+    }
+
+    protected void DetailsViewLogin_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+            e.KeepInEditMode = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated this user's info. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewLogin.DataBind();
+        }
+    }
+    protected void DetailsViewLogin_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated that building. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewLogin.DataBind();
+        }
+    }
+
+    protected void DetailsViewLogin_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+            e.KeepInInsertMode = true;
+        }
+        else
+        {
+            GridViewLogin.DataBind();
+        }
+    }
+
+    protected void DetailsViewPictures_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+            e.KeepInInsertMode = true;
+        }
+        else
+        {
+            GridViewPictures.DataBind();
+        }
+    }
+
+    protected void DetailsViewPictures_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+            e.KeepInEditMode = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated this user's info. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewPictures.DataBind();
+        }
+    }
+    protected void DetailsViewPictures_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated that building. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewPictures.DataBind();
         }
     }
 }
