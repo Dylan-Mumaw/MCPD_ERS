@@ -10,7 +10,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="div">
             <!-----------------BUILDING MAINTENANCE GRIDVIEW---------------->
             <asp:GridView ID="GridViewBuildings" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings">
                 <Columns>
@@ -192,13 +192,14 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <asp:Button runat="server" ID="newBuilding" Text="New" OnClick="newBuilding_Click" />
+                                <asp:Button runat="server" ID="newBuilding" Text="New" OnClick="NewBuilding_Click" />
                             </td>
                         </tr>
                     </table>
                 </EmptyDataTemplate>
             </asp:DetailsView>
 
+            <!-----------------BUILDING MAINTENANCE DATA SOURCE---------------->
             <asp:SqlDataSource ID="SqlDataSourceBuildingsDetails" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings] WHERE ([Id] = @Id)"
@@ -227,7 +228,7 @@
             </asp:SqlDataSource>
 
 
-            <!-----------------TYPE MAINTENANCE GRIDVIEW---------------->
+            <!-----------------TYPE MAINTENANCE DROP-DOWN DATA---------------->
             <asp:SqlDataSource ID="SqlDataSourceTypesDdl" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
@@ -274,6 +275,7 @@
                                 Text='<%# GetNextId("Types") %>'></asp:Label>
                         </InsertItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Building Type:">
                         <ItemTemplate>
                             <asp:Label ID="lblDetailsViewType" runat="server"
@@ -303,6 +305,7 @@
                         ShowEditButton="true"
                         ShowInsertButton="true" />
                 </Fields>
+
                 <EmptyDataTemplate>
                     <table cellspacing="0" rules="rows" border="1" id="DetailsViewTypes" style="border-collapse: collapse;">
                         <tr>
@@ -319,13 +322,14 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <asp:Button runat="server" ID="newBuilding" Text="New" OnClick="newType_Click" />
+                                <asp:Button runat="server" ID="newBuilding" Text="New" OnClick="NewType_Click" />
                             </td>
                         </tr>
                     </table>
                 </EmptyDataTemplate>
             </asp:DetailsView>
 
+            <!-----------------TYPE MAINTENANCE DATA---------------->
             <asp:SqlDataSource ID="SqlDataSourceTypesDetails" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT [typeId], [type] FROM [Types] WHERE ([typeId] = @typeId)"
@@ -347,7 +351,7 @@
                 </UpdateParameters>
             </asp:SqlDataSource>
 
-            <!--------LOGIN MAINTENANCE GRIDVIEW---------->
+            <!-----------------LOGIN MAINTENANCE DATA---------------->
             <asp:SqlDataSource ID="SqlDataSourceLogin" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT * FROM [Logins]"
@@ -379,7 +383,7 @@
                 </Columns>
             </asp:GridView>
 
-            <!--------LOGIN MAINTENANCE DETAILS VIEW---------->
+            <!-----------------LOGIN MAINTENANCE DETAILS LIST---------------->
             <asp:DetailsView ID="DetailsViewLogin" runat="server"
                 DataSourceID="SqlDataSourceLoginDetails" DataKeyNames="LogId"
                 AutoGenerateRows="false"
@@ -509,13 +513,14 @@
                             </td>
                         </tr>
                         <td colspan="2">
-                            <asp:Button runat="server" ID="newLogin" Text="New" OnClick="newLogin_Click" />
+                            <asp:Button runat="server" ID="newLogin" Text="New" OnClick="NewLogin_Click" />
                         </td>
                         </tr>
                     </table>
                 </EmptyDataTemplate>
             </asp:DetailsView>
 
+            <!-----------------LOGIN MAINTENANCE DATA---------------->
             <asp:SqlDataSource ID="SqlDataSourceLoginDetails" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins] WHERE ([LogId] = @LogId)"
@@ -541,7 +546,7 @@
                 </UpdateParameters>
             </asp:SqlDataSource>
 
-            <!------------PICTURE MAINTENANCE GRIDVIEW------------>
+            <!-----------------PICTURES MAINTENANCE DATA---------------->
             <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT * FROM [Pictures]" DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId"
@@ -569,7 +574,7 @@
                 </Columns>
             </asp:GridView>
 
-            <!--------PICTURES MAINTENANCE DETAILS VIEW---------->
+            <!-----------------PICTURES MAINTENANCE DETAILS LIST---------------->
             <asp:DetailsView ID="DetailsViewPictures" runat="server"
                 DataSourceID="SqlDataSourcePictureDetails" DataKeyNames="PicId"
                 AutoGenerateRows="false"
@@ -659,13 +664,14 @@
                             </td>
                         </tr>
                         <td colspan="2">
-                            <asp:Button runat="server" ID="newPicture" Text="New" OnClick="newPicture_Click" />
+                            <asp:Button runat="server" ID="newPicture" Text="New" OnClick="NewPicture_Click" />
                         </td>
                         </tr>
                     </table>
                 </EmptyDataTemplate>
             </asp:DetailsView>
 
+            <!-----------------PICTURE MAINTENANCE DATA---------------->
             <asp:SqlDataSource ID="SqlDataSourcePictureDetails" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                 SelectCommand="SELECT [picId], [buildId], [refLoc] FROM [Pictures] WHERE ([picId] = @picId)"

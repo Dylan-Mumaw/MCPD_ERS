@@ -19,21 +19,21 @@ public partial class Maintenance : System.Web.UI.Page
         return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
     }
 
-    protected void newBuilding_Click(object sender, EventArgs e)
+    protected void NewBuilding_Click(object sender, EventArgs e)
     {
         DetailsViewBuildings.ChangeMode(DetailsViewMode.Insert);
     }
-    protected void newType_Click(object sender, EventArgs e)
+    protected void NewType_Click(object sender, EventArgs e)
     {
         DetailsViewTypes.ChangeMode(DetailsViewMode.Insert);
     }
 
-    protected void newLogin_Click(object sender, EventArgs e)
+    protected void NewLogin_Click(object sender, EventArgs e)
     {
         DetailsViewLogin.ChangeMode(DetailsViewMode.Insert);
     }
 
-    protected void newPicture_Click(object sender, EventArgs e)
+    protected void NewPicture_Click(object sender, EventArgs e)
     {
         DetailsViewPictures.ChangeMode(DetailsViewMode.Insert);
     }
@@ -82,6 +82,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewBuildings.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
     protected void DetailsViewBuildings_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
@@ -100,6 +101,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewBuildings.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
     protected void DetailsViewBuildings_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
@@ -114,6 +116,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewBuildings.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 
@@ -134,6 +137,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewTypes.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
     protected void DetailsViewTypes_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
@@ -152,6 +156,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewTypes.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
     protected void DetailsViewTypes_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
@@ -166,6 +171,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewTypes.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 
@@ -186,6 +192,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewLogin.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
     protected void DetailsViewLogin_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
@@ -204,6 +211,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewLogin.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 
@@ -219,6 +227,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewLogin.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 
@@ -234,6 +243,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewPictures.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 
@@ -254,6 +264,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewPictures.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
     protected void DetailsViewPictures_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
@@ -272,6 +283,7 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewPictures.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 }
