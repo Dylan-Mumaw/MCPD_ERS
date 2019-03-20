@@ -176,10 +176,11 @@ public partial class Display : System.Web.UI.Page
                         int naturalHeight = b.Height;
                         b.Dispose();
 
-                        int adjustedDivWidth = naturalWidth + 20;
-                        int adjustedDivHeight = naturalHeight + 30;
+                        //int adjustedDivWidth = naturalWidth + 20;
+                        //int adjustedDivHeight = naturalHeight + 30;
 
-                        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
+                        //bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
+                        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;");
                     }
                 }
             }

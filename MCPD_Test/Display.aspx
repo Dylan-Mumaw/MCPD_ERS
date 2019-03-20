@@ -90,7 +90,7 @@
             <div id="bigImageZoom" runat="server" style="width:0px;height:0px;display:none;" class="dragscroll">
                 <asp:GridView ID="GridViewBigPicture" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceBigPicture">
                         <Columns>
-                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
+                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image" ItemStyle-Width="500" >
 
                             </asp:ImageField>
                         </Columns>
