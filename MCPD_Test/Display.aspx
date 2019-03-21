@@ -10,8 +10,11 @@
 
     <script>
         function zoomin() {
-            var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
-            var myImg = myImgQuery[0];
+            //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
+            //var myImg = myImgQuery[0];
+
+            var myImg = document.getElementById("bigImage");
+
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
             if (currWidth >= 2500) {
@@ -25,8 +28,11 @@
             }
         }
         function zoomout() {
-            var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
-            var myImg = myImgQuery[0];
+            //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
+            //var myImg = myImgQuery[0];
+
+            var myImg = document.getElementById("bigImage");
+
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
             if (currWidth <= 100) {
@@ -81,6 +87,8 @@
                     <asp:CommandField ShowSelectButton="True" />
                 </Columns>
             </asp:GridView>
+
+            <%--
             <asp:SqlDataSource ID="SqlDataSourceBigPicture" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="GridViewGallery" Name="picId" PropertyName="SelectedValue" Type="Int32" />
@@ -95,6 +103,11 @@
                             </asp:ImageField>
                         </Columns>
                 </asp:GridView>
+            </div>
+            --%>
+
+            <div id="bigImageZoom" runat="server" style="display:none;" class="dragscroll">
+                <asp:Image ID="bigImage" runat="server" width="500px" ResizeMode="Fit"/>
             </div>
            
             <input id="ZoomIn"  type="button" value="Zoom In" onclick="zoomin()" class="button" />
