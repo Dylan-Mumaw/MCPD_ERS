@@ -221,7 +221,7 @@ public partial class Display : System.Web.UI.Page
                         int naturalHeight = b.Height;
                         b.Dispose();
 
-                        double ratio = (double)500 / naturalWidth;
+                        double ratio = bigImage.Width.Value / naturalWidth;
                         int scaledHeight = (int)(naturalHeight * ratio);
 
                         bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;height:{0}px;", scaledHeight+4);
