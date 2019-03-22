@@ -27,7 +27,7 @@ public partial class Home : Page
         if (result.Length == 0)
             //Response.Redirect("Home.aspx");
             Label1.Text = "Please enter correct data.";
-        if (result.Length > 0) Response.Redirect("Display.aspx");
+        if (result.Length > 0) Response.Redirect("Display.aspx", false);
     }
     protected void SelectQuery()
     {
