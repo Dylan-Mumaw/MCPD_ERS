@@ -19,6 +19,51 @@ public partial class Display : System.Web.UI.Page
         //{
         //    BindPage();
         //}
+
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            SqlCommand cmd = new SqlCommand("SELECT type FROM Types", connection);
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    string currentType = reader["type"].ToString();
+
+                    Button currentButton = new Button();
+                    currentButton.ID = "btn" + currentType;
+                    currentButton.Text = currentType;
+                    currentButton.CssClass = "button";
+                    currentButton.UseSubmitBehavior = false;
+
+                    currentButton.Click += (se, args) => { BindGridViewType(currentType); };
+
+                    ButtonContainer.Controls.Add(currentButton);
+                }
+
+                Button searchAllButton = new Button();
+                searchAllButton.ID = "btnSelectAll";
+                searchAllButton.Text = "Select All";
+                searchAllButton.CssClass = "button";
+                searchAllButton.UseSubmitBehavior = false;
+
+                searchAllButton.Click += (se, args) => { SearchAll(); };
+
+                ButtonContainer.Controls.Add(searchAllButton);
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 
     public void BindPage()
@@ -244,6 +289,38 @@ public partial class Display : System.Web.UI.Page
 
 
     //<-----------------Button Click Events----------------->
+
+    protected void SearchAll()
+    {
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+
+        try
+        {
+            connection.Open();
+            string sqlStatement = "SELECT * FROM Buildings ORDER BY TYPE ASC";
+            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+            sqlDa.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                GridViewList.DataSource = dt;
+                GridViewList.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex)
+        {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
     protected void ButtonSearch_Click(object sender, EventArgs e)
     {
 
@@ -309,6 +386,7 @@ public partial class Display : System.Web.UI.Page
         string typeText = "School";
         BindGridViewType(typeText);
     }
+    
     //<-----------------End Button Click----------------->
 
     //<-----------------Begin SelectedIndexChanged----------------->
