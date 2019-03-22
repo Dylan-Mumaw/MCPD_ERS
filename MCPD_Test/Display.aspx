@@ -63,7 +63,6 @@
 <body>
     <form id="searchForm" runat="server">
         <div style="" id="MainContainer" class="container">
-
             <div id="LeftContainer" class="item">
                 <asp:Panel ID="ButtonContainer" runat="server"></asp:Panel>
                 <!--
@@ -100,47 +99,29 @@
                 </asp:SqlDataSource>
 
                 <div id="GalleryContainer" class="gallery">
-                <asp:GridView ID="GridViewGallery" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId">
-                    <Columns>
-                        <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
-                        </asp:ImageField>
-                        <asp:CommandField ShowSelectButton="True" />
-                    </Columns>
-                </asp:GridView>
-                    </div>
-                </div>
-
-                <%--
-            <asp:SqlDataSource ID="SqlDataSourceBigPicture" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="GridViewGallery" Name="picId" PropertyName="SelectedValue" Type="Int32" />
-                </SelectParameters>
-            </asp:SqlDataSource>
-
-            <div id="bigImageZoom" runat="server" style="width:0px;height:0px;display:none;" class="dragscroll">
-                <asp:GridView ID="GridViewBigPicture" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceBigPicture">
+                    <asp:GridView ID="GridViewGallery" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId">
                         <Columns>
-                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image" ItemStyle-Width="500" >
-
+                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
                             </asp:ImageField>
+                            <asp:CommandField ShowSelectButton="True" />
                         </Columns>
-                </asp:GridView>
-            </div>
-                --%>
-            <div id="RightContainer" class="item">
-                    <div id="BigImageContainer">
-                <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
-                    <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />
+                    </asp:GridView>
                 </div>
-                        </div>
-
-                <div id="ZoomButtonContainer">
-                <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" class="button" />
-                <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" class="button" />
-                <input id="TestTextbox" class="textbox" type="text" runat="server" />
+            </div>
+            <div id="RightContainer" class="item">
+                <div id="BigImageContainer">
+                    <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
+                        <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />
                     </div>
+                </div>
+                <div id="ZoomButtonContainer">
+                    <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" class="button" />
+                    <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" class="button" />
+                    <input id="TestTextbox" class="textbox" type="text" runat="server" />
+                </div>
             </div>
             <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]"></asp:SqlDataSource>
+        </div>
     </form>
 </body>
 </html>
