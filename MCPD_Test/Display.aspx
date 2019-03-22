@@ -46,6 +46,14 @@
             }
         }
     </script>
+
+    <script runat="server">
+        void test()
+        {
+            TestTextbox.Value = "Tested";
+        }
+    </script>
+
     <style type="text/css">
         #TestTextbox {
             width: 236px;
@@ -57,6 +65,8 @@
         <div style="" id="MainContainer" class="container">
 
             <div id="LeftContainer" class="item">
+                <asp:Panel ID="ButtonContainer" runat="server"></asp:Panel>
+                <!--
                 <div id="ButtonContainer">
                     <asp:Button ID="schoolButton" runat="server" Text="Schools" OnClick="SchoolButton_Click" CssClass="button" UseSubmitBehavior="False" />
                     <asp:Button ID="govButton" runat="server" Text="Government" OnClick="GovButton_Click" CssClass="button" UseSubmitBehavior="False" />
@@ -65,6 +75,7 @@
                     <asp:Button ID="privateButton" runat="server" Text="Private/Commercial" OnClick="PrivateButton_Click" CssClass="button" UseSubmitBehavior="False" />
                     <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" CssClass="button" UseSubmitBehavior="False" />
                 </div>
+                -->
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" />
                 <br />
                 <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
