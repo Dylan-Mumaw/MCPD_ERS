@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="DisplayStyle.css" />
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="dragscroll.js"></script>
     <title>Michigan City First Responders</title>
 
     <script>
@@ -14,16 +14,16 @@
             //var myImg = myImgQuery[0];
 
             var myImg = document.getElementById("bigImage");
-
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
+
             if (currWidth >= 2500) {
                 document.getElementById("TestTextbox").value = "Width was outside 2500; Value was " + currWidth;
                 return false;
             }
             else {
                 myImg.style.width = (currWidth + 50) + "px";
-                myImg.style.height = (currHeight + 50) + "px";
+                //myImg.style.height = (currHeight + 50) + "px";
                 document.getElementById("TestTextbox").value = "Width was within 2500; Value was " + currWidth;
             }
         }
@@ -41,7 +41,7 @@
             }
             else {
                 myImg.style.width = (currWidth - 50) + "px";
-                myImg.style.height = (currHeight - 50) + "px";
+                //myImg.style.height = (currHeight - 50) + "px";
                 document.getElementById("TestTextbox").value = "Width was within 100; Value was " + currWidth;
             }
         }
@@ -119,7 +119,7 @@
             <div id="RightContainer" class="item">
                     <div id="BigImageContainer">
                 <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
-                    <asp:Image ID="bigImage" runat="server" Width="500px" ResizeMode="Fit" />
+                    <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />
                 </div>
                         </div>
 

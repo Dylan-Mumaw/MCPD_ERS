@@ -121,6 +121,10 @@ body {
     text-align: center;
 }
 
+.grabbable {
+    cursor: all-scroll;
+}
+
 #ButtonContainer {
     display: flex;
     flex-direction: row;
