@@ -1,0 +1,19 @@
+﻿body {
+
+}
+
+.registrationDiv{
+    display:flex;
+    flex-direction:column;
+}
+
+label {
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    font-variant: small-caps;
+    color: red;
+    margin-left: 14%;
+    margin-bottom: 1%;
+    letter-spacing: .5px;
+}

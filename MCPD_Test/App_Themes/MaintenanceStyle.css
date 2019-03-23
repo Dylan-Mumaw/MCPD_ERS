@@ -1,0 +1,82 @@
+body {
+    background-color: #1B1537;
+    height: 100%;
+    width: 100%;
+    font-family: Gotham,gototham,Verdana,sans-serif;
+    font-size:small;
+}
+
+.container {
+    color: white;
+    background-color: rgba(27, 20, 56, 0.47);
+    display: flex;
+    flex-direction: row;
+    height: 33.33%;
+    margin-bottom:5px;
+}
+#MainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.item {
+    border: 2px;
+    border-color: white;
+    display: flex;
+}
+
+
+header {
+    font-family: Gotham,gototham,Verdana,sans-serif;
+    display:block;
+    background-color:fuchsia;
+    font-size:large;
+}
+
+textbox {
+    display: block;
+    width: 100%;
+    background-color: white;
+    border-left: 1px, white;
+    border-right: 1px, white;
+    border-top: 1px, white;
+    border-bottom: 1px, white;
+    border-radius: 2px;
+}
+
+
+select {
+    width: 16%;
+    height: 50px;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    color: #666666;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
+}
+#MaintenanceItem {
+    margin-left: 5px;
+}
+
+#GridViewBox {
+    margin-right: 5px;
+}
+#GridViewTypesBox {
+    margin-right:5px;
+}
+#GridViewLoginBox {
+    margin-right: 5px;
+}
+
+#GridViewPicsBox {
+    margin-right: 5px;
+}

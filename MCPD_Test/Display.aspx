@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="DisplayStyle.css" />
+    <link rel="stylesheet" href="App_Themes/DisplayStyle.css" />
     <script type="text/javascript" src="dragscroll.js"></script>
     <title>Michigan City First Responders</title>
 

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 
-    <link rel="stylesheet" href="HomeStyle.css" />
+    <link rel="stylesheet" href="App_Themes/HomeStyle.css" />
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <title>Login</title>
 </head>
