@@ -81,7 +81,7 @@
                 <br />
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
                 <div id="GridViewListContainer">
-                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
+                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="buildId" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
                             <asp:BoundField DataField="Address" HeaderText="Address" ReadOnly="true" SortExpression="Address" />
@@ -109,6 +109,17 @@
                 </div>
             </div>
             <div id="RightContainer" class="item">
+                <div id="currentPicture">
+                    <asp:GridView ID="GridViewCurrentPicture" CssClass="GridViewList" runat="server" AutoGenerateColumns="false">
+                        <Columns>
+                            <asp:BoundField DataField ="Name" HeaderText="Building"/>
+                            <asp:BoundField DataField ="Address" HeaderText="Address"/>
+                            <asp:BoundField DataField ="fullname" HeaderText="Contact Name"/>
+                            <asp:BoundField DataField ="contactnumber" HeaderText="Number"/>
+                            <asp:BoundField DataField ="title" HeaderText="Title"/>
+                        </Columns>
+                    </asp:GridView>
+                </div>
                 <div id="BigImageContainer">
                     <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
                         <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />

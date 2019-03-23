@@ -193,6 +193,39 @@ public partial class Display : System.Web.UI.Page
         }
     }
 
+    
+    private void BindGridViewCurrentPicture() {
+        DataTable dt = new DataTable();
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+
+        try {
+            using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
+            using (var cmd = new System.Data.SqlClient.SqlCommand())
+            {
+                cn.Open();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT name, address, fullname, contactnumber, title FROM Buildings INNER JOIN Contacts ON Buildings.buildId = Contacts.buildID WHERE Buildings.buildId = "+buildID+";";
+
+                SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+                sqlDa.Fill(dt);
+            }
+
+            if (dt.Rows.Count > 0) {
+                GridViewCurrentPicture.DataSource = dt;
+                GridViewCurrentPicture.DataBind();
+            }
+        }
+        catch (System.Data.SqlClient.SqlException ex) {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            //throw new Exception(msg);
+        }
+        finally {
+            connection.Close();
+        }
+    }
+
     private void BindGridViewBigPicture()
     {
 
@@ -395,6 +428,7 @@ public partial class Display : System.Web.UI.Page
         buildID = Convert.ToInt16(GridViewList.SelectedDataKey.Value);
         BindGridViewGallery();
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
+        BindGridViewCurrentPicture();
     }
 
     protected void TextBoxSearch_TextChanged(object sender, EventArgs e)
