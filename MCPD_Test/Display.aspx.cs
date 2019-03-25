@@ -205,7 +205,7 @@ public partial class Display : System.Web.UI.Page
                 cn.Open();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT name, address, fullname, contactnumber, title FROM Buildings INNER JOIN Contacts ON Buildings.buildId = Contacts.buildID WHERE Buildings.buildId = "+buildID+";";
+                cmd.CommandText = "SELECT name, address, fullname, contactnumber, title FROM Buildings INNER JOIN Contacts ON Buildings.Id = Contacts.buildID WHERE Buildings.Id = "+buildID+";";
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
                 sqlDa.Fill(dt);

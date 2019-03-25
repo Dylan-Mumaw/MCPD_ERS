@@ -81,7 +81,7 @@
                 <br />
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
                 <div id="GridViewListContainer">
-                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="buildId" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
+                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
                             <asp:BoundField DataField="Address" HeaderText="Address" ReadOnly="true" SortExpression="Address" />
@@ -110,7 +110,7 @@
             </div>
             <div id="RightContainer" class="item">
                 <div id="currentPicture">
-                    <asp:GridView ID="GridViewCurrentPicture" CssClass="GridViewList" runat="server" AutoGenerateColumns="false">
+                    <asp:GridView ID="GridViewCurrentPicture" CssClass="" runat="server" AutoGenerateColumns="false">
                         <Columns>
                             <asp:BoundField DataField ="Name" HeaderText="Building"/>
                             <asp:BoundField DataField ="Address" HeaderText="Address"/>
