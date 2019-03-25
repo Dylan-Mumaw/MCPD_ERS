@@ -17,9 +17,9 @@
                     <header>Buildings</header>
                     <div class="item">
                         <div id="GridViewBox">
-                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings">
+                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="buildId" DataSourceID="SqlDataSourceBuildings">
                                 <Columns>
-                                    <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                    <asp:BoundField DataField="buildId" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                                     <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
                                     <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
