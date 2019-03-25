@@ -19,7 +19,7 @@
                         <div id="GridViewBox">
                             <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="buildId" DataSourceID="SqlDataSourceBuildings">
                                 <Columns>
-                                    <asp:BoundField DataField="buildId" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                    <asp:BoundField DataField="buildId" HeaderText="buildId" InsertVisible="False" ReadOnly="True" SortExpression="buildId" />
                                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                                     <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
                                     <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
@@ -30,30 +30,29 @@
                             </asp:GridView>
                         </div>
                         <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                            SelectCommand="SELECT * FROM [Buildings]"
-                            DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
-                            InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Alias]) VALUES (@Name, @Address, @Alias)"
-                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id">
+                            SelectCommand="SELECT * FROM [Buildings]" DeleteCommand="DELETE FROM [Buildings] WHERE [buildId] = @buildId" InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Type], [Alias]) VALUES (@Name, @Address, @Type, @Alias)" UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [buildId] = @buildId">
                             <DeleteParameters>
-                                <asp:Parameter Name="Id" Type="Int32" />
+                                <asp:Parameter Name="buildId" Type="Int32" />
                             </DeleteParameters>
                             <InsertParameters>
                                 <asp:Parameter Name="Name" Type="String" />
                                 <asp:Parameter Name="Address" Type="String" />
+                                <asp:Parameter Name="Type" Type="String" />
                                 <asp:Parameter Name="Alias" Type="String" />
                             </InsertParameters>
                             <UpdateParameters>
                                 <asp:Parameter Name="Name" Type="String" />
                                 <asp:Parameter Name="Address" Type="String" />
+                                <asp:Parameter Name="Type" Type="String" />
                                 <asp:Parameter Name="Alias" Type="String" />
-                                <asp:Parameter Name="Id" Type="Int32" />
+                                <asp:Parameter Name="buildId" Type="Int32" />
                             </UpdateParameters>
                         </asp:SqlDataSource>
 
                         <!-----------------BUILDING MAINTENANCE DETAILS LIST---------------->
                         <div id="DetailsViewBox">
                             <asp:DetailsView ID="DetailsViewBuildings" runat="server"
-                                DataSourceID="SqlDataSourceBuildingsDetails" DataKeyNames="Id"
+                                DataSourceID="SqlDataSourceBuildingsDetails" DataKeyNames="buildId"
                                 AutoGenerateRows="false"
                                 OnItemDeleted="DetailsViewBuildings_ItemDeleted"
                                 OnItemInserted="DetailsViewBuildings_ItemInserted"
@@ -63,11 +62,11 @@
                                     <asp:TemplateField HeaderText="Building ID:">
                                         <ItemTemplate>
                                             <asp:Label ID="lblDetailsViewBuildingId" runat="server"
-                                                Text='<%# Eval("Id") %>'></asp:Label>
+                                                Text='<%# Eval("buildId") %>'></asp:Label>
                                         </ItemTemplate>
                                         <EditItemTemplate>
                                             <asp:Label ID="lblDetailsViewBuildingId" runat="server"
-                                                Text='<%# Eval("Id") %>'></asp:Label>
+                                                Text='<%# Eval("buildId") %>'></asp:Label>
                                         </EditItemTemplate>
                                         <InsertItemTemplate>
                                             <asp:Label ID="lblDetailsViewBuildingId" runat="server"
@@ -217,12 +216,12 @@
                     <div class="item">
                         <asp:SqlDataSource ID="SqlDataSourceBuildingsDetails" runat="server"
                             ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                            SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings] WHERE ([Id] = @Id)"
-                            DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
+                            SelectCommand="SELECT * FROM [Buildings] WHERE ([buildId] = @buildId)"
+                            DeleteCommand="DELETE FROM [Buildings] WHERE [buildId] = @buildId"
                             InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Type], [Alias]) VALUES (@Name, @Address, @Type, @Alias)"
-                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id">
+                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [buildId] = @buildId">
                             <SelectParameters>
-                                <asp:ControlParameter ControlID="GridViewBuildings" Name="Id" PropertyName="SelectedValue" Type="Int32" />
+                                <asp:ControlParameter ControlID="GridViewBuildings" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
                             </SelectParameters>
                             <DeleteParameters>
                                 <asp:Parameter Name="Id" Type="Int32" />
@@ -247,7 +246,7 @@
                         <div id="maintenanceItem" class="item">
                             <asp:SqlDataSource ID="SqlDataSourceTypesDdl" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                                SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
+                                SelectCommand="SELECT [type] FROM [Types]"></asp:SqlDataSource>
                             <div id="GridViewTypesBox">
                                 <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes">
                                     <Columns>
@@ -258,17 +257,7 @@
                                 </asp:GridView>
                             </div>
 
-                            <asp:SqlDataSource ID="SqlDataSourceTypes" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Types] ORDER BY [typeId]" DeleteCommand="DELETE FROM [Types] WHERE [typeId] = @typeId" InsertCommand="INSERT INTO [Types] ([type]) VALUES (@type)" UpdateCommand="UPDATE [Types] SET [type] = @type WHERE [typeId] = @typeId">
-                                <DeleteParameters>
-                                    <asp:Parameter Name="typeId" Type="Int32" />
-                                </DeleteParameters>
-                                <InsertParameters>
-                                    <asp:Parameter Name="type" Type="Int32" />
-                                </InsertParameters>
-                                <UpdateParameters>
-                                    <asp:Parameter Name="type" Type="Int32" />
-                                    <asp:Parameter Name="typeId" Type="Int32" />
-                                </UpdateParameters>
+                            <asp:SqlDataSource ID="SqlDataSourceTypes" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Types] ORDER BY [typeId]">
                             </asp:SqlDataSource>
 
                             <!-----------------TYPE MAINTENANCE DETAILS LIST---------------->
@@ -352,7 +341,7 @@
                             <!-----------------TYPE MAINTENANCE DATA---------------->
                             <asp:SqlDataSource ID="SqlDataSourceTypesDetails" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                                SelectCommand="SELECT [typeId], [type] FROM [Types] WHERE ([typeId] = @typeId)"
+                                SelectCommand="SELECT * FROM [Types] WHERE ([typeId] = @typeId)"
                                 DeleteCommand="DELETE FROM [Types] WHERE [typeId] = @typeId"
                                 InsertCommand="INSERT INTO [Types] ([type]) VALUES (@type)"
                                 UpdateCommand="UPDATE [Types] SET [type] = @type WHERE [typeId] = @typeId">
@@ -551,7 +540,7 @@
                 <!-----------------LOGIN MAINTENANCE DATA---------------->
                 <asp:SqlDataSource ID="SqlDataSourceLoginDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                    SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins] WHERE ([LogId] = @LogId)"
+                    SelectCommand="SELECT * FROM [Logins] WHERE ([LogId] = @LogId)"
                     DeleteCommand="DELETE FROM [Logins] WHERE [LogId] = @LogId"
                     InsertCommand="INSERT INTO [Logins] ([Name], [UserName], [Password]) VALUES (@Name, @UserName, @Password)"
                     UpdateCommand="UPDATE [Logins] SET [Name] = @Name, [UserName] = @UserName, [Password] = @Password WHERE [LogId] = @LogId">
@@ -580,21 +569,7 @@
             <div id="BottomRowContainer" class="container">
                 <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                    SelectCommand="SELECT * FROM [Pictures]" DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId"
-                    InsertCommand="INSERT INTO [Pictures] ([buildId], [refLoc]) VALUES (@buildId, @refLoc)"
-                    UpdateCommand="UPDATE [Pictures] SET [buildId] = @buildId, [refLoc] = @refLoc WHERE [picId] = @picId">
-                    <DeleteParameters>
-                        <asp:Parameter Name="picId" Type="Int32" />
-                    </DeleteParameters>
-                    <InsertParameters>
-                        <asp:Parameter Name="buildId" Type="Int32" />
-                        <asp:Parameter Name="refLoc" Type="String" />
-                    </InsertParameters>
-                    <UpdateParameters>
-                        <asp:Parameter Name="buildId" Type="Int32" />
-                        <asp:Parameter Name="refLoc" Type="String" />
-                        <asp:Parameter Name="picId" Type="Int32" />
-                    </UpdateParameters>
+                    SelectCommand="SELECT * FROM [Pictures]">
                 </asp:SqlDataSource>
                 <div id="GridViewPicsBox">
                     <asp:GridView ID="GridViewPictures" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="picId" DataSourceID="SqlDataSourcePictures">
@@ -609,111 +584,26 @@
 
                 <!-----------------PICTURES MAINTENANCE DETAILS LIST---------------->
                 <asp:DetailsView ID="DetailsViewPictures" runat="server"
-                    DataSourceID="SqlDataSourcePictureDetails" DataKeyNames="PicId"
-                    AutoGenerateRows="false"
+                    DataSourceID="SqlDataSourcePictureDetails" DataKeyNames="picId"
+                    AutoGenerateRows="False"
                     OnItemDeleted="DetailsViewPictures_ItemDeleted"
                     OnItemInserted="DetailsViewPictures_ItemInserted"
                     OnItemUpdated="DetailsViewPictures_ItemUpdated">
                     <Fields>
-                        <asp:TemplateField HeaderText="Photo ID:">
-                            <ItemTemplate>
-                                <asp:Label ID="lblDetailsViewPicId" runat="server"
-                                    Text='<%# Eval("picId") %>'></asp:Label>
-                            </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:Label ID="lblDetailsViewPicId" runat="server"
-                                    Text='<%# Eval("picId") %>'></asp:Label>
-                            </EditItemTemplate>
-                            <InsertItemTemplate>
-                                <asp:Label ID="lblDetailsViewPicId" runat="server"
-                                    Text='<%# GetNextId("Pictures") %>'></asp:Label>
-                            </InsertItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Building ID:">
-                            <ItemTemplate>
-                                <asp:Label ID="lblDetailsViewBuildID" runat="server"
-                                    Text='<%# Eval("buildId") %>'></asp:Label>
-                            </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtDetailsViewBuildID" runat="server"
-                                    Text='<%# Bind("buildId") %>' Width="200px"></asp:TextBox>
-                                <asp:RequiredFieldValidator
-                                    ID="RequiredFieldValidatorBuildID" runat="server"
-                                    ControlToValidate="txtDetailsViewBuildID"
-                                    ErrorMessage="Building ID is a required field.">
-                                </asp:RequiredFieldValidator>
-                            </EditItemTemplate>
-                            <InsertItemTemplate>
-                                <asp:TextBox ID="txtDetailsViewBuildId" runat="server"
-                                    Text='<%# Bind("buildId") %>' Width="200px"></asp:TextBox>
-                                <asp:RequiredFieldValidator
-                                    ID="RequiredFieldValidatorBuildingName" runat="server"
-                                    ControlToValidate="txtDetailsViewBuildId"
-                                    ErrorMessage="BuildingId is a required field.">
-                                </asp:RequiredFieldValidator>
-                            </InsertItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Ref Loc:">
-                            <ItemTemplate>
-                                <asp:Label ID="lblDetailsViewRefLoc" runat="server"
-                                    Text='<%# Eval("refLoc") %>'></asp:Label>
-                            </ItemTemplate>
-                            <InsertItemTemplate>
-                                <asp:TextBox ID="txtDetailsViewRefLoc" runat="server"
-                                    Text='<%# Bind("refLoc") %>' Width="200px"></asp:TextBox>
-                                <asp:RequiredFieldValidator
-                                    ID="RequiredFieldValidatorRefLoc" runat="server"
-                                    ControlToValidate="txtDetailsViewRefLoc"
-                                    ErrorMessage="refLoc is a required field.">
-                                </asp:RequiredFieldValidator>
-                            </InsertItemTemplate>
-                        </asp:TemplateField>
-                        <asp:CommandField ButtonType="Button"
-                            ShowDeleteButton="true"
-                            ShowEditButton="true"
-                            ShowInsertButton="true" />
+                        <asp:BoundField DataField="picId" HeaderText="picId" ReadOnly="True" SortExpression="picId" ConvertEmptyStringToNull="False" InsertVisible="False" />
+                        <asp:BoundField DataField="buildId" HeaderText="buildId" SortExpression="buildId" ConvertEmptyStringToNull="False" ApplyFormatInEditMode="True" />
+                        <asp:BoundField DataField="refLoc" HeaderText="refLoc" SortExpression="refLoc" />
+                        <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowInsertButton="True" ButtonType="Button" />
                     </Fields>
-
-                    <EmptyDataTemplate>
-                        <table cellspacing="0" rules="rows" border="1" id="DetailsViewPictures" style="border-collapse: collapse;">
-                            <tr>
-                                <td>Picture ID:</td>
-                                <td>
-                                    <span id="DetailsViewPictures_lblDetailsViewPicId"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Building ID:</td>
-                                <td>
-                                    <span id="DetailsViewPictures_lblDetailsViewBuildId"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>RefLoc:</td>
-                                <td>
-                                    <span id="DetailsViewPictures_lblDetailsRefLoc"></span>
-                                </td>
-                            </tr>
-                            <td colspan="2">
-                                <asp:Button runat="server" ID="newPicture" Text="New" OnClick="NewPicture_Click" />
-                            </td>
-                            </tr>
-                        </table>
-                    </EmptyDataTemplate>
+                    
+                   
+                    
                 </asp:DetailsView>
 
                 <!-----------------PICTURE MAINTENANCE DATA---------------->
                 <asp:SqlDataSource ID="SqlDataSourcePictureDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                    SelectCommand="SELECT [picId], [buildId], [refLoc] FROM [Pictures] WHERE ([picId] = @picId)"
-                    DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId"
-                    InsertCommand="INSERT INTO [Pictures] ([picId], [buildId], [refLoc]) VALUES (@picId, @buildId, @refLoc)"
-                    UpdateCommand="UPDATE [Pictures] SET [buildId] = @buildId, [refLoc] = @refLoc WHERE [picId] = @picId">
-                    <SelectParameters>
-                        <asp:ControlParameter ControlID="GridViewPictures" Name="PicId" PropertyName="SelectedValue" Type="Int32" />
-                    </SelectParameters>
+                    SelectCommand="SELECT * FROM [Pictures] WHERE ([picId] = @picId)" DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId" InsertCommand="INSERT INTO [Pictures] ([buildId], [refLoc]) VALUES (@buildId, @refLoc)" UpdateCommand="UPDATE [Pictures] SET [buildId] = @buildId, [refLoc] = @refLoc WHERE [picId] = @picId">
                     <DeleteParameters>
                         <asp:Parameter Name="picId" Type="Int32" />
                     </DeleteParameters>
@@ -721,6 +611,9 @@
                         <asp:Parameter Name="buildId" Type="Int32" />
                         <asp:Parameter Name="refLoc" Type="String" />
                     </InsertParameters>
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="GridViewPictures" Name="picId" PropertyName="SelectedValue" Type="Int32" />
+                    </SelectParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="buildId" Type="Int32" />
                         <asp:Parameter Name="refLoc" Type="String" />
