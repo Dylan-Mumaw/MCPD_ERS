@@ -603,7 +603,10 @@
                 <!-----------------PICTURE MAINTENANCE DATA---------------->
                 <asp:SqlDataSource ID="SqlDataSourcePictureDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                    SelectCommand="SELECT * FROM [Pictures] WHERE ([picId] = @picId)" DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId" InsertCommand="INSERT INTO [Pictures] ([buildId], [refLoc]) VALUES (@buildId, @refLoc)" UpdateCommand="UPDATE [Pictures] SET [buildId] = @buildId, [refLoc] = @refLoc WHERE [picId] = @picId">
+                    SelectCommand="SELECT * FROM [Pictures] WHERE ([picId] = @picId)" 
+                    DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId" 
+                    InsertCommand="INSERT INTO [Pictures] ([buildId], [refLoc]) VALUES (@buildId, @refLoc)" 
+                    UpdateCommand="UPDATE [Pictures] SET [buildId] = @buildId, [refLoc] = @refLoc WHERE [picId] = @picId">
                     <DeleteParameters>
                         <asp:Parameter Name="picId" Type="Int32" />
                     </DeleteParameters>
