@@ -12,7 +12,7 @@ body {
     align-items: center;
     justify-content: center;
     background: url(../StylePhotos/PoliceStation.jpg) no-repeat center center fixed;
-    background-size: cover;
+    background-size:cover;
 }
 
 form{
@@ -20,20 +20,16 @@ form{
 }
 
 .maincontainer {
-    border-radius: 10px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: end;
     width: 300px;
-    height: 350px;
-    box-shadow: 4px 5px 3px 2px #33333396;
-    background: white;
+    height: 415px;
+    box-shadow: 4px 5px 3px 2px #0009;
+    background: #f6f6f6;
 }
-
-.background {
-}
-
 
 .textbox {
     background-color: #fff;
@@ -47,16 +43,25 @@ form{
     margin-top: 5px;
 }
 
+.validatestyle {
+    font-family: Gotham,gotham,Verdana,sans-serif;
+    font-size:small;
+    color:red
+}
+
 .button {
-    border-radius: 2px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-size: larger;
+    border-radius: 5px;
+    font-family: Gotham,gotham,Verdana,sans-serif;
     height: 30px;
+    background: #fff;
+}
+
+.button:hover{
+    background: #d5d5d5;
 }
 
 .label {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Gotham,gotham,Verdana,sans-serif;
     font-size: small;
     color: #323232;
     letter-spacing: .5px;
@@ -64,6 +69,7 @@ form{
 
 .usernameitem{
     margin-bottom: 15px;
+    margin-top: 40px;
 }
 
 .passworditem{
@@ -71,12 +77,10 @@ form{
 }
 
 .buttonitem{
-    margin-bottom: 25px;
+    margin-bottom: 45px;
     display: flex;
-}
-
-.labelitem{
-
+    justify-content: space-evenly;
+    width: 250px;
 }
 
 .pagecontainer{
@@ -85,7 +89,4 @@ form{
     align-items: center;
     height:100%;
 }
-.formcontainer{
-    height: inherit;
-    width: 300px;
-}
+
