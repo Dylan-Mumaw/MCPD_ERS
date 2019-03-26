@@ -10,19 +10,48 @@
     <title>Login</title>
 </head>
 <body>
-    <form id="form1" runat="server">      
-        <div id="LoginDiv" class="div">        
-            <asp:Image ID="logoImage" runat="server" ImageUrl="~/StylePhotos/black logo png.png" CssClass="background" />
-            <br />
-            <asp:Label ID="LabelUsername" runat="server" Text="Username" CssClass="label"></asp:Label><br />
-            <asp:TextBox ID="TextBoxUsername" runat="server" CssClass="textbox" Width="300px"></asp:TextBox><br />
-            <br />
-            <asp:Label ID="LabelPassword" runat="server" Text="Password" CssClass="label"></asp:Label><br />
-            <asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password" CssClass="textbox" Width="300px"></asp:TextBox><br />
-            <br />
-            <asp:Button ID="ButtonLogin" runat="server" Text="Login" CssClass="button" OnClick="ButtonLogin_Click" />
-            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-        </div>
-    </form>
+
+    <div id="FormContainer" class="formcontainer">
+        <form id="form1" runat="server">
+
+            <div id="LoginContainer" class="maincontainer">
+
+                <div id="ImageItem" class="imageitem">
+                    <asp:Image ID="logoImage" runat="server" ImageUrl="~/StylePhotos/FixedLogo.png" CssClass="background" />
+                </div>
+
+                <div class="usernameitem" id="UsernameItem">
+                    <asp:Label ID="LabelUsername" runat="server" Text="Username" CssClass="label"></asp:Label><br />
+                    <asp:TextBox ID="TextBoxUsername" runat="server" CssClass="textbox"></asp:TextBox><br />
+                    <asp:RequiredFieldValidator ID="validateLogin"
+                runat="server" ControlToValidate="TextBoxUserName"
+                ErrorMessage="Required"
+                InitialValue=""> 
+            </asp:RequiredFieldValidator>
+                </div>
+
+                <div id="PasswordItem" class="passworditem">
+                    <asp:Label ID="LabelPassword" runat="server" Text="Password" CssClass="label"></asp:Label><br />
+                    <asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password" CssClass="textbox"></asp:TextBox><br />
+                    <asp:RequiredFieldValidator ID="validatePass"
+                        runat="server" ControlToValidate="TextBoxPassword"
+                        ErrorMessage="Required"
+                        InitialValue=""> 
+                    </asp:RequiredFieldValidator>
+                </div>
+
+                <div id="ButtonItem" class="buttonitem">
+                    <asp:Button ID="ButtonLogin" runat="server" Text="Login" CssClass="button" OnClick="ButtonLogin_Click" />
+                    <asp:Button ID="ButtonCreate" runat="server" Text="Create Account" CssClass="button" CausesValidation="false" OnClick="ButtonCreate_Click" />
+                </div>
+
+                <div id="LabelItem" class="labelitem">
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
 </body>
 </html>

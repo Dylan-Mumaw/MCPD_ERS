@@ -68,6 +68,8 @@
             </asp:RequiredFieldValidator>
 
             <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="button" OnClick="ButtonSubmit_Click" />
+
+            <asp:Label ID="TestLabel" runat="server" Text="" />
         </div>
     </form>
 </body>

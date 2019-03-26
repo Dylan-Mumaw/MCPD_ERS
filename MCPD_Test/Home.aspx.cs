@@ -24,10 +24,10 @@ public partial class Home : Page
     {
         SelectQuery();
         Label1.Text = result;
-        if (result.Length == 0)
+        if (result.Length < 0)
             //Response.Redirect("Home.aspx");
             Label1.Text = "Please enter correct data.";
-        if (result.Length > 0) Response.Redirect("Display.aspx", false);
+        if (result.Length > 0) Server.Transfer("Display.aspx", false);
     }
     protected void SelectQuery()
     {
@@ -40,5 +40,10 @@ public partial class Home : Page
         {
             result += reader["userName"].ToString();
         }
+    }
+
+    protected void ButtonCreate_Click(object sender, EventArgs e)
+    {
+        Server.Transfer("Registration.aspx");
     }
 }
