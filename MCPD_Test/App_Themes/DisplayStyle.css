@@ -139,3 +139,9 @@ body {
 #RightContainer {
     margin-left: 4px;
 }
+
+.currentpictureitem {
+    color: white;
+    font-family: Gotham,gotham,Verdana,sans-serif;
+    font-size: small;
+}

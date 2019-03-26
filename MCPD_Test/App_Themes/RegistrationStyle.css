@@ -1,19 +1,47 @@
 ﻿body {
-
+    /*! display: block; */
+    /*! margin-right: auto; */
+    /*! margin-left: auto; */
+    background-color: #1B1537;
+    height: 100%;
+    width: 100%;
 }
 
-.registrationDiv{
-    display:flex;
-    flex-direction:column;
+.registrationDiv {
+    width: 20%;
+    /*! height: 85%; */
+    color: white;
+    background-color: rgba(146, 143, 161, 0.47);
+    margin: auto;
+    /*! vertical-align: middle; */
+    border-radius: 10px;
 }
 
-label {
+.label {
     display: block;
     font-family: Arial, Helvetica, sans-serif;
     font-size: small;
     font-variant: small-caps;
-    color: red;
+    color: white;
     margin-left: 14%;
     margin-bottom: 1%;
     letter-spacing: .5px;
+}
+
+.textbox {
+    display: block;
+    background-color: white;
+    border-radius: 2px;
+    margin: auto;
+    width: 70%;
+}
+
+.button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
+    font-size: larger;
 }
