@@ -19,6 +19,137 @@ public partial class Maintenance : System.Web.UI.Page
         return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
     }
 
+    protected void GridViewBuildings_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        // Use the RowType property to determine whether the 
+        // row being created is the header row. 
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            // Call the GetSortColumnIndex helper method to determine
+            // the index of the column being sorted.
+            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
+
+            if (sortColumnIndex != -1)
+            {
+                // Call the AddSortImage helper method to add
+                // a sort direction image to the appropriate
+                // column header. 
+                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
+            }
+        }
+    }
+    protected void GridViewTypes_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        // Use the RowType property to determine whether the 
+        // row being created is the header row. 
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            // Call the GetSortColumnIndex helper method to determine
+            // the index of the column being sorted.
+            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
+
+            if (sortColumnIndex != -1)
+            {
+                // Call the AddSortImage helper method to add
+                // a sort direction image to the appropriate
+                // column header. 
+                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
+            }
+        }
+    }
+    protected void GridViewLogin_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        // Use the RowType property to determine whether the 
+        // row being created is the header row. 
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            // Call the GetSortColumnIndex helper method to determine
+            // the index of the column being sorted.
+            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
+
+            if (sortColumnIndex != -1)
+            {
+                // Call the AddSortImage helper method to add
+                // a sort direction image to the appropriate
+                // column header. 
+                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
+            }
+        }
+    }
+    protected void GridViewPictures_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        // Use the RowType property to determine whether the 
+        // row being created is the header row. 
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            // Call the GetSortColumnIndex helper method to determine
+            // the index of the column being sorted.
+            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
+
+            if (sortColumnIndex != -1)
+            {
+                // Call the AddSortImage helper method to add
+                // a sort direction image to the appropriate
+                // column header. 
+                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
+            }
+        }
+    }
+
+    // This is a helper method used to determine the index of the
+    // column being sorted. If no column is being sorted, -1 is returned.
+    int GetSortColumnIndex(GridView GridViewBeingSorted)
+    {
+        if(GridViewBeingSorted.SortExpression == "")
+            GridViewBeingSorted.Sort(GridViewBeingSorted.Columns[0].SortExpression, SortDirection.Ascending);
+        
+        // Iterate through the Columns collection to determine the index
+        // of the column being sorted.
+        foreach (DataControlField field in GridViewBeingSorted.Columns)
+        {
+            if (field.SortExpression == GridViewBeingSorted.SortExpression)
+            {
+                return GridViewBeingSorted.Columns.IndexOf(field);
+            }
+        }
+
+        return -1;
+    }
+
+    // This is a helper method used to add a sort direction
+    // image to the header of the column being sorted.
+    void AddSortImage(int columnIndex, GridViewRow headerRow, GridView GridViewBeingSorted)
+    {
+
+        // Create the sorting image based on the sort direction.
+        Image sortPrefixImage = new Image();
+        Image sortSuffixImage = new Image();
+
+        if (GridViewBeingSorted.SortDirection == SortDirection.Ascending)
+        {
+            sortPrefixImage.ImageUrl = "~/StylePhotos/Up.png";
+            sortPrefixImage.AlternateText = "Ascending Order";
+
+            sortSuffixImage.ImageUrl = "~/StylePhotos/Up.png";
+            sortSuffixImage.AlternateText = "Ascending Order";
+        }
+        else
+        {
+            sortPrefixImage.ImageUrl = "~/StylePhotos/Down.png";
+            sortPrefixImage.AlternateText = "Descending Order";
+
+            sortSuffixImage.ImageUrl = "~/StylePhotos/Down.png";
+            sortSuffixImage.AlternateText = "Descending Order";
+        }
+
+        sortPrefixImage.Width = 15;
+        sortSuffixImage.Width = 15;
+
+        // Add the images to the appropriate header cell.
+        headerRow.Cells[columnIndex].Controls.AddAt(0, sortPrefixImage);
+        headerRow.Cells[columnIndex].Controls.Add(sortSuffixImage);
+    }
+
     protected void NewBuilding_Click(object sender, EventArgs e)
     {
         DetailsViewBuildings.ChangeMode(DetailsViewMode.Insert);
