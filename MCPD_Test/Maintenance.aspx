@@ -17,18 +17,19 @@
                     <header>Buildings</header>
                     <div class="item">
                         <div id="GridViewBox">
-                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings">
+                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="true" onrowcreated="GridViewBuildings_RowCreated" >
                                 <Columns>
-                                    <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
-                                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                                    <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
-                                    <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
-                                    <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
+                                    <asp:BoundField DataField="Id" HeaderText ="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                    <asp:BoundField DataField="Name" HeaderText ="Name" SortExpression="Name" />
+                                    <asp:BoundField DataField="Address" HeaderText ="Address" SortExpression="Address" />
+                                    <asp:BoundField DataField="Type" HeaderText ="Type" SortExpression="Type" />
+                                    <asp:BoundField DataField="Alias" HeaderText ="Alias" SortExpression="Alias" />
                                     <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
                                 </Columns>
                                 <PagerStyle BackColor="#ff00ff" />
                             </asp:GridView>
                         </div>
+
                         <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                             SelectCommand="SELECT * FROM [Buildings]"
                             DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
@@ -249,7 +250,7 @@
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                                 SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
                             <div id="GridViewTypesBox">
-                                <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes">
+                                <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes" AllowSorting="true" onrowcreated="GridViewTypes_RowCreated">
                                     <Columns>
                                         <asp:BoundField DataField="typeId" HeaderText="Type ID" InsertVisible="False" ReadOnly="True" SortExpression="typeId" />
                                         <asp:BoundField DataField="type" HeaderText="Type" SortExpression="Type" />
@@ -400,7 +401,7 @@
                     </UpdateParameters>
                 </asp:SqlDataSource>
                 <div id="GridViewLoginBox">
-                    <asp:GridView ID="GridViewLogin" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLogin">
+                    <asp:GridView ID="GridViewLogin" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLogin" AllowSorting="true" onrowcreated="GridViewLogin_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="LogId" HeaderText="LogId" InsertVisible="False" ReadOnly="True" SortExpression="LogId" />
                             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -597,7 +598,7 @@
                     </UpdateParameters>
                 </asp:SqlDataSource>
                 <div id="GridViewPicsBox">
-                    <asp:GridView ID="GridViewPictures" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="picId" DataSourceID="SqlDataSourcePictures">
+                    <asp:GridView ID="GridViewPictures" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="picId" DataSourceID="SqlDataSourcePictures" AllowSorting="true" onrowcreated="GridViewPictures_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="picId" HeaderText="picId" InsertVisible="False" ReadOnly="True" SortExpression="picId" />
                             <asp:BoundField DataField="buildId" HeaderText="buildId" SortExpression="buildId" />
