@@ -21,62 +21,22 @@ public partial class Maintenance : System.Web.UI.Page
 
     protected void GridViewBuildings_RowCreated(Object sender, GridViewRowEventArgs e)
     {
-        // Use the RowType property to determine whether the 
-        // row being created is the header row. 
-        if (e.Row.RowType == DataControlRowType.Header)
-        {
-            // Call the GetSortColumnIndex helper method to determine
-            // the index of the column being sorted.
-            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
-
-            if (sortColumnIndex != -1)
-            {
-                // Call the AddSortImage helper method to add
-                // a sort direction image to the appropriate
-                // column header. 
-                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
-            }
-        }
+        SetArrows(sender, e);
     }
     protected void GridViewTypes_RowCreated(Object sender, GridViewRowEventArgs e)
     {
-        // Use the RowType property to determine whether the 
-        // row being created is the header row. 
-        if (e.Row.RowType == DataControlRowType.Header)
-        {
-            // Call the GetSortColumnIndex helper method to determine
-            // the index of the column being sorted.
-            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
-
-            if (sortColumnIndex != -1)
-            {
-                // Call the AddSortImage helper method to add
-                // a sort direction image to the appropriate
-                // column header. 
-                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
-            }
-        }
+        SetArrows(sender, e);
     }
     protected void GridViewLogin_RowCreated(Object sender, GridViewRowEventArgs e)
     {
-        // Use the RowType property to determine whether the 
-        // row being created is the header row. 
-        if (e.Row.RowType == DataControlRowType.Header)
-        {
-            // Call the GetSortColumnIndex helper method to determine
-            // the index of the column being sorted.
-            int sortColumnIndex = GetSortColumnIndex((GridView)sender);
-
-            if (sortColumnIndex != -1)
-            {
-                // Call the AddSortImage helper method to add
-                // a sort direction image to the appropriate
-                // column header. 
-                AddSortImage(sortColumnIndex, e.Row, (GridView)sender);
-            }
-        }
+        SetArrows(sender, e);
     }
     protected void GridViewPictures_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        SetArrows(sender, e);
+    }
+
+    protected void SetArrows(Object sender, GridViewRowEventArgs e)
     {
         // Use the RowType property to determine whether the 
         // row being created is the header row. 
