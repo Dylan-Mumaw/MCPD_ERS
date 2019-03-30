@@ -36,6 +36,11 @@ public partial class Maintenance : System.Web.UI.Page
         SetArrows(sender, e);
     }
 
+    protected void GridViewContacts_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        SetArrows(sender, e);
+    }
+
     protected void SetArrows(Object sender, GridViewRowEventArgs e)
     {
         // Use the RowType property to determine whether the 
@@ -60,9 +65,9 @@ public partial class Maintenance : System.Web.UI.Page
     // column being sorted. If no column is being sorted, -1 is returned.
     int GetSortColumnIndex(GridView GridViewBeingSorted)
     {
-        if(GridViewBeingSorted.SortExpression == "")
+        if (GridViewBeingSorted.SortExpression == "")
             GridViewBeingSorted.Sort(GridViewBeingSorted.Columns[0].SortExpression, SortDirection.Ascending);
-        
+
         // Iterate through the Columns collection to determine the index
         // of the column being sorted.
         foreach (DataControlField field in GridViewBeingSorted.Columns)
@@ -110,6 +115,7 @@ public partial class Maintenance : System.Web.UI.Page
         headerRow.Cells[columnIndex].Controls.Add(sortSuffixImage);
     }
 
+
     protected void NewBuilding_Click(object sender, EventArgs e)
     {
         DetailsViewBuildings.ChangeMode(DetailsViewMode.Insert);
@@ -127,6 +133,11 @@ public partial class Maintenance : System.Web.UI.Page
     protected void NewPicture_Click(object sender, EventArgs e)
     {
         DetailsViewPictures.ChangeMode(DetailsViewMode.Insert);
+    }
+
+    protected void NewContact_Click(object sender, EventArgs e)
+    {
+        DetailsViewContacts.ChangeMode(DetailsViewMode.Insert);
     }
 
     protected Int32 GetNextId(string tableName)
@@ -374,6 +385,61 @@ public partial class Maintenance : System.Web.UI.Page
         else
         {
             GridViewPictures.DataBind();
+            Response.Redirect(Request.RawUrl);
+        }
+    }
+
+    protected void DetailsViewContacts_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+            e.KeepInEditMode = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated that building. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewContacts.DataBind();
+            Response.Redirect(Request.RawUrl);
+        }
+    }
+    protected void DetailsViewContacts_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated that building. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewContacts.DataBind();
+            Response.Redirect(Request.RawUrl);
+        }
+    }
+    protected void DetailsViewContacts_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+            e.KeepInInsertMode = true;
+        }
+        else
+        {
+            GridViewContacts.DataBind();
             Response.Redirect(Request.RawUrl);
         }
     }

@@ -17,19 +17,18 @@
                     <header>Buildings</header>
                     <div class="item">
                         <div id="GridViewBox">
-                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="true" onrowcreated="GridViewBuildings_RowCreated" >
+                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="true" OnRowCreated="GridViewBuildings_RowCreated">
                                 <Columns>
-                                    <asp:BoundField DataField="Id" HeaderText ="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
-                                    <asp:BoundField DataField="Name" HeaderText ="Name" SortExpression="Name" />
-                                    <asp:BoundField DataField="Address" HeaderText ="Address" SortExpression="Address" />
-                                    <asp:BoundField DataField="Type" HeaderText ="Type" SortExpression="Type" />
-                                    <asp:BoundField DataField="Alias" HeaderText ="Alias" SortExpression="Alias" />
+                                    <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                                    <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
+                                    <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                                    <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
                                     <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
                                 </Columns>
                                 <PagerStyle BackColor="#ff00ff" />
                             </asp:GridView>
                         </div>
-
                         <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                             SelectCommand="SELECT * FROM [Buildings]"
                             DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
@@ -207,14 +206,14 @@
                                     </table>
                                 </EmptyDataTemplate>
                             </asp:DetailsView>
-                        </div id="DetailsViewBox">
+                        </div>
                     </div>
                 </div>
 
-                <!-----------------BUILDING MAINTENANCE DATA SOURCE---------------->
-        
+                <!-----------------BUILDING MAINTENANCE DETAILS DATA SOURCE---------------->
+
                 <div id="MaintenanceItem">
-                     <header id="MaintenanceHeader">Maintenance</header>
+                    <header id="MaintenanceHeader">Types</header>
                     <div class="item">
                         <asp:SqlDataSource ID="SqlDataSourceBuildingsDetails" runat="server"
                             ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
@@ -250,7 +249,7 @@
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                                 SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
                             <div id="GridViewTypesBox">
-                                <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes" AllowSorting="true" onrowcreated="GridViewTypes_RowCreated">
+                                <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes" AllowSorting="true" OnRowCreated="GridViewTypes_RowCreated">
                                     <Columns>
                                         <asp:BoundField DataField="typeId" HeaderText="Type ID" InsertVisible="False" ReadOnly="True" SortExpression="typeId" />
                                         <asp:BoundField DataField="type" HeaderText="Type" SortExpression="Type" />
@@ -348,9 +347,9 @@
                                         </table>
                                     </EmptyDataTemplate>
                                 </asp:DetailsView>
-                            </div id="Box4">
+                            </div>
 
-                            <!-----------------TYPE MAINTENANCE DATA---------------->
+                            <!-----------------TYPE MAINTENANCE DETAILS DATA---------------->
                             <asp:SqlDataSource ID="SqlDataSourceTypesDetails" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                                 SelectCommand="SELECT [typeId], [type] FROM [Types] WHERE ([typeId] = @typeId)"
@@ -377,7 +376,7 @@
             </div>
 
             <!-----------------LOGIN MAINTENANCE DATA---------------->
-            <header>Account</header>
+            <header>Accounts</header>
             <div id="MiddleRowContainer" class="container">
                 <asp:SqlDataSource ID="SqlDataSourceLogin" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
@@ -400,8 +399,10 @@
                         <asp:Parameter Name="LogId" Type="Int32" />
                     </UpdateParameters>
                 </asp:SqlDataSource>
+
+                <!-----------------LOGIN MAINTENANCE GRIDVIEW---------------->
                 <div id="GridViewLoginBox">
-                    <asp:GridView ID="GridViewLogin" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLogin" AllowSorting="true" onrowcreated="GridViewLogin_RowCreated">
+                    <asp:GridView ID="GridViewLogin" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLogin" AllowSorting="true" OnRowCreated="GridViewLogin_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="LogId" HeaderText="LogId" InsertVisible="False" ReadOnly="True" SortExpression="LogId" />
                             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -410,7 +411,7 @@
                             <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="true" ShowHeader="True" />
                         </Columns>
                     </asp:GridView>
-                </div id="GridViewLoginBox">
+                </div>
 
                 <!-----------------LOGIN MAINTENANCE DETAILS LIST---------------->
                 <asp:DetailsView ID="DetailsViewLogin" runat="server"
@@ -423,7 +424,7 @@
                         <asp:TemplateField HeaderText="User ID:">
                             <ItemTemplate>
                                 <asp:Label ID="lblDetailsViewUserId" runat="server"
-                                    Text='<%# Eval("LogId") %>'></asp:Label>
+                                    Text='<%# Eval("logId") %>'></asp:Label>
                             </ItemTemplate>
                             <EditItemTemplate>
                                 <asp:Label ID="lblDetailsViewUserId" runat="server"
@@ -549,7 +550,7 @@
                     </EmptyDataTemplate>
                 </asp:DetailsView>
 
-                <!-----------------LOGIN MAINTENANCE DATA---------------->
+                <!-----------------LOGIN MAINTENANCE DETAILS DATA---------------->
                 <asp:SqlDataSource ID="SqlDataSourceLoginDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins] WHERE ([LogId] = @LogId)"
@@ -598,11 +599,11 @@
                     </UpdateParameters>
                 </asp:SqlDataSource>
                 <div id="GridViewPicsBox">
-                    <asp:GridView ID="GridViewPictures" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="picId" DataSourceID="SqlDataSourcePictures" AllowSorting="true" onrowcreated="GridViewPictures_RowCreated">
+                    <asp:GridView ID="GridViewPictures" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="picId" DataSourceID="SqlDataSourcePictures" AllowSorting="true" OnRowCreated="GridViewPictures_RowCreated">
                         <Columns>
-                            <asp:BoundField DataField="picId" HeaderText="picId" InsertVisible="False" ReadOnly="True" SortExpression="picId" />
-                            <asp:BoundField DataField="buildId" HeaderText="buildId" SortExpression="buildId" />
-                            <asp:BoundField DataField="refLoc" HeaderText="refLoc" SortExpression="refLoc" />
+                            <asp:BoundField DataField="picId" HeaderText="Pic ID" InsertVisible="False" ReadOnly="True" SortExpression="picId" />
+                            <asp:BoundField DataField="buildId" HeaderText="Building ID" SortExpression="buildId" />
+                            <asp:BoundField DataField="refLoc" HeaderText="RefLoc" SortExpression="refLoc" />
                             <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
                         </Columns>
                     </asp:GridView>
@@ -705,7 +706,7 @@
                     </EmptyDataTemplate>
                 </asp:DetailsView>
 
-                <!-----------------PICTURE MAINTENANCE DATA---------------->
+                <!-----------------PICTURE MAINTENANCE DETAILS DATA---------------->
                 <asp:SqlDataSource ID="SqlDataSourcePictureDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT [picId], [buildId], [refLoc] FROM [Pictures] WHERE ([picId] = @picId)"
@@ -728,13 +729,250 @@
                         <asp:Parameter Name="picId" Type="Int32" />
                     </UpdateParameters>
                 </asp:SqlDataSource>
-
                 <p>
                     <asp:Label ID="lblError" runat="server" EnableViewState="false"></asp:Label>
                 </p>
-            </div id="BottomRowContainer" class="container">
-        </div id="MainContainer" class="container">
+            </div>
 
+
+            <!-----------------CONTACT MAINTENANCE DATA---------------->
+            <header>Contacts</header>
+            <div id="BottomRowContainer" class="container">
+                <asp:SqlDataSource ID="SqlDataSourceContacts" runat="server"
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                    SelectCommand="SELECT * FROM [Contacts]"
+                    DeleteCommand="DELETE FROM [Contacts] WHERE [ContactId] = @ContactId"
+                    InsertCommand="INSERT INTO [Contacts] ([FullName], [ContactNumber], [Title], [buildID]) VALUES (@FullName, @ContactNumber, @Title, @buildID)"
+                    UpdateCommand="UPDATE [Contacts] SET [FullName] = @FullName, [ContactNumber] = @ContactNumber [Title] = @Title, [buildID] = @buildID WHERE [ContactId] = @ContactId">
+                    <DeleteParameters>
+                        <asp:Parameter Name="ContactId" Type="Int32" />
+                    </DeleteParameters>
+                    <InsertParameters>
+                        <asp:Parameter Name="FullName" Type="String" />
+                        <asp:Parameter Name="ContactNumber" Type="String" />
+                        <asp:Parameter Name="Title" Type="String" />
+                        <asp:Parameter Name="buildID" Type="Int32" />
+                    </InsertParameters>
+                    <UpdateParameters>
+                        <asp:Parameter Name="FullName" Type="String" />
+                        <asp:Parameter Name="ContactNumber" Type="String" />
+                        <asp:Parameter Name="Title" Type="String" />
+                        <asp:Parameter Name="buildID" Type="Int32" />
+                        <asp:Parameter Name="ContactId" Type="Int32" />
+                    </UpdateParameters>
+                </asp:SqlDataSource>
+
+                <!-----------------CONTACT MAINTENANCE GRIDVIEW---------------->
+                <div id="GridViewContactBox">
+                    <asp:GridView ID="GridViewContacts" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="ContactId" DataSourceID="SqlDataSourceContacts" AllowSorting="true" OnRowCreated="GridViewContacts_RowCreated">
+                        <Columns>
+                            <asp:BoundField DataField="ContactId" HeaderText="Contact ID" InsertVisible="False" ReadOnly="True" SortExpression="ContactId" />
+                            <asp:BoundField DataField="FullName" HeaderText="Full Name" SortExpression="FullName" />
+                            <asp:BoundField DataField="ContactNumber" HeaderText="Contact Number" SortExpression="ContactNumber" />
+                            <asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title" />
+                            <asp:BoundField DataField="buildID" HeaderText="Building ID" SortExpression="buildID" />
+                            <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="true" ShowHeader="True" />
+                        </Columns>
+                    </asp:GridView>
+                </div>
+
+                <!-----------------CONTACT MAINTENANCE DETAILSLIST---------------->
+                <asp:DetailsView ID="DetailsViewContacts" runat="server"
+                    DataSourceID="SqlDataSourceContactDetails" DataKeyNames="ContactId"
+                    AutoGenerateRows="false"
+                    OnItemDeleted="DetailsViewContacts_ItemDeleted"
+                    OnItemInserted="DetailsViewContacts_ItemInserted"
+                    OnItemUpdated="DetailsViewContacts_ItemUpdated">
+                    <Fields>
+                        <asp:TemplateField HeaderText="Contact ID:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewContactId" runat="server"
+                                    Text='<%# Eval("ContactId") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:Label ID="lblDetailsViewContactId" runat="server"
+                                    Text='<%# Eval("ContactId") %>'></asp:Label>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:Label ID="lblDetailsViewContactId" runat="server"
+                                    Text='<%# GetNextId("Contacts") %>'></asp:Label>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Full Name:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewFullName" runat="server"
+                                    Text='<%# Eval("FullName") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewFullName" runat="server"
+                                    Text='<%# Bind("FullName") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorFullName" runat="server"
+                                    ControlToValidate="txtDetailsViewFullName"
+                                    ErrorMessage="Name is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewFullName" runat="server"
+                                    Text='<%# Bind("FullName") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorFullName" runat="server"
+                                    ControlToValidate="txtDetailsViewFullName"
+                                    ErrorMessage="Name is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Contact Number:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewContactNumber" runat="server"
+                                    Text='<%# Eval("ContactNumber") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewContactNumber" runat="server"
+                                    Text='<%# Bind("ContactNumber") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorContactNumber" runat="server"
+                                    ControlToValidate="txtDetailsViewContactNumber"
+                                    ErrorMessage="Username is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewContactNumber" runat="server"
+                                    Text='<%# Bind("ContactNumber") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorContactNumber" runat="server"
+                                    ControlToValidate="txtDetailsViewContactNumber"
+                                    ErrorMessage="ContactNumber is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Title:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewTitle" runat="server"
+                                    Text='<%# Eval("Title") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewTitle" runat="server"
+                                    Text='<%# Bind("Title") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorTitle" runat="server"
+                                    ControlToValidate="txtDetailsViewTitle"
+                                    ErrorMessage="Title is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewTitle" runat="server"
+                                    Text='<%# Bind("Title") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorTitle" runat="server"
+                                    ControlToValidate="txtDetailsViewTitle"
+                                    ErrorMessage="Title is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Building ID::">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewbuildID" runat="server"
+                                    Text='<%# Eval("buildID") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewbuildID" runat="server"
+                                    Text='<%# Bind("buildID") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorbuildID" runat="server"
+                                    ControlToValidate="txtDetailsViewbuildID"
+                                    ErrorMessage="buildID is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewbuildID" runat="server"
+                                    Text='<%# Bind("buildID") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorbuildID" runat="server"
+                                    ControlToValidate="txtDetailsViewbuildID"
+                                    ErrorMessage="buildID is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+                        <asp:CommandField ButtonType="Button"
+                            ShowDeleteButton="true"
+                            ShowEditButton="true"
+                            ShowInsertButton="true" />
+                    </Fields>
+
+                    <EmptyDataTemplate>
+                        <table cellspacing="0" rules="rows" border="1" id="DetailsViewContacts" style="border-collapse: collapse;">
+                            <tr>
+                                <td>Contact ID:</td>
+                                <td>
+                                    <span id="DetailsViewContacts_lblDetailsViewContactId"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Full Name:</td>
+                                <td>
+                                    <span id="DetailsViewContacts_lblDetailsViewFullName"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ContactNumber:</td>
+                                <td>
+                                    <span id="DetailsViewContacts_lblDetailsViewContactNumber"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Title:</td>
+                                <td>
+                                    <span id="DetailsViewContacts_lblDetailsViewTitle"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Building ID:</td>
+                                <td>
+                                    <span id="DetailsViewContacts_lblDetailsViewBuildingID"></span>
+                                </td>
+                            </tr>
+                            <td colspan="2">
+                                <asp:Button runat="server" ID="newContact" Text="New" OnClick="NewContact_Click" />
+                            </td>
+                            </tr>
+                        </table>
+                    </EmptyDataTemplate>
+                </asp:DetailsView>
+
+                <!-----------------CONTACT MAINTENANCE DETAILS DATA---------------->
+                <asp:SqlDataSource ID="SqlDataSourceContactDetails" runat="server"
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                    SelectCommand="SELECT [ContactId], [FullName], [ContactNumber], [Title], [buildID] FROM [Contacts] WHERE ([ContactId] = @ContactId)"
+                    DeleteCommand="DELETE FROM [Contacts] WHERE [ContactId] = @ContactId"
+                    InsertCommand="INSERT INTO [Contacts] ([FullName], [ContactNumber], [Title], buildID) VALUES (@FullName, @ContactNumber, @Title, @buildID)"
+                    UpdateCommand="UPDATE [Contacts] SET [FullName] = @FullName, [ContactNumber] = @ContactNumber, [Title] = @Title, [buildID] = @buildID WHERE [ContactId] = @ContactId">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="GridViewContacts" Name="ContactId" PropertyName="SelectedValue" Type="Int32" />
+                    </SelectParameters>
+                    <DeleteParameters>
+                        <asp:Parameter Name="ContactId" Type="Int32" />
+                    </DeleteParameters>
+                    <InsertParameters>
+                        <asp:Parameter Name="FullName" Type="String" />
+                        <asp:Parameter Name="ContactNumber" Type="String" />
+                        <asp:Parameter Name="Title" Type="String" />
+                        <asp:Parameter Name="buildID" Type="Int32" />
+                    </InsertParameters>
+                    <UpdateParameters>
+                        <asp:Parameter Name="FullName" Type="String" />
+                        <asp:Parameter Name="ContactNumber" Type="String" />
+                        <asp:Parameter Name="Title" Type="String" />
+                        <asp:Parameter Name="buildID" Type="Int32" />
+                        <asp:Parameter Name="ContactId" Type="Int32" />
+                    </UpdateParameters>
+                </asp:SqlDataSource>
+            </div>
+        </div>
     </form>
 </body>
 </html>
