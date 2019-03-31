@@ -761,9 +761,6 @@
                         <asp:Parameter Name="ContactId" Type="Int32" />
                     </UpdateParameters>
                 </asp:SqlDataSource>
-                <p>
-                    <asp:Label ID="lblError" runat="server" EnableViewState="false"></asp:Label>
-                </p>
 
                 <!-----------------CONTACT MAINTENANCE GRIDVIEW---------------->
                 <div id="GridViewContactBox">
