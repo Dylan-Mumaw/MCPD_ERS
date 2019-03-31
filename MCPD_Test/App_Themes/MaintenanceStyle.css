@@ -32,6 +32,11 @@ header {
     display:block;
     background-color:fuchsia;
     font-size:large;
+    color:white;
+}
+
+a{
+    color:white;
 }
 
 textbox {
