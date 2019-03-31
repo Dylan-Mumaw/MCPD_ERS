@@ -248,6 +248,8 @@
                             <asp:SqlDataSource ID="SqlDataSourceTypesDdl" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                                 SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
+
+                        <!-----------------TYPE MAINTENANCE GRIDVIEW---------------->
                             <div id="GridViewTypesBox">
                                 <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes" AllowSorting="true" OnRowCreated="GridViewTypes_RowCreated">
                                     <Columns>

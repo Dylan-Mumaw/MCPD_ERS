@@ -65,23 +65,14 @@
         <div style="" id="MainContainer" class="container">
             <div id="LeftContainer" class="item">
                 <asp:Panel ID="ButtonContainer" runat="server"></asp:Panel>
-                <!--
-                <div id="ButtonContainer">
-                    <asp:Button ID="schoolButton" runat="server" Text="Schools" OnClick="SchoolButton_Click" CssClass="button" UseSubmitBehavior="False" />
-                    <asp:Button ID="govButton" runat="server" Text="Government" OnClick="GovButton_Click" CssClass="button" UseSubmitBehavior="False" />
-                    <asp:Button ID="medButton" runat="server" Text="Medical" OnClick="MedButton_Click" CssClass="button" UseSubmitBehavior="False" />
-                    <asp:Button ID="bankButton" runat="server" Text="Banks" OnClick="BankButton_Click" CssClass="button" UseSubmitBehavior="False" />
-                    <asp:Button ID="privateButton" runat="server" Text="Private/Commercial" OnClick="PrivateButton_Click" CssClass="button" UseSubmitBehavior="False" />
-                    <asp:Button ID="ButtonTest" runat="server" Text="Select All" OnClick="ButtonTest_Click" CssClass="button" UseSubmitBehavior="False" />
-                </div>
-                -->
+
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" />
                 <br />
                 <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
                 <br />
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
-                <div id="GridViewListContainer">
-                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
+                <div id="GridViewBuildingListContainer">
+                    <asp:GridView ID="GridViewBuildingList" CssClass="blueTable" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewBuildingList_SelectedIndexChanged" OnPageIndexChanging="GridViewBuildingList_PageIndexChanging">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
                             <asp:BoundField DataField="Address" HeaderText="Address" ReadOnly="true" SortExpression="Address" />
@@ -94,12 +85,12 @@
 
                 <asp:SqlDataSource ID="SqlDataSourceGallery" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc], [picId] FROM [Pictures] WHERE ([buildId] = @buildId)">
                     <SelectParameters>
-                        <asp:ControlParameter ControlID="GridViewList" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
+                        <asp:ControlParameter ControlID="GridViewBuildingList" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 
                 <div id="GalleryContainer" class="gallery">
-                    <asp:GridView ID="GridViewGallery" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId">
+                    <asp:GridView ID="GridViewGallery" runat="server" CssClass="blueTable" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId">
                         <Columns>
                             <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
                             </asp:ImageField>
@@ -110,13 +101,25 @@
             </div>
             <div id="RightContainer" class="item">
                 <div id="currentPicture">
-                    <asp:GridView ID="GridViewCurrentPicture" CssClass="" runat="server" AutoGenerateColumns="false">
+                    <asp:GridView ID="GridViewCurrentContact" DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
                         <Columns>
-                            <asp:BoundField DataField ="Name" HeaderText="Building"/>
-                            <asp:BoundField DataField ="Address" HeaderText="Address"/>
-                            <asp:BoundField DataField ="fullname" HeaderText="Contact Name"/>
-                            <asp:BoundField DataField ="contactnumber" HeaderText="Number"/>
-                            <asp:BoundField DataField ="title" HeaderText="Title"/>
+                            <asp:BoundField DataField="Name" HeaderText="Building" />
+                            <asp:BoundField DataField="Address" HeaderText="Address" />
+                            <asp:BoundField DataField="FullName" HeaderText="Contact" />
+                            <asp:TemplateField HeaderText="Contact Name:">
+                                <ItemTemplate>
+                                    <asp:DropDownList ID="ddlContactName" runat="server"
+                                        DataTextField="FullName" DataValueField="ContactId" AutoPostBack="true" Width="130px">
+                                    </asp:DropDownList>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Contact Phone Number:">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblContactNumber" runat="server"></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <%--<asp:BoundField DataField="ContactNumber" HeaderText="Number" />--%>
+                            <asp:BoundField DataField="Title" HeaderText="Title" />
                         </Columns>
                     </asp:GridView>
                 </div>
@@ -131,6 +134,7 @@
                     <input id="TestTextbox" class="textbox" type="text" runat="server" />
                 </div>
             </div>
+            <asp:SqlDataSource ID="SqlDataSourceContactDdl" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT FullName FROM Contacts"></asp:SqlDataSource>
             <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]"></asp:SqlDataSource>
         </div>
     </form>

@@ -191,7 +191,7 @@ public partial class Maintenance : System.Web.UI.Page
     {
         if (e.Exception != null)
         {
-            lblError.Text = "A database error has occured. " +
+            lblError.Text = "A database error has occured. " + "<br>" +
                 "Message: " + e.Exception.Message;
             e.ExceptionHandled = true;
         }
@@ -246,8 +246,10 @@ public partial class Maintenance : System.Web.UI.Page
     {
         if (e.Exception != null)
         {
-            lblError.Text = "A database error has occured. " +
-                "Message: " + e.Exception.Message;
+            lblError.Text = "A database error has occured. <br>"  + 
+                "Message: " + e.Exception.Message +
+                "<br> Reason: Selected TYPE is currently held by one or more records in the BUILDINGS table.<br>" +
+                "Solution: Delete or update any BUILDING record currently holding the selected TYPE.";
             e.ExceptionHandled = true;
         }
         else if (e.AffectedRows == 0)
