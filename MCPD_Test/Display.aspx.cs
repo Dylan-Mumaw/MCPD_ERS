@@ -66,6 +66,35 @@ public partial class Display : System.Web.UI.Page
         }
     }
 
+    protected void Page_LoadComplete(object sender, EventArgs e)
+    {
+        foreach(GridViewRow row in GridViewList.Rows)
+        {
+            DropDownList contactsDdl = (DropDownList)row.FindControl("ddlContacts");
+            Label contactNumLabel = (Label)row.FindControl("lblContactNumber");
+
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT [ContactNumber] FROM [Contacts] WHERE ([ContactId] = " + contactsDdl.SelectedValue + ")", connection);
+                try
+                {
+                    connection.Open();
+                    contactNumLabel.Text = cmd.ExecuteScalar().ToString();
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Fetch Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+    }
+
     public void BindPage()
     {
         DataTable dt = new DataTable();
@@ -451,4 +480,74 @@ public partial class Display : System.Web.UI.Page
 
     }
     //<-----------------End SelectedIndexChanged----------------->
+
+    protected void GridViewList_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView rowView = (DataRowView)e.Row.DataItem;
+            if (rowView != null)
+            {
+                int id = (int)rowView["Id"];
+
+                DropDownList contactsDdl = (DropDownList)e.Row.FindControl("ddlContacts");
+
+                DataTable dt = new DataTable();
+                SqlConnection connection = new SqlConnection(GetConnectionString());
+
+                try
+                {
+                    connection.Open();
+                    string sqlStatement = "SELECT [ContactId], [FullName], [ContactNumber] FROM [Contacts] WHERE ([buildId] = " + id + ")";
+                    SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+                    sqlDa.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        contactsDdl.DataSource = dt;
+                        contactsDdl.DataBind();
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Fetch Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+    }
+    /*
+    protected void ddlContacts_SelectedIndexChanged(Object sender, EventArgs e)
+    {
+        DropDownList contactsDdl = (DropDownList)sender;
+        GridViewRow row = (GridViewRow)contactsDdl.Parent.Parent;
+        Label contactNumLabel = (Label)row.FindControl("lblContactNumber");
+
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            SqlCommand cmd = new SqlCommand("SELECT [ContactNumber] FROM [Contacts] WHERE ([ContactId] = " + contactsDdl.SelectedValue + ")", connection);
+            try
+            {
+                connection.Open();
+                contactNumLabel.Text = cmd.ExecuteScalar().ToString();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+    */
 }

@@ -81,12 +81,25 @@
                 <br />
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
                 <div id="GridViewListContainer">
-                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging">
+                    <asp:GridView ID="GridViewList" CssClass="GridViewList" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewList_SelectedIndexChanged" OnPageIndexChanging="GridViewList_PageIndexChanging" OnRowCreated="GridViewList_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
                             <asp:BoundField DataField="Address" HeaderText="Address" ReadOnly="true" SortExpression="Address" />
                             <asp:BoundField DataField="Type" HeaderText="Type" ReadOnly="true" SortExpression="Type" />
                             <asp:BoundField DataField="Alias" HeaderText="Alias" ReadOnly="true" SortExpression="Alias" />
+                            <asp:TemplateField HeaderText="Contact Name:">
+                                <ItemTemplate>
+                                    <asp:DropDownList ID="ddlContacts" runat="server" 
+                                                DataTextField="FullName" DataValueField="ContactId" AutoPostBack="true"
+                                                Width="130px">
+                                            </asp:DropDownList>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Contact Phone Number:">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblContactNumber" runat="server"></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:CommandField ShowSelectButton="True" />
                         </Columns>
                     </asp:GridView>
