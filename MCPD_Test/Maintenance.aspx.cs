@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Text;
 
 public partial class Maintenance : System.Web.UI.Page
 {
@@ -445,4 +446,46 @@ public partial class Maintenance : System.Web.UI.Page
             Response.Redirect(Request.RawUrl);
         }
     }
+    protected void DetailsViewPictures_ItemInserting(object sender, DetailsViewInsertEventArgs e)
+    {
+        
+        FileUpload fu = (FileUpload)FindControl("DetailsViewPictures").FindControl("UploadPicture");
+        fu.SaveAs(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\" + fu.FileName);
+        SqlDataSourcePictureDetails.InsertParameters.Add("refLoc", "~\\\\LocationPhotos\\\\" + fu.PostedFile.FileName);
+    }
+    /*
+    protected void btnUploadPicture_Click(object sender, EventArgs e)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (UploadPicture.HasFile)
+        {
+            try
+            {
+                sb.AppendFormat(" Uploading file: {0}", UploadPicture.FileName);
+
+                //saving the file
+                UploadPicture.SaveAs("c:\\SaveDirectory\\" + UploadPicture.FileName);
+
+                //Showing the file information
+                sb.AppendFormat("<br/> Save As: {0}", UploadPicture.PostedFile.FileName);
+                sb.AppendFormat("<br/> File type: {0}", UploadPicture.PostedFile.ContentType);
+                sb.AppendFormat("<br/> File length: {0}", UploadPicture.PostedFile.ContentLength);
+                sb.AppendFormat("<br/> File name: {0}", UploadPicture.PostedFile.FileName);
+                
+                lblmessage.Text = sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                sb.Append("<br/> Error <br/>");
+                sb.AppendFormat("Unable to save file <br/> {0}", ex.Message);
+                lblmessage.Text = sb.ToString();
+            }
+        }
+        else
+        {
+            lblmessage.Text = sb.ToString();
+        }
+    }
+    */
 }

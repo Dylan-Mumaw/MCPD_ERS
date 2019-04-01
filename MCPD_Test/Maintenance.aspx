@@ -617,7 +617,8 @@
                     AutoGenerateRows="false"
                     OnItemDeleted="DetailsViewPictures_ItemDeleted"
                     OnItemInserted="DetailsViewPictures_ItemInserted"
-                    OnItemUpdated="DetailsViewPictures_ItemUpdated">
+                    OnItemUpdated="DetailsViewPictures_ItemUpdated"
+                    OnItemInserting="DetailsViewPictures_ItemInserting">
                     <Fields>
                         <asp:TemplateField HeaderText="Photo ID:">
                             <ItemTemplate>
@@ -665,11 +666,10 @@
                                     Text='<%# Eval("refLoc") %>'></asp:Label>
                             </ItemTemplate>
                             <InsertItemTemplate>
-                                <asp:TextBox ID="txtDetailsViewRefLoc" runat="server"
-                                    Text='<%# Bind("refLoc") %>' Width="200px"></asp:TextBox>
+                                <asp:FileUpload ID="UploadPicture" runat="server" accept="image/*" />
                                 <asp:RequiredFieldValidator
                                     ID="RequiredFieldValidatorRefLoc" runat="server"
-                                    ControlToValidate="txtDetailsViewRefLoc"
+                                    ControlToValidate="UploadPicture"
                                     ErrorMessage="refLoc is a required field.">
                                 </asp:RequiredFieldValidator>
                             </InsertItemTemplate>
@@ -713,7 +713,7 @@
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT [picId], [buildId], [refLoc] FROM [Pictures] WHERE ([picId] = @picId)"
                     DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId"
-                    InsertCommand="INSERT INTO [Pictures] ([picId], [buildId], [refLoc]) VALUES (@picId, @buildId, @refLoc)"
+                    InsertCommand="INSERT INTO [Pictures] ([buildId], [refLoc]) VALUES (@buildId, @refLoc)"
                     UpdateCommand="UPDATE [Pictures] SET [buildId] = @buildId, [refLoc] = @refLoc WHERE [picId] = @picId">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="GridViewPictures" Name="PicId" PropertyName="SelectedValue" Type="Int32" />
@@ -723,7 +723,7 @@
                     </DeleteParameters>
                     <InsertParameters>
                         <asp:Parameter Name="buildId" Type="Int32" />
-                        <asp:Parameter Name="refLoc" Type="String" />
+                        
                     </InsertParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="buildId" Type="Int32" />
