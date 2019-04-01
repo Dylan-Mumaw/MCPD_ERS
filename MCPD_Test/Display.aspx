@@ -8,6 +8,7 @@
     <script type="text/javascript" src="dragscroll.js"></script>
     <title>Michigan City First Responders</title>
 
+    <!-----------------ZOOM JAVASCRIPT FUNCTION---------------->
     <script>
         function zoomin() {
             //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
@@ -63,9 +64,10 @@
 <body>
     <form id="searchForm" runat="server">
         <div style="" id="MainContainer" class="container">
+
+            <!-----------------BUILDING SEARCH AND GRIDVIEW---------------->
             <div id="LeftContainer" class="item">
                 <asp:Panel ID="ButtonContainer" runat="server"></asp:Panel>
-
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" />
                 <br />
                 <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
@@ -83,6 +85,7 @@
                     </asp:GridView>
                 </div>
 
+                <!-----------------BUILDING PHOTO GALLERY---------------->
                 <asp:SqlDataSource ID="SqlDataSourceGallery" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc], [picId] FROM [Pictures] WHERE ([buildId] = @buildId)">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="GridViewBuildingList" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
@@ -99,13 +102,15 @@
                     </asp:GridView>
                 </div>
             </div>
+
+            <!-----------------CONTACT INFO---------------->
             <div id="RightContainer" class="item">
                 <div id="currentPicture">
-                    <asp:GridView ID="GridViewCurrentContact" DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
+                    <asp:GridView ID="GridViewCurrentContact"  DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Building" />
                             <asp:BoundField DataField="Address" HeaderText="Address" />
-                            <asp:BoundField DataField="FullName" HeaderText="Contact" />
+                            <%--<asp:BoundField DataField="FullName" HeaderText="Contact" />--%>
                             <asp:TemplateField HeaderText="Contact Name:">
                                 <ItemTemplate>
                                     <asp:DropDownList ID="ddlContactName" runat="server"
@@ -113,16 +118,23 @@
                                     </asp:DropDownList>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Contact Phone Number:">
+                            <asp:TemplateField HeaderText="Contact Phone Number">
                                 <ItemTemplate>
                                     <asp:Label ID="lblContactNumber" runat="server"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <%--<asp:BoundField DataField="ContactNumber" HeaderText="Number" />--%>
-                            <asp:BoundField DataField="Title" HeaderText="Title" />
+                            <%--<asp:BoundField DataField="Title" HeaderText="Title" />--%>
+                            <asp:TemplateField HeaderText="Title">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblContactTitle" runat="server"></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>
+
+                <!-----------------SELECTED IMAGE---------------->
                 <div id="BigImageContainer">
                     <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
                         <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />

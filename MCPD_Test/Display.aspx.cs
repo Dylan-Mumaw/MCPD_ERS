@@ -72,14 +72,17 @@ public partial class Display : System.Web.UI.Page
         {
             DropDownList contactsDdl = (DropDownList)row.FindControl("ddlContactName");
             Label contactNumLabel = (Label)row.FindControl("lblContactNumber");
+            Label contactTitleLabel = (Label)row.FindControl("lblContactTitle");
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand("SELECT [ContactNumber] FROM [Contacts] WHERE ([ContactId] = " + contactsDdl.SelectedValue + ")", connection);
+                SqlCommand cmdTwo = new SqlCommand("SELECT [Title] FROM [Contacts] WHERE ([ContactId] = " + contactsDdl.SelectedValue + ")", connection);
                 try
                 {
                     connection.Open();
                     contactNumLabel.Text = cmd.ExecuteScalar().ToString();
+                    contactTitleLabel.Text = cmdTwo.ExecuteScalar().ToString();
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
@@ -283,7 +286,7 @@ public partial class Display : System.Web.UI.Page
                 cn.Open();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT name, address, fullname, contactnumber, title FROM Buildings INNER JOIN Contacts ON Buildings.Id = " +
+                cmd.CommandText = "SELECT contactId, name, address, fullname, contactnumber, title FROM Buildings INNER JOIN Contacts ON Buildings.Id = " +
                                   "Contacts.buildID WHERE Buildings.Id = " + buildID + ";";
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
@@ -294,6 +297,14 @@ public partial class Display : System.Web.UI.Page
             {
                 GridViewCurrentContact.DataSource = dt;
                 GridViewCurrentContact.DataBind();
+
+                if (GridViewCurrentContact.Rows.Count > 1)
+                {
+                    for (int i = 1; i < GridViewCurrentContact.Rows.Count; i++)
+                    {
+                        GridViewCurrentContact.Rows[i].Visible = false;
+                    }
+                }
             }
         }
         catch (System.Data.SqlClient.SqlException ex)
@@ -308,10 +319,6 @@ public partial class Display : System.Web.UI.Page
         }
     }
 
-    private void BindGridViewBigPicture()
-    {
-
-    }
     //<-----------------END DATA BINDING----------------->
 
     protected void SetBigImageUrl()
@@ -395,36 +402,6 @@ public partial class Display : System.Web.UI.Page
 
     }
 
-    protected void GovButton_Click(object sender, EventArgs e)
-    {
-        string typeText = "Government";
-        BindGridViewType(typeText);
-    }
-
-    protected void MedButton_Click(object sender, EventArgs e)
-    {
-        string typeText = "Medical";
-        BindGridViewType(typeText);
-    }
-
-    protected void BankButton_Click(object sender, EventArgs e)
-    {
-        string typeText = "Bank";
-        BindGridViewType(typeText);
-    }
-
-    protected void PrivateButton_Click(object sender, EventArgs e)
-    {
-        string typeText = "Private";
-        BindGridViewType(typeText);
-
-    }
-    protected void SchoolButton_Click(object sender, EventArgs e)
-    {
-        string typeText = "School";
-        BindGridViewType(typeText);
-    }
-
     //<-----------------END BUTTON CLICK EVENTS----------------->
 
     //<-----------------BEGIN SELECTED INDEX CHANGED----------------->
@@ -446,14 +423,8 @@ public partial class Display : System.Web.UI.Page
     protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)
     {
         picID = (int)GridViewGallery.SelectedDataKey.Value;
-        //BindGridViewBigPicture();
         //SizeDiv();
         SetBigImageUrl();
-    }
-
-    protected void GridViewBigPicture_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
     }
     //<-----------------END SELECTED INDEX CHANGED----------------->
 
@@ -474,7 +445,7 @@ public partial class Display : System.Web.UI.Page
                 try
                 {
                     connection.Open();
-                    string sqlStatement = "SELECT [FullName], [ContactNumber] FROM [Contacts] WHERE ([ContactId] = " + id + ")";
+                    string sqlStatement = "SELECT [ContactId], [FullName], [ContactNumber], [Title] FROM Buildings INNER JOIN Contacts ON Buildings.Id = " + "Contacts.buildID WHERE Buildings.Id = " + buildID + ";";
                     SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
                     SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
                     sqlDa.Fill(dt);
