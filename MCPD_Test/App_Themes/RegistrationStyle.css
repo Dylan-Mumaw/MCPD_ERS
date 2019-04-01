@@ -1,47 +1,74 @@
-﻿body {
-    /*! display: block; */
-    /*! margin-right: auto; */
-    /*! margin-left: auto; */
-    background-color: #1B1537;
+﻿html {
+    margin: 0px;
     height: 100%;
     width: 100%;
 }
-
-.registrationDiv {
-    width: 20%;
-    /*! height: 85%; */
-    color: white;
-    background-color: rgba(146, 143, 161, 0.47);
-    margin: auto;
-    /*! vertical-align: middle; */
-    border-radius: 10px;
+body {
+    margin: 0px;
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(../StylePhotos/PoliceStation.jpg) no-repeat center center fixed;
+    background-size: cover;
 }
 
+form {
+    width: 300px;
+}
+
+
 .label {
-    display: block;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Gotham,gotham,Verdana,sans-serif;
     font-size: small;
-    font-variant: small-caps;
-    color: white;
-    margin-left: 14%;
-    margin-bottom: 1%;
+    color: #323232;
     letter-spacing: .5px;
 }
 
 .textbox {
-    display: block;
-    background-color: white;
+    background-color: #fff;
     border-radius: 2px;
-    margin: auto;
-    width: 70%;
+    width: 250px;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 2px;
+    box-shadow: 1px 1px 2px 1px #9D9EA0 inset;
+    border: none;
+    margin-top: 5px;
 }
 
 .button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-size: larger;
+    font-family: Gotham,gotham,Verdana,sans-serif;
+    height: 30px;
+    background: #fff;
 }
+
+    .button:hover {
+        background: #d5d5d5;
+    }
+
+/*Items*/
+.registrationDiv {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    width: 300px;
+    box-shadow: 4px 5px 3px 2px #0009;
+    background: #f6f6f6;
+}
+
+.item{
+    display:flex;
+    flex-direction:column;
+    margin-top: 20px;
+}
+.bottomitem{
+    margin-bottom:20px;
+}
+
+
+
