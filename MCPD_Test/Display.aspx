@@ -5,11 +5,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="App_Themes/DisplayStyle.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="dragscroll.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Michigan City First Responders</title>
 
     <!-----------------ZOOM JAVASCRIPT FUNCTION---------------->
-    <script>
+    <script type="text/javascript">
+        document.onload = function () {
+            PageMethods.GetPossibleResults(onSuccess, onFailure);
+        }
+
         function zoomin() {
             //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
             //var myImg = myImgQuery[0];
@@ -46,6 +53,23 @@
                 document.getElementById("TestTextbox").value = "Width was within 100; Value was " + currWidth;
             }
         }
+
+        function GetPossibleResultsClient(test) {
+          $( "#TextBoxSearch" ).autocomplete({
+            source: possibleResults
+          });
+        }
+ 
+        function onSuccess(result) {
+          $( "#TextBoxSearch" ).autocomplete({
+            source: result
+          });
+        }
+ 
+        function onFailure(error) {
+            alert(error);
+        }
+
     </script>
 
     <script runat="server">
@@ -63,17 +87,18 @@
 </head>
 <body>
     <form id="searchForm" runat="server">
+        <asp:ScriptManager ID="smPageMethods" runat="server" EnablePageMethods="true"></asp:ScriptManager>
         <div style="" id="MainContainer" class="container">
 
             <!-----------------BUILDING SEARCH AND GRIDVIEW---------------->
-            <div id="LeftContainer" class="item leftContainer">
-                <asp:Panel ID="ButtonContainer" CssClass="buttonContainer" runat="server"></asp:Panel>
+            <div id="LeftContainer" class="item">
+                <asp:Panel ID="ButtonContainer" runat="server" ></asp:Panel>
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" />
                 <br />
                 <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
                 <br />
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
-                <div id="GridViewBuildingListContainer" class="buildingListContainer">
+                <div id="GridViewBuildingListContainer">
                     <asp:GridView ID="GridViewBuildingList" CssClass="blueTable" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewBuildingList_SelectedIndexChanged" OnPageIndexChanging="GridViewBuildingList_PageIndexChanging">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
@@ -104,9 +129,9 @@
             </div>
 
             <!-----------------CONTACT INFO---------------->
-            <div id="RightContainer" class="item rightContainer">
+            <div id="RightContainer" class="item">
                 <div id="currentPicture">
-                    <asp:GridView ID="GridViewCurrentContact" DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
+                    <asp:GridView ID="GridViewCurrentContact"  DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Building" />
                             <asp:BoundField DataField="Address" HeaderText="Address" />
