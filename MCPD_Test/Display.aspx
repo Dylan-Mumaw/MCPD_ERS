@@ -66,14 +66,14 @@
         <div style="" id="MainContainer" class="container">
 
             <!-----------------BUILDING SEARCH AND GRIDVIEW---------------->
-            <div id="LeftContainer" class="item">
-                <asp:Panel ID="ButtonContainer" runat="server"></asp:Panel>
+            <div id="LeftContainer" class="item leftContainer">
+                <asp:Panel ID="ButtonContainer" CssClass="buttonContainer" runat="server"></asp:Panel>
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" />
                 <br />
                 <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
                 <br />
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
-                <div id="GridViewBuildingListContainer">
+                <div id="GridViewBuildingListContainer" class="buildingListContainer">
                     <asp:GridView ID="GridViewBuildingList" CssClass="blueTable" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewBuildingList_SelectedIndexChanged" OnPageIndexChanging="GridViewBuildingList_PageIndexChanging">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
@@ -104,9 +104,9 @@
             </div>
 
             <!-----------------CONTACT INFO---------------->
-            <div id="RightContainer" class="item">
+            <div id="RightContainer" class="item rightContainer">
                 <div id="currentPicture">
-                    <asp:GridView ID="GridViewCurrentContact"  DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
+                    <asp:GridView ID="GridViewCurrentContact" DataKeyNames="ContactId" CssClass="blueTable" runat="server" AutoGenerateColumns="false" OnRowCreated="GridViewCurrentContact_RowCreated">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Building" />
                             <asp:BoundField DataField="Address" HeaderText="Address" />
