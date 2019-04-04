@@ -60,6 +60,10 @@ body {
     height: 100%;
 }
 
+.buildingListContainer{
+    margin-top:10px;
+}
+
 
 /*Tables*/
 table{
@@ -80,6 +84,12 @@ table.blueTable th{
 }
 table.blueTable tr:nth-child(even){
     background:rgba(208, 221, 242, 0.89);
+}
+table.blueTable a{
+    color:#323232;
+}
+table.blueTable a:hover{
+    color:red;
 }
 
 
