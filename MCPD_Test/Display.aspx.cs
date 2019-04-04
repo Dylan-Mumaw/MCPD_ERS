@@ -12,10 +12,20 @@ public partial class Display : System.Web.UI.Page
 {
     private int buildID = 0;
     private int picID = 0;
+    String flag;
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        flag = (String) Session["Flag"];
+        if (string.IsNullOrEmpty(flag))
+        {
+            string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
+            Response.Redirect(url);
+        }
+        if (flag.Equals("Admin"))
+        {
 
+        }
         using (SqlConnection connection = new SqlConnection(GetConnectionString()))
         {
             SqlCommand cmd = new SqlCommand("SELECT type FROM Types", connection);
