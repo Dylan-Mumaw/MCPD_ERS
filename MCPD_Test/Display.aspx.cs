@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Web.Script.Serialization;
 
 public partial class Display : System.Web.UI.Page
 {
@@ -468,5 +469,72 @@ public partial class Display : System.Web.UI.Page
                 }
             }
         }
+    }
+
+    [System.Web.Services.WebMethod]
+    public static List<string> GetPossibleResults()
+    {
+        List<string> possibleResults = new List<String>();
+
+        string strGetNames = "SELECT DISTINCT Name FROM Buildings";
+        string strGetAliases = "SELECT DISTINCT Alias FROM Buildings";
+        string strGetAddresses = "SELECT DISTINCT Address FROM Buildings";
+        string strGetTypes = "SELECT Type FROM Types";
+
+        using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+        {
+            SqlCommand GetNames = new SqlCommand(strGetNames, connection);
+            SqlCommand GetAliases = new SqlCommand(strGetAliases, connection);
+            SqlCommand GetAddresses = new SqlCommand(strGetAddresses, connection);
+            SqlCommand GetTypes = new SqlCommand(strGetTypes, connection);
+
+            connection.Open();
+            SqlDataReader reader = GetNames.ExecuteReader();
+
+            try
+            {
+                while(reader.Read())
+                {
+                    possibleResults.Add(reader[0].ToString());
+                }
+
+                reader.Close();
+                reader = GetAliases.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    possibleResults.Add(reader[0].ToString());
+                }
+
+                reader.Close();
+                reader = GetAddresses.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    possibleResults.Add(reader[0].ToString());
+                }
+
+                reader.Close();
+                reader = GetTypes.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    possibleResults.Add(reader[0].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error: ";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+            return possibleResults;
     }
 }
