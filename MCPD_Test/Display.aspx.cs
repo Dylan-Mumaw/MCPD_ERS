@@ -28,7 +28,8 @@ public partial class Display : System.Web.UI.Page
         }
         using (SqlConnection connection = new SqlConnection(GetConnectionString()))
         {
-            SqlCommand cmd = new SqlCommand("SELECT type FROM Types", connection);
+            SqlCommand cmd = new SqlCommand("getType", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
             connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -86,8 +87,12 @@ public partial class Display : System.Web.UI.Page
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
-                SqlCommand cmd = new SqlCommand("SELECT [ContactNumber] FROM [Contacts] WHERE ([ContactId] = " + contactsDdl.SelectedValue + ")", connection);
-                SqlCommand cmdTwo = new SqlCommand("SELECT [Title] FROM [Contacts] WHERE ([ContactId] = " + contactsDdl.SelectedValue + ")", connection);
+                SqlCommand cmd = new SqlCommand("ContactNumber", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@contactid", contactsDdl.SelectedValue);
+                SqlCommand cmdTwo = new SqlCommand("ContactNumber", connection);
+                cmdTwo.CommandType = CommandType.StoredProcedure;
+                cmdTwo.Parameters.AddWithValue("@contactid", contactsDdl.SelectedValue);
                 try
                 {
                     connection.Open();
@@ -113,19 +118,14 @@ public partial class Display : System.Web.UI.Page
     protected void SizeDiv()
     {
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
-        using (var cmd = new System.Data.SqlClient.SqlCommand())
-
-            try
-            {
+            try{
                 {
-                    cn.Open();
-                    cmd.Connection = cn;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)";
-                    cmd.Parameters.AddWithValue("@picId", picID);
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("getRefLoc", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@picId", picID);
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
@@ -165,7 +165,7 @@ public partial class Display : System.Web.UI.Page
     {
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Buildings ORDER BY Type", connection);
+        SqlDataAdapter da = new SqlDataAdapter("building", connection);
         da.Fill(dt);
         GridViewBuildingList.DataSource = dt;
         GridViewBuildingList.DataBind();
@@ -181,36 +181,31 @@ public partial class Display : System.Web.UI.Page
 
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
-        using (var cmd = new System.Data.SqlClient.SqlCommand())
-
-            try
+        try {
             {
-                {
-                    cn.Open();
-                    cmd.Connection = cn;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "Select * From Buildings WHERE Type = @Type ORDER BY Type";
-                    cmd.Parameters.AddWithValue("@Type", t);
-                    SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
-                    sqlDa.Fill(dt);
-                }
-                if (dt.Rows.Count > 0)
-                {
-                    GridViewBuildingList.DataSource = dt;
-                    GridViewBuildingList.DataBind();
-                }
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("BuildingType", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Type", t);
+                SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+                sqlDa.Fill(dt);
             }
-            catch (System.Data.SqlClient.SqlException ex)
+            if (dt.Rows.Count > 0)
             {
-                string msg = "Fetch Error:";
-                msg += ex.Message;
-                throw new Exception(msg);
+                GridViewBuildingList.DataSource = dt;
+                GridViewBuildingList.DataBind();
             }
-            finally
-            {
-                connection.Close();
-            }
+        }
+        catch (System.Data.SqlClient.SqlException ex)
+        {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
 
     private void BindGridViewSearch(string t)
@@ -220,13 +215,10 @@ public partial class Display : System.Web.UI.Page
 
         try
         {
-            using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
-            using (var cmd = new System.Data.SqlClient.SqlCommand())
             {
-                cn.Open();
-                cmd.Connection = cn;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Select * FROM Buildings WHERE Name LIKE '%'+@text+'%' OR Alias LIKE '%'+@text+'%' OR Type LIKE '%'+@text+'%' or Address LIKE '%'+@text+'%' ORDER BY Type";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GridSearch", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@text", t);
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
@@ -259,8 +251,9 @@ public partial class Display : System.Web.UI.Page
         try
         {
             connection.Open();
-            string sqlStatement = "SELECT refLoc FROM Pictures WHERE buildId='" + buildID + "';";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlCommand sqlCmd = new SqlCommand("BuildRefLoc", connection);
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            sqlCmd.Parameters.AddWithValue("@buildID", buildID);
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
@@ -290,14 +283,11 @@ public partial class Display : System.Web.UI.Page
 
         try
         {
-            using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
-            using (var cmd = new System.Data.SqlClient.SqlCommand())
             {
-                cn.Open();
-                cmd.Connection = cn;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT contactId, name, address, fullname, contactnumber, title FROM Buildings INNER JOIN Contacts ON Buildings.Id = " +
-                                  "Contacts.buildID WHERE Buildings.Id = " + buildID + ";";
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("CurrentContact", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@buildId", buildID);
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
                 sqlDa.Fill(dt);
@@ -331,48 +321,39 @@ public partial class Display : System.Web.UI.Page
 
     //<-----------------END DATA BINDING----------------->
 
-    protected void SetBigImageUrl()
-    {
+    protected void SetBigImageUrl() {
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
-        using (var cmd = new System.Data.SqlClient.SqlCommand())
-
-            try
+        try {
             {
-                {
-                    cn.Open();
-                    cmd.Connection = cn;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)";
-                    cmd.Parameters.AddWithValue("@picId", picID);
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("getRefLoc", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@picId", picID);
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        bigImage.ImageUrl = reader[0].ToString();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) {
+                    bigImage.ImageUrl = reader[0].ToString();
 
-                        System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
-                        int naturalWidth = b.Width;
-                        int naturalHeight = b.Height;
-                        b.Dispose();
+                    System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
+                    int naturalWidth = b.Width;
+                    int naturalHeight = b.Height;
+                    b.Dispose();
 
-                        double ratio = bigImage.Width.Value / naturalWidth;
-                        int scaledHeight = (int)(naturalHeight * ratio);
+                    double ratio = bigImage.Width.Value / naturalWidth;
+                    int scaledHeight = (int)(naturalHeight * ratio);
 
-                        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;height:{0}px;", scaledHeight + 4);
-                    }
+                    bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;height:{0}px;", scaledHeight + 4);
                 }
             }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                string msg = "Fetch Error:";
-                msg += ex.Message;
-                throw new Exception(msg);
-            }
-            finally
-            {
-                connection.Close();
-            }
+        }
+        catch (System.Data.SqlClient.SqlException ex) {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally {
+            connection.Close();
+        }
     }
     //<-----------------BEGIN BUTTON CLICK EVENTS----------------->
 
@@ -384,8 +365,8 @@ public partial class Display : System.Web.UI.Page
         try
         {
             connection.Open();
-            string sqlStatement = "SELECT * FROM Buildings ORDER BY TYPE ASC";
-            SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
+            SqlCommand sqlCmd = new SqlCommand("building", connection);
+            sqlCmd.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
             sqlDa.Fill(dt);
 
@@ -455,9 +436,11 @@ public partial class Display : System.Web.UI.Page
                 try
                 {
                     connection.Open();
-                    string sqlStatement = "SELECT [ContactId], [FullName], [ContactNumber], [Title] FROM Buildings INNER JOIN Contacts ON Buildings.Id = " + "Contacts.buildID WHERE Buildings.Id = " + buildID + ";";
-                    SqlCommand sqlCmd = new SqlCommand(sqlStatement, connection);
-                    SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+                    SqlCommand cmd = new SqlCommand("CurrentContact", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@buildId", buildID);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+
                     sqlDa.Fill(dt);
 
                     if (dt.Rows.Count > 0)

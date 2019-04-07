@@ -65,7 +65,7 @@
     <form id="searchForm" runat="server">
 
         <div style="" id="MainContainer" class="container">
-            <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance"
+            <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance" 
                 CausesValidation="false" PostBackUrl="~/Maintenance.aspx"/>
             <!-----------------BUILDING SEARCH AND GRIDVIEW---------------->
             <div id="LeftContainer" class="item">
