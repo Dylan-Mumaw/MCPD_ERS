@@ -33,10 +33,6 @@ body {
     border: none;
 }
 
-.textboxsearch_item{
-    margin-bottom:10px;
-    margin-top:5px;
-}
 
 
 /*Containers and Items*/ 
@@ -62,6 +58,11 @@ body {
 
 .buildingListContainer{
     margin-top:10px;
+}
+
+.labelSearchItem {
+    margin-bottom: 5px;
+    margin-top: 15px;
 }
 
 
@@ -98,7 +99,7 @@ table.blueTable a:hover{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    word-wrap: break-word;
+    margin-bottom:8px;
 }
 
 .button {
@@ -111,22 +112,19 @@ table.blueTable a:hover{
     font-family: Gotham,gotham,Verdana,sans-serif;
     font-size: small;
     font-weight: bold;
+    white-space:normal;
+    padding:0;
 }
 
     .button:hover {
         background-color: #b1b1b1;
     }
 
-    .button:active {
-        position: relative;
-        top: 1px;
-    }
 
 
 /*Image Gallery*/
 
 .gallery {
-    border: 1px solid #ccc;
     width: 100%;
     display:table;
 }
@@ -135,9 +133,7 @@ table.blueTable a:hover{
         height: auto;
         
     }
-    .gallery tr{
-
-    }
+  
     .gallery td{
         width:25%;
     }
@@ -149,14 +145,5 @@ table.blueTable a:hover{
     cursor: all-scroll;
 }
 
-.gridviewContactBox{
-
-}
-
-#BigImageContainer {
-    width: 100%;
-    min-height: 100%;
-    margin-top: 2%;
-}
 
 
