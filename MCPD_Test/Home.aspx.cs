@@ -29,10 +29,10 @@ public partial class Home : Page
     protected void ButtonLogin_Click(object sender, EventArgs e)
     {
         SelectQuery();
-        if (flag.Length <= 0)
+        if (string.IsNullOrEmpty(flag) || flag.Length <= 0)
             //Response.Redirect("Home.aspx");
             Label1.Text = "Please enter correct data.";
-        if (flag.Length > 0) Server.Transfer("Display.aspx", false);
+        else if (flag.Length > 0) Server.Transfer("Display.aspx", false);
         
     }
     protected void SelectQuery()
@@ -40,11 +40,11 @@ public partial class Home : Page
         string UserName = TextBoxUsername.Text;
         string Password = TextBoxPassword.Text;
         DBMaster dbm = new DBMaster();
-        SqlDataReader reader = dbm.getReader("SELECT roll FROM logins WHERE userName ='" + UserName + "' AND password ='" + Password + "';");
+        SqlDataReader reader = dbm.getReader("SELECT role FROM logins WHERE userName ='" + UserName + "' COLLATE Latin1_General_CS_AS AND password ='" + Password + "' COLLATE Latin1_General_CS_AS;");
 
         while (reader.Read())
         {
-            flag += reader["roll"].ToString();
+            flag += reader["role"].ToString();
         }
         Session["Flag"] = flag;
     }
