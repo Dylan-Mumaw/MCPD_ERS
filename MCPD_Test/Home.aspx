@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 
-    <link rel="stylesheet" href="App_Themes/HomeStyle.css"/>
+    <link rel="stylesheet" href="App_Themes/HomeStyle.css" />
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <title>Login</title>
 </head>
@@ -24,9 +24,9 @@
                     <asp:Label ID="LabelUsername" runat="server" Text="Username" CssClass="label"></asp:Label><br />
                     <asp:TextBox ID="TextBoxUsername" runat="server" CssClass="textbox"></asp:TextBox><br />
                     <asp:RequiredFieldValidator ID="validateLogin"
-                runat="server" ControlToValidate="TextBoxUserName"
-                ErrorMessage="Required"
-                InitialValue="" CssClass="validatestyle"></asp:RequiredFieldValidator>
+                        runat="server" ControlToValidate="TextBoxUserName"
+                        ErrorMessage="Required"
+                        InitialValue="" CssClass="validatestyle"></asp:RequiredFieldValidator>
                 </div>
 
                 <div id="PasswordItem" class="passworditem">

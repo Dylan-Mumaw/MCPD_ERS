@@ -17,7 +17,7 @@
                     <header>Buildings</header>
                     <div class="item">
                         <div id="GridViewBox">
-                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="true" OnRowCreated="GridViewBuildings_RowCreated">
+                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="True" OnRowCreated="GridViewBuildings_RowCreated">
                                 <Columns>
                                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -30,10 +30,10 @@
                             </asp:GridView>
                         </div>
                         <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                            SelectCommand="SELECT * FROM [Buildings]"
+                            SelectCommand="building"
                             DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
                             InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Alias]) VALUES (@Name, @Address, @Alias)"
-                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id">
+                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id" SelectCommandType="StoredProcedure">
                             <DeleteParameters>
                                 <asp:Parameter Name="Id" Type="Int32" />
                             </DeleteParameters>
@@ -45,6 +45,7 @@
                             <UpdateParameters>
                                 <asp:Parameter Name="Name" Type="String" />
                                 <asp:Parameter Name="Address" Type="String" />
+                                <asp:Parameter Name="Type" />
                                 <asp:Parameter Name="Alias" Type="String" />
                                 <asp:Parameter Name="Id" Type="Int32" />
                             </UpdateParameters>
@@ -249,7 +250,7 @@
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                                 SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
 
-                        <!-----------------TYPE MAINTENANCE GRIDVIEW---------------->
+                            <!-----------------TYPE MAINTENANCE GRIDVIEW---------------->
                             <div id="GridViewTypesBox">
                                 <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes" AllowSorting="true" OnRowCreated="GridViewTypes_RowCreated">
                                     <Columns>
@@ -723,7 +724,7 @@
                     </DeleteParameters>
                     <InsertParameters>
                         <asp:Parameter Name="buildId" Type="Int32" />
-                        
+
                     </InsertParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="buildId" Type="Int32" />

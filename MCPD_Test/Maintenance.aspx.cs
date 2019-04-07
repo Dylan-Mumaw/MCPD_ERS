@@ -13,6 +13,13 @@ public partial class Maintenance : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        string url;
+        string flag = (String)Session["Flag"];
+        if (string.IsNullOrEmpty(flag) || !flag.Equals("Admin"))
+        {
+            url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
+            Response.Redirect(url);
+        }
     }
 
     private string GetConnectionString()
@@ -247,7 +254,7 @@ public partial class Maintenance : System.Web.UI.Page
     {
         if (e.Exception != null)
         {
-            lblError.Text = "A database error has occured. <br>"  + 
+            lblError.Text = "A database error has occured. <br>" +
                 "Message: " + e.Exception.Message +
                 "<br> Reason: Selected TYPE is currently held by one or more records in the BUILDINGS table.<br>" +
                 "Solution: Delete or update any BUILDING record currently holding the selected TYPE.";
