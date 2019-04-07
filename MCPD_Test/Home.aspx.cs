@@ -11,6 +11,8 @@ using System.Web.UI.WebControls;
 public partial class Home : Page
 {
     string flag = "";
+    string User = "";
+    string Pass = "";
 
     private string GetConnectionString()
     {
@@ -28,6 +30,8 @@ public partial class Home : Page
 
     protected void ButtonLogin_Click(object sender, EventArgs e)
     {
+        User = TextBoxUsername.Text;
+        Pass = TextBoxPassword.Text;
         SelectQuery();
         if (string.IsNullOrEmpty(flag) || flag.Length <= 0)
             //Response.Redirect("Home.aspx");
@@ -37,14 +41,18 @@ public partial class Home : Page
     }
     protected void SelectQuery()
     {
-        string UserName = TextBoxUsername.Text;
-        string Password = TextBoxPassword.Text;
-        DBMaster dbm = new DBMaster();
-        SqlDataReader reader = dbm.getReader("SELECT role FROM logins WHERE userName ='" + UserName + "' COLLATE Latin1_General_CS_AS AND password ='" + Password + "' COLLATE Latin1_General_CS_AS;");
+        SqlConnection connection = new SqlConnection(GetConnectionString());
+        SqlCommand cmd = new SqlCommand("role", connection);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@user", User);
+        cmd.Parameters.AddWithValue("@pass", Pass);
+        connection.Open();
+
+        SqlDataReader reader = cmd.ExecuteReader();
 
         while (reader.Read())
         {
-            flag += reader["role"].ToString();
+            flag = reader["Role"].ToString();
         }
         Session["Flag"] = flag;
     }

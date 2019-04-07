@@ -16,15 +16,15 @@ public partial class Display : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        flag = (String) Session["Flag"];
+        flag = (String)Session["Flag"];
         if (string.IsNullOrEmpty(flag))
         {
             string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
         }
-        if (flag.Equals("Admin"))
+        if (!flag.Equals("Admin"))
         {
-
+            ButtonMaintenance.Visible = false;
         }
         using (SqlConnection connection = new SqlConnection(GetConnectionString()))
         {
@@ -118,39 +118,40 @@ public partial class Display : System.Web.UI.Page
     protected void SizeDiv()
     {
         SqlConnection connection = new SqlConnection(GetConnectionString());
-            try{
-                {
+        try
+        {
+            {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("getRefLoc", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@picId", picID);
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
-                        int naturalWidth = b.Width;
-                        int naturalHeight = b.Height;
-                        b.Dispose();
+                while (reader.Read())
+                {
+                    System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
+                    int naturalWidth = b.Width;
+                    int naturalHeight = b.Height;
+                    b.Dispose();
 
-                        //int adjustedDivWidth = naturalWidth + 20;
-                        //int adjustedDivHeight = naturalHeight + 30;
+                    //int adjustedDivWidth = naturalWidth + 20;
+                    //int adjustedDivHeight = naturalHeight + 30;
 
-                        //bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
-                        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:200%;");
-                    }
+                    //bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
+                    bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:200%;");
                 }
             }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                string msg = "Fetch Error:";
-                msg += ex.Message;
-                throw new Exception(msg);
-            }
-            finally
-            {
-                connection.Close();
-            }
+        }
+        catch (System.Data.SqlClient.SqlException ex)
+        {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
 
     //<-----------------GET CONNECTION STRING----------------->
@@ -181,7 +182,8 @@ public partial class Display : System.Web.UI.Page
 
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        try {
+        try
+        {
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("BuildingType", connection);
@@ -321,9 +323,11 @@ public partial class Display : System.Web.UI.Page
 
     //<-----------------END DATA BINDING----------------->
 
-    protected void SetBigImageUrl() {
+    protected void SetBigImageUrl()
+    {
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        try {
+        try
+        {
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("getRefLoc", connection);
@@ -331,7 +335,8 @@ public partial class Display : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@picId", picID);
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
+                while (reader.Read())
+                {
                     bigImage.ImageUrl = reader[0].ToString();
 
                     System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
@@ -346,12 +351,14 @@ public partial class Display : System.Web.UI.Page
                 }
             }
         }
-        catch (System.Data.SqlClient.SqlException ex) {
+        catch (System.Data.SqlClient.SqlException ex)
+        {
             string msg = "Fetch Error:";
             msg += ex.Message;
             throw new Exception(msg);
         }
-        finally {
+        finally
+        {
             connection.Close();
         }
     }

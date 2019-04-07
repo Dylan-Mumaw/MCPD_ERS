@@ -11,20 +11,13 @@ using System.Text;
 
 public partial class Maintenance : System.Web.UI.Page
 {
-    string flag;
-    
     protected void Page_Load(object sender, EventArgs e)
     {
         string url;
-        flag = (String)Session["Flag"];
-        if (string.IsNullOrEmpty(flag))
+        string flag = (String)Session["Flag"];
+        if (string.IsNullOrEmpty(flag) || !flag.Equals("Admin"))
         {
             url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
-            Response.Redirect(url);
-        }
-        else if (!flag.Equals("Admin"))
-        {
-            url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Display.aspx";
             Response.Redirect(url);
         }
     }

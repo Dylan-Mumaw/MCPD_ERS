@@ -13,7 +13,6 @@
 
     <div id="FormContainer" class="formcontainer">
         <form id="form1" runat="server">
-
             <div id="LoginContainer" class="maincontainer">
 
                 <div id="ImageItem" class="imageitem">
