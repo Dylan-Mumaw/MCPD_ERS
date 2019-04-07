@@ -35,7 +35,7 @@ public partial class Home : Page
         string UserName = TextBoxUsername.Text;
         string Password = TextBoxPassword.Text;
         DBMaster dbm = new DBMaster();
-        SqlDataReader reader = dbm.getReader("SELECT userName FROM logins WHERE userName ='" + UserName + "' AND password ='" + Password + "';");
+        SqlDataReader reader = dbm.getReader("SELECT userName FROM logins WHERE userName ='" + UserName + "' COLLATE SQL_Latin1_General_CP1_CS_AS AND password ='" + Password + "' COLLATE SQL_Latin1_General_CP1_CS_AS;");
 
         while (reader.Read())
         {
