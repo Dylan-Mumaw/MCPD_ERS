@@ -325,45 +325,46 @@ public partial class Display : System.Web.UI.Page
     protected void SetBigImageUrl()
     {
         SqlConnection connection = new SqlConnection(GetConnectionString());
-        using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
-        using (var cmd = new System.Data.SqlClient.SqlCommand())
+        //using (var cn = new System.Data.SqlClient.SqlConnection(GetConnectionString()))
+        //using (var cmd = new System.Data.SqlClient.SqlCommand())
 
-            try
+        try
+        {
+            connection.Open();
+            SqlCommand cmd = new SqlCommand("getRefLoc", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@picId", picID);
+            //cmd.Connection = cn;
+            //cmd.CommandType = CommandType.Text;
+            //cmd.CommandText = "SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)";
+            //cmd.Parameters.AddWithValue("@picId", picID);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                {
-                    cn.Open();
-                    cmd.Connection = cn;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT [refLoc] FROM [Pictures] WHERE ([picId] = @picId)";
-                    cmd.Parameters.AddWithValue("@picId", picID);
+                bigImage.ImageUrl = reader[0].ToString();
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        bigImage.ImageUrl = reader[0].ToString();
+                System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
+                int naturalWidth = b.Width;
+                int naturalHeight = b.Height;
+                b.Dispose();
 
-                        System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
-                        int naturalWidth = b.Width;
-                        int naturalHeight = b.Height;
-                        b.Dispose();
+                double ratio = bigImage.Width.Value / naturalWidth;
+                int scaledHeight = (int)(naturalHeight * ratio);
 
-                        double ratio = bigImage.Width.Value / naturalWidth;
-                        int scaledHeight = (int)(naturalHeight * ratio);
-
-                        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;height:{0}px;", scaledHeight + 4);
-                    }
-                }
+                bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;height:{0}px;", scaledHeight + 4);
             }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                string msg = "Fetch Error:";
-                msg += ex.Message;
-                throw new Exception(msg);
-            }
-            finally
-            {
-                connection.Close();
-            }
+        }
+        catch (System.Data.SqlClient.SqlException ex)
+        {
+            string msg = "Fetch Error:";
+            msg += ex.Message;
+            throw new Exception(msg);
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
     //<-----------------BEGIN BUTTON CLICK EVENTS----------------->
 
