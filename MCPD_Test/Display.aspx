@@ -13,7 +13,7 @@
 
     <!-----------------ZOOM JAVASCRIPT FUNCTION---------------->
     <script type="text/javascript">
-        document.onload = function () {
+        window.onload = function () {
             PageMethods.GetPossibleResults(onSuccess, onFailure);
         }
 
