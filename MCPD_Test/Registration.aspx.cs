@@ -21,29 +21,29 @@ public partial class Registration : System.Web.UI.Page
         string empNumber = TextBoxID.Text;
         string phoneNumber = TextBoxPhone.Text;
         string address = TextBoxAddress.Text;
+        string city = TextBoxCity.Text;
+        string state = DropDownListState.SelectedValue.ToString().Trim();
+        string ZIP = TextBoxZIP.Text;
         string email = TextBoxEmail.Text;
 
-        TestLabel.Text = "First Name: " + firstName +
-                         "</b>Last Name: " + lastName +
-                         "</b>Position: " + empPosition +
-                         "</b>Employee ID Number: " + empNumber +
-                         "</b>Phone Number: " + phoneNumber +
-                         "</b>Address: " + address +
-                         "Email: " + email;
-
-        MailAddress fromAddress = new MailAddress("SENDER GOES HERE");
-        MailAddress toAddress = new MailAddress("RECIPIENT GOES HERE");
+        MailAddress fromAddress = new MailAddress("Sender email goes here");
+        MailAddress toAddress = new MailAddress("Recipient email goes here");
         MailMessage emailMsg = new MailMessage(fromAddress, toAddress)
         {
             Subject = ("Hey!"),
 
-            Body = ("First Name: " + firstName +
-                    "</b>Last Name: " + lastName +
-                    "</b>Position: " + empPosition +
-                    "</b>Employee ID Number: " + empNumber +
-                    "</b>Phone Number: " + phoneNumber +
-                    "</b>Address: " + address +
-                    "Email: " + email)
+            Body = ("New User Account Requested." +
+                    "\nUser Information: " +
+                    "\nFirst Name: "  + firstName +
+                    "\nLast Name: " + lastName +
+                    "\nPosition: " + empPosition +
+                    "\nEmployee ID Number: " + empNumber +
+                    "\nPhone Number: " + phoneNumber +
+                    "\nAddress: " + address +
+                    "\nCity: " + city +
+                    "\nState: " + state +
+                    "\nZIP: " + ZIP +
+                    "\nEmail: " + email)
         };
 
         //Creates SMTP client
@@ -54,7 +54,7 @@ public partial class Registration : System.Web.UI.Page
         SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
         {
             EnableSsl = true,
-            Credentials = new System.Net.NetworkCredential("Email of owner account", "Password of owner account"),
+            Credentials = new System.Net.NetworkCredential("HOST'S EMAIL", "HOST'S PASSWORD"),
             DeliveryMethod = SmtpDeliveryMethod.Network
         };
 
