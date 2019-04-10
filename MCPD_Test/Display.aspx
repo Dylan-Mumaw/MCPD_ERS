@@ -14,8 +14,22 @@
     <!-----------------ZOOM JAVASCRIPT FUNCTION---------------->
     <script type="text/javascript">
         window.onload = function () {
-            PageMethods.GetPossibleResults(onSuccess, onFailure);
+            PageMethods.GetPossibleResults(onPossibleResultsSuccess, onPossibleResultsFailure);
         }
+
+        function handleEnter (obj, event) 
+        {        
+             var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;        
+             if (keyCode == 13) 
+             {                    
+                document.getElementById(obj).click();
+                return false;        
+             }        
+             else
+             {
+                return true;   
+             }   
+        } 
 
         function zoomin() {
             //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
@@ -55,20 +69,31 @@
         }
 
         //<!-----------------ZOOM JAVASCRIPT FUNCTION---------------->
+        /*
         function GetPossibleResultsClient(test) {
             $("#TextBoxSearch").autocomplete({
                 source: possibleResults
             });
         }
-
-        function onSuccess(result) {
+        */
+        function onPossibleResultsSuccess(result) {
             $("#TextBoxSearch").autocomplete({
                 source: result
             });
         }
 
-        function onFailure(error) {
+        function onPossibleResultsFailure(error) {
             alert(error);
+        }
+
+        function onSearchSuccess(result)
+        {
+
+        }
+
+        function onSearchFailure(error)
+        {
+
         }
 
     </script>
@@ -94,14 +119,12 @@
             <!-----------------BUILDING SEARCH AND GRIDVIEW---------------->
             <div id="LeftContainer" class="item leftContainer">
                 <asp:Panel ID="ButtonContainer" runat="server" CssClass="buttonContainer"></asp:Panel>               
-                <asp:Button ID="searchButton" runat="server" Style="display: none;" />
+                <asp:Button ID="searchButton" runat="server" Style="display: none;" onclick="SearchButton_Click"/>
                 <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance"
                     CausesValidation="false"  PostBackUrl="~/Maintenance.aspx" CssClass="button" />
                 <div id="LabelSearchItem" class="labelSearchItem">
                     <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
-
                 </div>
-
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
                 <div id="GridViewBuildingListContainer">
                     <asp:GridView ID="GridViewBuildingList" CssClass="blueTable" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewBuildingList_SelectedIndexChanged" OnPageIndexChanging="GridViewBuildingList_PageIndexChanging">
@@ -113,6 +136,7 @@
                             <asp:CommandField ShowSelectButton="True" />
                         </Columns>
                     </asp:GridView>
+                    <asp:Label ID="lblNoResults" runat="server" Text="No results." Visible="false"></asp:Label>
                 </div>
 
                 <!-----------------BUILDING PHOTO GALLERY---------------->
