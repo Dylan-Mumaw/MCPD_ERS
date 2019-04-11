@@ -587,10 +587,11 @@ public partial class Display : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='underline';";
+            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='none';";
             e.Row.Attributes["onmouseout"] = "this.style.textDecoration='none';";
 
             e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewBuildingList, "Select$" + e.Row.RowIndex);
+            e.Row.Cells[4].Style["display"] = "none";
         }
     }
 
@@ -598,7 +599,7 @@ public partial class Display : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='underline';";
+            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='none';";
             e.Row.Attributes["onmouseout"] = "this.style.textDecoration='none';";
 
             e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewGallery, "Select$" + e.Row.RowIndex);

@@ -16,7 +16,6 @@
         window.onload = function () {
             PageMethods.GetPossibleResults(onPossibleResultsSuccess, onPossibleResultsFailure);
         }
-
         function handleEnter(obj, event) {
             var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
             if (keyCode == 13) {
@@ -27,15 +26,12 @@
                 return true;
             }
         }
-
         function zoomin() {
             //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
             //var myImg = myImgQuery[0];
-
             var myImg = document.getElementById("bigImage");
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
-
             if (currWidth >= 2500) {
                 document.getElementById("TestTextbox").value = "Width was outside 2500; Value was " + currWidth;
                 return false;
@@ -49,9 +45,7 @@
         function zoomout() {
             //var myImgQuery = document.querySelectorAll('.dragscroll > div > table > tbody > tr > td > img');
             //var myImg = myImgQuery[0];
-
             var myImg = document.getElementById("bigImage");
-
             var currWidth = myImg.clientWidth;
             var currHeight = myImg.clientHeight;
             if (currWidth <= 100) {
@@ -64,7 +58,6 @@
                 document.getElementById("TestTextbox").value = "Width was within 100; Value was " + currWidth;
             }
         }
-
         //<!-----------------ZOOM JAVASCRIPT FUNCTION---------------->
         /*
         function GetPossibleResultsClient(test) {
@@ -78,19 +71,13 @@
                 source: result
             });
         }
-
         function onPossibleResultsFailure(error) {
             alert(error);
         }
-
         function onSearchSuccess(result) {
-
         }
-
         function onSearchFailure(error) {
-
         }
-
     </script>
 
     <script runat="server">
@@ -121,14 +108,14 @@
                     <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>
                 </div>
                 <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Width="400px" OnTextChanged="TextBoxSearch_TextChanged"></asp:TextBox>&nbsp<br />
-                <div id="GridViewBuildingListContainer">
-                    <asp:GridView ID="GridViewBuildingList" CssClass="blueTable" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewBuildingList_SelectedIndexChanged" OnPageIndexChanging="GridViewBuildingList_PageIndexChanging" OnRowDataBound="GridViewBuildingList_RowDataBound">
+                <div id="GridViewBuildingListContainer" class="buildingListContainer">
+                    <asp:GridView ID="GridViewBuildingList" CssClass="blueTable" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" OnSelectedIndexChanged="GridViewBuildingList_SelectedIndexChanged" OnPageIndexChanging="GridViewBuildingList_PageIndexChanging" OnRowDataBound="GridViewBuildingList_RowDataBound" BorderStyle="NotSet" GridLines="Both">
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="true" SortExpression="Name" />
                             <asp:BoundField DataField="Address" HeaderText="Address" ReadOnly="true" SortExpression="Address" />
                             <asp:BoundField DataField="Type" HeaderText="Type" ReadOnly="true" SortExpression="Type" />
                             <asp:BoundField DataField="Alias" HeaderText="Alias" ReadOnly="true" SortExpression="Alias" />
-                            <asp:CommandField ShowSelectButton="True" />
+                            <asp:CommandField ShowSelectButton="true"/>
                         </Columns>
                     </asp:GridView>
                     <asp:Label ID="lblNoResults" runat="server" Text="No results." Visible="false"></asp:Label>
