@@ -39,6 +39,7 @@ public partial class Home : Page
     }
     protected void SelectQuery()
     {
+        flag = "";
         SqlConnection connection = new SqlConnection(GetConnectionString());
         SqlCommand cmd = new SqlCommand("role", connection)
         {
