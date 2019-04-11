@@ -17,6 +17,16 @@ public partial class Display : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        flag = (String)Session["Flag"];
+        if (string.IsNullOrEmpty(flag))
+        {
+            string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
+            Response.Redirect(url);
+        }
+        if (!flag.Equals("Admin"))
+        {
+            ButtonMaintenance.Visible = false;
+        }
         using (SqlConnection connection = new SqlConnection(GetConnectionString()))
         {
             SqlCommand cmd = new SqlCommand("getType", connection)
@@ -56,6 +66,7 @@ public partial class Display : System.Web.UI.Page
                 searchAllButton.Click += (se, args) => { SearchAll(); };
 
                 ButtonContainer.Controls.Add(searchAllButton);
+                TextBoxSearch.Attributes.Add("onkeydown", "return handleEnter('" + searchButton.ClientID + "', event)");
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
@@ -196,6 +207,11 @@ public partial class Display : System.Web.UI.Page
             {
                 GridViewBuildingList.DataSource = dt;
                 GridViewBuildingList.DataBind();
+                lblNoResults.Visible = false;
+            }
+            else
+            {
+                lblNoResults.Visible = true;
             }
         }
         catch (System.Data.SqlClient.SqlException ex)
@@ -229,11 +245,26 @@ public partial class Display : System.Web.UI.Page
                 sqlDa.Fill(dt);
             }
 
+            GridViewBuildingList.DataSource = dt;
+            GridViewBuildingList.DataBind();
+
+
+            if (dt.Rows.Count == 0)
+            {
+                lblNoResults.Visible = true;
+            }
+            else
+            {
+                lblNoResults.Visible = false;
+            }
+
+            /*
             if (dt.Rows.Count > 0)
             {
                 GridViewBuildingList.DataSource = dt;
                 GridViewBuildingList.DataBind();
             }
+            */
         }
         catch (System.Data.SqlClient.SqlException ex)
         {
@@ -417,6 +448,15 @@ public partial class Display : System.Web.UI.Page
 
     protected void TextBoxSearch_TextChanged(object sender, EventArgs e)
     {
+        /*
+        string search = TextBoxSearch.Text;
+        BindGridViewSearch(search);
+        bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
+        */
+    }
+
+    protected void SearchButton_Click(object sender, EventArgs e)
+    {
         string search = TextBoxSearch.Text;
         BindGridViewSearch(search);
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
@@ -541,5 +581,27 @@ public partial class Display : System.Web.UI.Page
             }
         }
         return possibleResults;
+    }
+
+    protected void GridViewBuildingList_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='underline';";
+            e.Row.Attributes["onmouseout"] = "this.style.textDecoration='none';";
+
+            e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewBuildingList, "Select$" + e.Row.RowIndex);
+        }
+    }
+
+    protected void GridViewGallery_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='underline';";
+            e.Row.Attributes["onmouseout"] = "this.style.textDecoration='none';";
+
+            e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewGallery, "Select$" + e.Row.RowIndex);
+        }
     }
 }
