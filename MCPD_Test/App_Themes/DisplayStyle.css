@@ -5,7 +5,7 @@ html {
 }
 
 body {
-    background-color: #cae9ff;
+    background-color: #ecf0f2;
     font-family: Gotham,gotham,Verdana,sans-serif;
     max-height: 100%;
 }
@@ -67,32 +67,35 @@ body {
 
 
 /*Tables*/
-table{
-    width:100%;
+table {
+    width: 100%;
     background: white;
-    border-collapse:collapse;
-    border-spacing:0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-sizing: border-box;
+    text-align: center;
+    border:transparent;
 }
 
 .blueTable {
     color: #323232;
     font-family: Gotham,gotham,Verdana,sans-serif;
     font-size: small;
+    border-radius:5px;
+}
+table.blueTable tr:hover{
+    background-color:#7ab6ff;
 }
 
 table.blueTable th{
     background:rgba(255, 255, 255, 0.89);
 }
-table.blueTable tr:nth-child(even){
-    background:rgba(208, 221, 242, 0.89);
+table.blueTable th, td {
+    border-bottom: 1px solid #ddd;
+    border-top:transparent;
+    border-left:transparent;
+    border-right:transparent;
 }
-table.blueTable a{
-    color:#323232;
-}
-table.blueTable a:hover{
-    color:red;
-}
-
 
 /*Buttons*/
 .buttonContainer {
@@ -105,21 +108,22 @@ table.blueTable a:hover{
 .button {
     width: 16%;
     height: 50px;
-    background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
     background-color: #ffffff;
-    border-radius: 6px;
+    border-radius: 3px;
     color: #323232;
-    font-family: Gotham,gotham,Verdana,sans-serif;
-    font-size: small;
-    font-weight: bold;
+    font-family: calibri;
+    font-size: large;
     white-space:normal;
     padding:0;
+    background-color: white;
+    border: 1px;
+    border-color: #787878;
 }
 
     .button:hover {
-        background-color: #b1b1b1;
+        transform: translate3d(0,-4px,0);
+        box-shadow: 0 3px 3px 0 rgba(0,0,0,.2);
     }
-
 
 
 /*Image Gallery*/
@@ -141,9 +145,19 @@ table.blueTable a:hover{
         height:100%;
     }
 
-.grabbable {
-    cursor: all-scroll;
+
+.dragscroll:hover {
+    cursor: move; /* fallback: no `url()` support or images disabled */
+    cursor: url(images/grab.cur); /* fallback: Internet Explorer */
+    cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
+    cursor: -moz-grab; /* Firefox 1.5-26 */
+    cursor: grab; /* W3C standards syntax, should come last */
 }
 
-
+    .dragscroll:active {
+        cursor: url(images/grabbing.cur);
+        cursor: -webkit-grabbing;
+        cursor: -moz-grabbing;
+        cursor: grabbing;
+    }
 
