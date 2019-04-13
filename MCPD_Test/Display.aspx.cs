@@ -228,13 +228,88 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewSearch(string t)
     {
-        DataTable dt = new DataTable();
+        DataTable recordsMatchedAllWords = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
         try
         {
+            connection.Open();
+
+            string[] searchedWords = t.Split(' ');
+
+            if(searchedWords[0] == "")
             {
-                connection.Open();
+                DataTable recordsMatched = new DataTable();
+
+                SqlCommand cmd = new SqlCommand("GridSearchSimple", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@text", t);
+                SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+                sqlDa.Fill(recordsMatched);
+
+                GridViewBuildingList.DataSource = recordsMatched;
+                GridViewBuildingList.DataBind();
+
+                if (recordsMatched.Rows.Count == 0)
+                {
+                    lblNoResults.Visible = true;
+                }
+                else
+                {
+                    lblNoResults.Visible = false;
+                }
+            }
+            else
+            {
+                foreach(string word in searchedWords)
+                {
+                    DataTable recordsMatchedThisWord = new DataTable();
+
+                    SqlCommand cmd = new SqlCommand("GridSearch", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("@text", word);
+
+                    SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+
+                    sqlDa.Fill(recordsMatchedThisWord);
+
+                    if (recordsMatchedAllWords.Rows.Count == 0)
+                    {
+                        recordsMatchedAllWords = recordsMatchedThisWord;
+                    }
+                    else
+                    {
+                        foreach (DataRow matchedRow in recordsMatchedThisWord.Rows)
+                        {
+                            for (int x=0; x < recordsMatchedAllWords.Rows.Count; x++)
+                            {
+                                if (Convert.ToInt32(matchedRow[0]) == Convert.ToInt32(recordsMatchedAllWords.Rows[x][0]))
+                                {
+                                    recordsMatchedAllWords.Rows[x]["Matches"] = Convert.ToInt32(recordsMatchedAllWords.Rows[x]["Matches"]) + Convert.ToInt32(matchedRow["Matches"]);
+                                    break;
+                                }
+                                else if(x+1 == recordsMatchedAllWords.Rows.Count)
+                                {
+                                    DataRow newRow = recordsMatchedAllWords.NewRow();
+                                    newRow[0] = matchedRow[0];
+                                    newRow[1] = matchedRow[1];
+                                    newRow[2] = matchedRow[2];
+                                    newRow[3] = matchedRow[3];
+                                    newRow[4] = matchedRow[4];
+                                    newRow[5] = matchedRow[5];
+                                    recordsMatchedAllWords.Rows.Add(newRow);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                /*
                 SqlCommand cmd = new SqlCommand("GridSearch", connection)
                 {
                     CommandType = CommandType.StoredProcedure
@@ -242,29 +317,24 @@ public partial class Display : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@text", t);
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+
                 sqlDa.Fill(dt);
-            }
+                */
 
-            GridViewBuildingList.DataSource = dt;
-            GridViewBuildingList.DataBind();
+                recordsMatchedAllWords.DefaultView.Sort = "Matches DESC";
 
-
-            if (dt.Rows.Count == 0)
-            {
-                lblNoResults.Visible = true;
-            }
-            else
-            {
-                lblNoResults.Visible = false;
-            }
-
-            /*
-            if (dt.Rows.Count > 0)
-            {
-                GridViewBuildingList.DataSource = dt;
+                GridViewBuildingList.DataSource = recordsMatchedAllWords;
                 GridViewBuildingList.DataBind();
+
+                if (recordsMatchedAllWords.Rows.Count == 0)
+                {
+                    lblNoResults.Visible = true;
+                }
+                else
+                {
+                    lblNoResults.Visible = false;
+                }
             }
-            */
         }
         catch (System.Data.SqlClient.SqlException ex)
         {
@@ -591,7 +661,7 @@ public partial class Display : System.Web.UI.Page
             e.Row.Attributes["onmouseout"] = "this.style.textDecoration='none';";
 
             e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewBuildingList, "Select$" + e.Row.RowIndex);
-            e.Row.Cells[4].Style["display"] = "none";
+            //e.Row.Cells[4].Style["display"] = "none";
         }
     }
 
