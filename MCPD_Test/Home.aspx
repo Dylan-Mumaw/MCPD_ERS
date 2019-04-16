@@ -6,6 +6,7 @@
 <head runat="server">
 
     <link rel="stylesheet" href="App_Themes/HomeStyle.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <title>Login</title>
 </head>
