@@ -5,9 +5,10 @@ html {
 }
 
 body {
-    background-color: #ecf0f2;
-    font-family: Gotham,gotham,Verdana,sans-serif;
+    background-color: #eaebf2;
+    font-family: 'Open Sans', sans-serif;
     max-height: 100%;
+    overflow: hidden;
 }
 
 .background {
@@ -31,7 +32,16 @@ body {
     padding-left:4px;
     box-shadow: 1px 1px 2px 1px #9D9EA0 inset;
     border: none;
+    height:30px;
+    width:100%;
 }
+.textbox::placeholder{
+    font-size:16px;
+}
+.textbox:focus::placeholder{
+    color:transparent;
+}
+
 
 
 
@@ -44,11 +54,14 @@ body {
     box-sizing:border-box;
 }
 .leftContainer {
-    margin-right: 4px;
+    flex-direction:column;
+    box-sizing: border-box;
+    padding-right: 10px;
 }
 
 .rightContainer {
-    margin-left: 4px;
+    box-sizing: border-box;
+    padding-left: 10px;
 }
 
 .item {
@@ -56,13 +69,17 @@ body {
     height: 100%;
 }
 
-.buildingListContainer{
-    margin-top:10px;
+.bordercontainer {   
+    box-shadow: 10px 10px 4px -5px rgba(138,138,138,0.49);
+    padding: 3px;
+    background-color: #6191A1;
+    border-radius: 5px;
 }
 
+
+
 .labelSearchItem {
-    margin-bottom: 5px;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 
@@ -74,21 +91,32 @@ table {
     border-spacing: 0;
     box-sizing: border-box;
     text-align: center;
-    border:transparent;
+    border: transparent;
 }
 
 .blueTable {
     color: #323232;
-    font-family: Gotham,gotham,Verdana,sans-serif;
-    font-size: small;
-    border-radius:5px;
+    font-family: 'Open Sans', sans-serif;
 }
-table.blueTable tr:hover{
-    background-color:#7ab6ff;
+table.blueTable tr{
+    height:30px;
+    cursor: pointer;
 }
+    table.blueTable tr:hover {
+        background-color: rgba(200, 223, 230, 0.64);
+    }
 
-table.blueTable th{
-    background:rgba(255, 255, 255, 0.89);
+table.blueTable th {
+    background:#6191a1;
+    color: white;
+    cursor: default;
+    height: 20px;
+    font-size: 14px;
+}
+table.blueTable td{
+    font-size: 12px;
+    padding-right:3px;
+    padding-left:3px;
 }
 table.blueTable th, td {
     border-bottom: 1px solid #ddd;
@@ -96,13 +124,83 @@ table.blueTable th, td {
     border-left:transparent;
     border-right:transparent;
 }
+table.blueTable tr:last-child{
+    height:30px;
+}
+table.blueTable tr:last-child:hover {
+    background: white;
+}
+
+
+.hiddencolumn{
+    display:none;
+}
+
+/*.pagination-ys {
+    padding-left: 0;
+    border-radius: 4px;
+}
+
+    .pagination-ys table > tbody > tr > td {
+        display: inline-block;
+        margin-bottom:-18px;
+    }
+
+        .pagination-ys table > tbody > tr > td > a,
+        .pagination-ys table > tbody > tr > td > span {
+            position: relative;
+            padding: 5px 9px;
+            text-decoration: none;
+            color: #323232;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            margin-left: -1px;
+        }
+
+        .pagination-ys table > tbody > tr > td > span {
+            position: relative;
+            padding: 5px 9px;
+            text-decoration: none;
+            margin-left: -1px;
+            color: #323232;
+            background-color: #f5f5f5;
+            border-color: #dddddd;
+            cursor: default;
+        }
+
+        .pagination-ys table > tbody > tr > td:first-child > a,
+        .pagination-ys table > tbody > tr > td:first-child > span {
+            margin-left: 0;
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+        }
+
+        .pagination-ys table > tbody > tr > td:last-child > a,
+        .pagination-ys table > tbody > tr > td:last-child > span {
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .pagination-ys table > tbody > tr > td > a:hover,
+        .pagination-ys table > tbody > tr > td > span:hover,
+        .pagination-ys table > tbody > tr > td > a:focus,
+        .pagination-ys table > tbody > tr > td > span:focus {
+            color: #97310e;
+            background-color: #eeeeee;
+            border-color: #dddddd;
+            cursor:pointer;
+        }*/
+    
+
+.currentPicItem{
+    margin-top:10px;
+}
 
 /*Buttons*/
 .buttonContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom:8px;
 }
 
 .button {
@@ -118,19 +216,24 @@ table.blueTable th, td {
     background-color: white;
     border: 1px;
     border-color: #787878;
+    cursor:pointer;
 }
 
     .button:hover {
         transform: translate3d(0,-4px,0);
         box-shadow: 0 3px 3px 0 rgba(0,0,0,.2);
+        background-color: #6191a1;
+        color: white;
     }
-
+   
 
 /*Image Gallery*/
 
 .gallery {
     width: 100%;
     display:table;
+    box-sizing: border-box;
+    margin-top: 10px;
 }
     .gallery img {
         width: 25%;

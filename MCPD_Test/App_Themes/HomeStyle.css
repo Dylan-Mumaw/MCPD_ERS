@@ -41,17 +41,18 @@ form{
     box-shadow: 1px 1px 2px 1px #9D9EA0 inset;
     border: none;
     margin-top: 5px;
+    padding-left:5px;
 }
 
 .validatestyle {
-    font-family: Gotham,gotham,Verdana,sans-serif;
-    font-size:small;
-    color:red
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+    color: red
 }
 
 .button {
     border-radius: 5px;
-    font-family: Gotham,gotham,Verdana,sans-serif;
+    font-family: 'Open Sans', sans-serif;
     height: 30px;
     background: #fff;
 }
@@ -61,7 +62,7 @@ form{
 }
 
 .label {
-    font-family: Gotham,gotham,Verdana,sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: small;
     color: #323232;
     letter-spacing: .5px;
