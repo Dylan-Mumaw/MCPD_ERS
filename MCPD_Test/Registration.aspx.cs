@@ -15,6 +15,7 @@ public partial class Registration : System.Web.UI.Page
 
     protected void ButtonSubmit_Click(object sender, EventArgs e)
     {
+        /*
         string firstName = TextBoxFirstName.Text;
         string lastName = TextBoxLastName.Text;
         string empPosition = RadioEmployeeLevel.SelectedValue;
@@ -57,15 +58,17 @@ public partial class Registration : System.Web.UI.Page
             Credentials = new System.Net.NetworkCredential("HOST'S EMAIL", "HOST'S PASSWORD"),
             DeliveryMethod = SmtpDeliveryMethod.Network
         };
+        */
 
         try
         {
-            client.Send(emailMsg);
-            Response.Write("<B>Email has been sent successfully.</B>");
+            //client.Send(emailMsg);
+            //Response.Write("<B>Email has been sent successfully.</B>");
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Email has been sent successfully.')", true);
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Exception caught in ButtonSubmit_Click(): { 0}", ex.ToString());
+            Console.WriteLine("Exception caught in ButtonSubmit_Click(): {0}", ex.ToString());
         }
     }
 }
