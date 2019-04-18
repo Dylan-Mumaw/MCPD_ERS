@@ -411,6 +411,7 @@
                             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                             <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
                             <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
+                            <asp:BoundField DataField="Role" HeaderText="Level" SortExpression="Role" />
                             <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="true" ShowHeader="True" />
                         </Columns>
                     </asp:GridView>
@@ -513,6 +514,27 @@
                                 </asp:RequiredFieldValidator>
                             </InsertItemTemplate>
                         </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Level:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewRole" runat="server"
+                                    Text='<%# Eval("Role") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewRole" runat="server"
+                                    Text='<%# Bind("Role") %>' Width="200px"></asp:TextBox>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:TextBox ID="txtDetailsViewRole" runat="server"
+                                    Text='<%# Bind("Role") %>' Width="200px"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorRole" runat="server"
+                                    ControlToValidate="txtDetailsViewRole"
+                                    ErrorMessage="Role is a required field.">
+                                </asp:RequiredFieldValidator>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:CommandField ButtonType="Button"
                             ShowDeleteButton="true"
                             ShowEditButton="true"
@@ -536,13 +558,19 @@
                             <tr>
                                 <td>Username:</td>
                                 <td>
-                                    <span id="DetailsViewBuildings_lblDetailsViewUserName"></span>
+                                    <span id="DetailsViewLogin_lblDetailsViewUserName"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Password:</td>
                                 <td>
-                                    <span id="DetailsViewBuildings_lblDetailsViewPassword"></span>
+                                    <span id="DetailsViewLogin_lblDetailsViewPassword"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Level:</td>
+                                <td>
+                                    <span id="DetailsViewLogin_lblDetailsViewRole"></span>
                                 </td>
                             </tr>
                             <td colspan="2">
