@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.Text;
+using System.IO;
 
 public partial class Maintenance : System.Web.UI.Page
 {
@@ -356,7 +357,7 @@ public partial class Maintenance : System.Web.UI.Page
         }
     }
 
-    
+
 
     //<-----------------END TYPE DATA EVENTS----------------->
 
@@ -482,12 +483,46 @@ public partial class Maintenance : System.Web.UI.Page
         }
         else
         {
-            DetailsView dv = (DetailsView)sender;
-            FileUpload fu = (FileUpload)dv.FindControl("UploadPicture");
-            fu.SaveAs(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\" + fu.FileName);
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                DetailsView dv = (DetailsView)sender;
+                FileUpload fu = (FileUpload)dv.FindControl("UploadPicture");
 
-            GridViewPictures.DataBind();
-            Response.Redirect(Request.RawUrl);
+                try
+                {
+                    string buildingName, buildingType;
+
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand("getBuilding", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", e.Values["buildId"].ToString());
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        buildingName = reader["Name"].ToString();
+                        buildingType = reader["Type"].ToString();
+
+                        buildingName = replaceInvalidCharacters(buildingName);
+                        buildingType = replaceInvalidCharacters(buildingType);
+
+                        fu.SaveAs(AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + buildingType + "\\\\" + buildingName + "\\\\" + fu.FileName);
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Fetch Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+                GridViewPictures.DataBind();
+                Response.Redirect(Request.RawUrl);
+            }
         }
     }
 
@@ -507,6 +542,95 @@ public partial class Maintenance : System.Web.UI.Page
         }
         else
         {
+            string oldBuildId = e.OldValues["buildId"].ToString();
+            string newBuildId = e.NewValues["buildId"].ToString();
+
+            // Not sure if this works
+            if (oldBuildId != newBuildId)
+            {
+                using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+                {
+                    try
+                    {
+                        string oldBuildingName, oldBuildingType, newBuildingName, newBuildingType;
+
+                        connection.Open();
+                        SqlCommand cmd1 = new SqlCommand("getBuilding", connection);
+                        cmd1.CommandType = CommandType.StoredProcedure;
+                        cmd1.Parameters.AddWithValue("@Id", oldBuildId);
+                        SqlDataReader reader1 = cmd1.ExecuteReader();
+
+                        if (reader1.Read())
+                        {
+                            oldBuildingName = reader1["Name"].ToString();
+                            oldBuildingType = reader1["Type"].ToString();
+
+                            oldBuildingName = replaceInvalidCharacters(oldBuildingName);
+                            oldBuildingType = replaceInvalidCharacters(oldBuildingType);
+
+                            reader1.Close();
+
+                            SqlCommand cmd2 = new SqlCommand("getBuilding", connection);
+                            cmd2.CommandType = CommandType.StoredProcedure;
+                            cmd2.Parameters.AddWithValue("@Id", newBuildId);
+                            SqlDataReader reader2 = cmd2.ExecuteReader();
+
+                            if (reader2.Read())
+                            {
+                                newBuildingName = reader2["Name"].ToString();
+                                newBuildingType = reader2["Type"].ToString();
+
+                                newBuildingName = replaceInvalidCharacters(newBuildingName);
+                                newBuildingType = replaceInvalidCharacters(newBuildingType);
+
+                                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" +newBuildingType))
+                                {
+                                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + newBuildingType);
+                                }
+
+                                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + newBuildingType + "\\\\" + newBuildingName))
+                                {
+                                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + newBuildingType + "\\\\" + newBuildingName);
+                                }
+
+                                DetailsView dv = (DetailsView)sender;
+                                Label lblDetailsViewRefLoc = (Label)dv.FindControl("lblDetailsViewRefLoc");
+
+                                int lastSlashIndex = 0;
+
+                                for (int x = 0; x < lblDetailsViewRefLoc.Text.Length; x++)
+                                {
+                                    if (lblDetailsViewRefLoc.Text[x] == '\\')
+                                    {
+                                        lastSlashIndex = x;
+                                    }
+                                }
+
+                                string fileName = lblDetailsViewRefLoc.Text.Substring(lastSlashIndex + 1);
+
+                                string oldDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + e.OldValues["refLoc"].ToString() + "\\\\" + oldBuildingName + "\\\\" + fileName;
+                                string newDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + newBuildingType + "\\\\" + newBuildingName + "\\\\" + fileName;
+                                // oldBuildingType
+                                File.Move(oldDirectory, newDirectory);
+                            }
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException ex)
+                    {
+                        string msg = "Fetch Error:";
+                        msg += ex.Message;
+                        throw new Exception(msg);
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+
+                    GridViewPictures.DataBind();
+                    Response.Redirect(Request.RawUrl);
+                }
+            }
+
             GridViewPictures.DataBind();
             Response.Redirect(Request.RawUrl);
         }
@@ -592,8 +716,124 @@ public partial class Maintenance : System.Web.UI.Page
 
     protected void DetailsViewPictures_ItemInserting(object sender, DetailsViewInsertEventArgs e)
     {
-        DetailsView dv = (DetailsView)sender;
-        FileUpload fu = (FileUpload)dv.FindControl("UploadPicture");
-        SqlDataSourcePictureDetails.InsertParameters.Add("refLoc", "~\\\\LocationPhotos\\\\" + fu.PostedFile.FileName);
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            try
+            {
+                string buildingName, buildingType;
+
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("getBuilding", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", e.Values["buildId"].ToString());
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    buildingName = reader["Name"].ToString();
+                    buildingType = reader["Type"].ToString();
+
+                    buildingName = replaceInvalidCharacters(buildingName);
+                    buildingType = replaceInvalidCharacters(buildingType);
+
+                    if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + buildingType))
+                    {
+                        Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + buildingType);
+                    }
+
+                    if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + buildingType + "\\\\" + buildingName))
+                    {
+                        Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "LocationPhotos\\\\" + buildingType + "\\\\" + buildingName);
+                    }
+
+                    DetailsView dv = (DetailsView)sender;
+                    FileUpload fu = (FileUpload)dv.FindControl("UploadPicture");
+                    SqlDataSourcePictureDetails.InsertParameters.Add("refLoc", "~\\\\LocationPhotos\\\\" + buildingType + "\\\\" + buildingName + "\\\\" + fu.PostedFile.FileName);
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+
+    private string replaceInvalidCharacters(string path)
+    {
+        path = path.Replace('\\', '_');
+        path = path.Replace('/', '_');
+        path = path.Replace('~', '_');
+        path = path.Replace('#', '_');
+        path = path.Replace('%', '_');
+        path = path.Replace('&', '_');
+        path = path.Replace('*', '_');
+        path = path.Replace('[', '_');
+        path = path.Replace(']', '_');
+        path = path.Replace(':', '_');
+        path = path.Replace('<', '_');
+        path = path.Replace('>', '_');
+        path = path.Replace('?', '_');
+        path = path.Replace('|', '_');
+        path = path.Replace('"', '_');
+
+        return path;
+    }
+
+    protected void DetailsViewPictures_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
+    {
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            try
+            {
+                string buildingName, buildingType;
+                DetailsView dv = (DetailsView)sender;
+                TextBox txtBuildId = (TextBox)dv.FindControl("txtDetailsViewBuildID");
+                Label lblDetailsViewRefLoc = (Label)dv.FindControl("lblDetailsViewRefLoc");
+                int lastSlashIndex = 0;
+
+                for(int x=0; x < lblDetailsViewRefLoc.Text.Length; x++)
+                {
+                    if(lblDetailsViewRefLoc.Text[x] == '\\')
+                    {
+                        lastSlashIndex = x;
+                    }
+                }
+
+                string fileName = lblDetailsViewRefLoc.Text.Substring(lastSlashIndex + 1);
+
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("getBuilding", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", txtBuildId.Text);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    buildingName = reader["Name"].ToString();
+                    buildingType = reader["Type"].ToString();
+
+                    buildingName = replaceInvalidCharacters(buildingName);
+                    buildingType = replaceInvalidCharacters(buildingType);
+
+                    SqlDataSourcePictureDetails.UpdateParameters.Add("refLoc", "~\\\\LocationPhotos\\\\" + buildingType + "\\\\" + buildingName + "\\\\" + fileName);
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
