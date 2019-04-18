@@ -20,6 +20,7 @@ public partial class Maintenance : System.Web.UI.Page
             url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
         }
+        //if(Session["UploadPicture"] == null && )
     }
 
     private string GetConnectionString()
@@ -31,10 +32,22 @@ public partial class Maintenance : System.Web.UI.Page
     {
         SetArrows(sender, e);
     }
+
+    protected void GridViewBuildingsArchive_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        SetArrows(sender, e);
+    }
+
     protected void GridViewTypes_RowCreated(Object sender, GridViewRowEventArgs e)
     {
         SetArrows(sender, e);
     }
+
+    protected void GridViewLoginArchive_RowCreated(Object sender, GridViewRowEventArgs e)
+    {
+        SetArrows(sender, e);
+    }
+
     protected void GridViewLogin_RowCreated(Object sender, GridViewRowEventArgs e)
     {
         SetArrows(sender, e);
@@ -123,7 +136,7 @@ public partial class Maintenance : System.Web.UI.Page
         headerRow.Cells[columnIndex].Controls.Add(sortSuffixImage);
     }
 
-
+    //<-----------------BEGIN NEW RECORD BUTTON CLICK----------------->
     protected void NewBuilding_Click(object sender, EventArgs e)
     {
         DetailsViewBuildings.ChangeMode(DetailsViewMode.Insert);
@@ -147,6 +160,7 @@ public partial class Maintenance : System.Web.UI.Page
     {
         DetailsViewContacts.ChangeMode(DetailsViewMode.Insert);
     }
+    //<-----------------END NEW RECORD BUTTON CLICK----------------->
 
     protected Int32 GetNextId(string tableName)
     {
@@ -175,6 +189,7 @@ public partial class Maintenance : System.Web.UI.Page
         return nextId;
     }
 
+    //<-----------------BEGIN BUILDING DATA EVENTS----------------->
     protected void DetailsViewBuildings_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
         if (e.Exception != null)
@@ -195,6 +210,37 @@ public partial class Maintenance : System.Web.UI.Page
             Response.Redirect(Request.RawUrl);
         }
     }
+
+    protected void DetailsViewBuildings_ItemDeleting(object sender, DetailsViewDeleteEventArgs e)
+    {
+        DetailsView dv = (DetailsView)sender;
+        Label lblBuildingId = (Label)dv.FindControl("lblDetailsViewBuildingId");
+        int buildingId = Convert.ToInt32(lblBuildingId.Text);
+
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("ArchiveBuilding", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", buildingId);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+
     protected void DetailsViewBuildings_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
     {
         if (e.Exception != null)
@@ -230,6 +276,29 @@ public partial class Maintenance : System.Web.UI.Page
         }
     }
 
+    protected void DetailsViewBuildingsArchive_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " + "<br>" +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated that building archive. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewBuildingsArchive.DataBind();
+            Response.Redirect(Request.RawUrl);
+        }
+    }
+    //<-----------------END BUILDING DATA EVENTS----------------->
+
+
+    //<----------------BEGIN TYPES DATA EVENTS----------------->
     protected void DetailsViewTypes_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
         if (e.Exception != null)
@@ -287,6 +356,11 @@ public partial class Maintenance : System.Web.UI.Page
         }
     }
 
+    
+
+    //<-----------------END TYPE DATA EVENTS----------------->
+
+    //<-----------------BEGIN LOGIN DATA EVENTS----------------->
     protected void DetailsViewLogin_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
         if (e.Exception != null)
@@ -307,6 +381,37 @@ public partial class Maintenance : System.Web.UI.Page
             Response.Redirect(Request.RawUrl);
         }
     }
+
+    protected void DetailsViewLogin_ItemDeleting(object sender, DetailsViewDeleteEventArgs e)
+    {
+        DetailsView dv = (DetailsView)sender;
+        Label lblUserId = (Label)dv.FindControl("lblDetailsViewUserId");
+        int userId = Convert.ToInt32(lblUserId.Text);
+
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("ArchiveLogin", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@LogId", userId);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Fetch Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+
     protected void DetailsViewLogin_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
     {
         if (e.Exception != null)
@@ -317,7 +422,7 @@ public partial class Maintenance : System.Web.UI.Page
         }
         else if (e.AffectedRows == 0)
         {
-            lblError.Text = "Another user may have updated that building. " +
+            lblError.Text = "Another user may have updated that login. " +
                 "Please try again.";
         }
         else
@@ -342,6 +447,30 @@ public partial class Maintenance : System.Web.UI.Page
             Response.Redirect(Request.RawUrl);
         }
     }
+
+    protected void DetailsViewLoginArchive_ItemDeleted(object sender, DetailsViewDeletedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occured. " +
+                "Message: " + e.Exception.Message;
+            e.ExceptionHandled = true;
+        }
+        else if (e.AffectedRows == 0)
+        {
+            lblError.Text = "Another user may have updated that login archive. " +
+                "Please try again.";
+        }
+        else
+        {
+            GridViewLogin.DataBind();
+            Response.Redirect(Request.RawUrl);
+        }
+    }
+
+    //<-----------------END LOGIN DATA EVENTS----------------->
+
+    //<-----------------BEGIN PICTURE DATA EVENTS----------------->
     protected void DetailsViewPictures_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
     {
         if (e.Exception != null)
@@ -401,7 +530,10 @@ public partial class Maintenance : System.Web.UI.Page
             Response.Redirect(Request.RawUrl);
         }
     }
+    //<-----------------END PICTURE DATA EVENTS----------------->
 
+
+    //<-----------------BEGIN CONTACT DATA EVENTS----------------->
     protected void DetailsViewContacts_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
         if (e.Exception != null)
@@ -456,6 +588,8 @@ public partial class Maintenance : System.Web.UI.Page
             Response.Redirect(Request.RawUrl);
         }
     }
+    //<-----------------END CONTACT DATA EVENTS----------------->
+
     protected void DetailsViewPictures_ItemInserting(object sender, DetailsViewInsertEventArgs e)
     {
         DetailsView dv = (DetailsView)sender;

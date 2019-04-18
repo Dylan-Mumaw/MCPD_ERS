@@ -30,8 +30,8 @@
                             </asp:GridView>
                         </div>
                         <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                            SelectCommand="building"
-                            DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
+                            SelectCommand="building">
+                            <%--DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
                             InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Alias]) VALUES (@Name, @Address, @Alias)"
                             UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id" SelectCommandType="StoredProcedure">
                             <DeleteParameters>
@@ -48,7 +48,7 @@
                                 <asp:Parameter Name="Type" />
                                 <asp:Parameter Name="Alias" Type="String" />
                                 <asp:Parameter Name="Id" Type="Int32" />
-                            </UpdateParameters>
+                            </UpdateParameters>--%>
                         </asp:SqlDataSource>
 
                         <!-----------------BUILDING MAINTENANCE DETAILS LIST---------------->
@@ -56,6 +56,7 @@
                             <asp:DetailsView ID="DetailsViewBuildings" runat="server"
                                 DataSourceID="SqlDataSourceBuildingsDetails" DataKeyNames="Id"
                                 AutoGenerateRows="false"
+                                OnItemDeleting="DetailsViewBuildings_ItemDeleting"
                                 OnItemDeleted="DetailsViewBuildings_ItemDeleted"
                                 OnItemInserted="DetailsViewBuildings_ItemInserted"
                                 OnItemUpdated="DetailsViewBuildings_ItemUpdated">
@@ -212,7 +213,6 @@
                 </div>
 
                 <!-----------------BUILDING MAINTENANCE DETAILS DATA SOURCE---------------->
-
                 <div id="MaintenanceItem">
                     <header id="MaintenanceHeader">Types</header>
                     <div class="item">
@@ -376,7 +376,118 @@
                         </div>
                     </div>
                 </div>
+
+                <!-----------------BUILDING ARCHIVE MAINTENANCE GRIDVIEW---------------->
+                <asp:GridView ID="GridViewBuildingsArchive" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildingsArchive" AllowSorting="True" OnRowCreated="GridViewBuildingsArchive_RowCreated">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                        <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
+                        <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                        <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
+                        <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
+                    </Columns>
+                    <PagerStyle BackColor="#ff00ff" />
+                </asp:GridView>
             </div>
+            <asp:SqlDataSource ID="SqlDataSourceBuildingsArchive" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                SelectCommand="SELECT * FROM [Buildings_Archive]"></asp:SqlDataSource>
+
+            <!-----------------BUILDING ARCHIVE MAINTENANCE DETAILS LIST---------------->
+            <asp:DetailsView ID="DetailsViewBuildingsArchive" runat="server"
+                DataSourceID="SqlDataSourceBuildingsArchiveDetails" DataKeyNames="Id"
+                AutoGenerateRows="false"
+                OnItemDeleted="DetailsViewBuildingsArchive_ItemDeleted">
+                <Fields>
+                    <asp:TemplateField HeaderText="Building ID:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewBuildingId" runat="server"
+                                Text='<%# Eval("Id") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Building Name:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewBuildingName" runat="server"
+                                Text='<%# Eval("Name") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Building Address:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewBuildingAddress" runat="server"
+                                Text='<%# Eval("Address") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Building Type:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewBuildingType" runat="server"
+                                Text='<%# Eval("Type") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Building Alias:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewBuildingAlias" runat="server"
+                                Text='<%# Eval("Alias") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:CommandField ButtonType="Button"
+                        ShowDeleteButton="true"
+                        ShowEditButton="false"
+                        ShowInsertButton="false" />
+                </Fields>
+
+                <EmptyDataTemplate>
+                    <table cellspacing="0" rules="rows" border="1" id="DetailsViewBuildings" style="border-collapse: collapse;">
+                        <tr>
+                            <td>Building ID:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewBuildingId"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Building Name:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewBuildingName"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Building Address:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewBuildingAddress"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Building Type:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewBuildingType"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Building Alias:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewBuildingAlias"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </EmptyDataTemplate>
+            </asp:DetailsView>
+
+            <!-----------------BUILDING ARCHIVE MAINTENANCE DETAILS DATA SOURCE---------------->
+            <asp:SqlDataSource ID="SqlDataSourceBuildingsArchiveDetails" runat="server"
+                ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings_Archive] WHERE ([Id] = @Id)"
+                DeleteCommand="DELETE FROM [Buildings_Archive] WHERE [Id] = @Id">
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="GridViewBuildingsArchive" Name="Id" PropertyName="SelectedValue" Type="Int32" />
+                </SelectParameters>
+                <DeleteParameters>
+                    <asp:Parameter Name="Id" Type="Int32" />
+                </DeleteParameters>
+            </asp:SqlDataSource>
+
 
             <!-----------------LOGIN MAINTENANCE DATA---------------->
             <header>Accounts</header>
@@ -421,6 +532,7 @@
                 <asp:DetailsView ID="DetailsViewLogin" runat="server"
                     DataSourceID="SqlDataSourceLoginDetails" DataKeyNames="LogId"
                     AutoGenerateRows="false"
+                    OnItemDeleting="DetailsViewLogin_ItemDeleting"
                     OnItemDeleted="DetailsViewLogin_ItemDeleted"
                     OnItemInserted="DetailsViewLogin_ItemInserted"
                     OnItemUpdated="DetailsViewLogin_ItemUpdated">
@@ -582,12 +694,13 @@
                 </asp:DetailsView>
 
                 <!-----------------LOGIN MAINTENANCE DETAILS DATA---------------->
+                
                 <asp:SqlDataSource ID="SqlDataSourceLoginDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                    SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins] WHERE ([LogId] = @LogId)"
+                    SelectCommand="SELECT [LogId], [Name], [UserName], [Password], [Role] FROM [Logins] WHERE ([LogId] = @LogId)"
                     DeleteCommand="DELETE FROM [Logins] WHERE [LogId] = @LogId"
-                    InsertCommand="INSERT INTO [Logins] ([Name], [UserName], [Password]) VALUES (@Name, @UserName, @Password)"
-                    UpdateCommand="UPDATE [Logins] SET [Name] = @Name, [UserName] = @UserName, [Password] = @Password WHERE [LogId] = @LogId">
+                    InsertCommand="INSERT INTO [Logins] ([Name], [UserName], [Password], [Role]) VALUES (@Name, @UserName, @Password, @Role)"
+                    UpdateCommand="UPDATE [Logins] SET [Name] = @Name, [UserName] = @UserName, [Password] = @Password, [Role] = @Role WHERE [LogId] = @LogId">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="GridViewLogin" Name="LogId" PropertyName="SelectedValue" Type="Int32" />
                     </SelectParameters>
@@ -598,15 +711,119 @@
                         <asp:Parameter Name="Name" Type="String" />
                         <asp:Parameter Name="UserName" Type="String" />
                         <asp:Parameter Name="Password" Type="String" />
+                        <asp:Parameter Name="Role" Type="String" />
                     </InsertParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="Name" Type="String" />
                         <asp:Parameter Name="UserName" Type="String" />
                         <asp:Parameter Name="Password" Type="String" />
+                        <asp:Parameter Name="Role" Type="String" />
                         <asp:Parameter Name="LogId" Type="Int32" />
                     </UpdateParameters>
                 </asp:SqlDataSource>
             </div>
+
+            <!-----------------LOGIN ARCHIVE MAINTENANCE GRIDVIEW---------------->
+            <div id="GridViewLoginArchiveBox">
+                <header>Accounts Archive</header>
+                <asp:GridView ID="GridViewLoginArchive" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLoginArchive" AllowSorting="true" OnRowCreated="GridViewLoginArchive_RowCreated">
+                    <Columns>
+                        <asp:BoundField DataField="LogId" HeaderText="LogId" InsertVisible="False" ReadOnly="True" SortExpression="LogId" />
+                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                        <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
+                        <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
+                        <asp:BoundField DataField="Role" HeaderText="Level" SortExpression="Role" />
+                        <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="true" ShowHeader="True" />
+                    </Columns>
+                </asp:GridView>
+            </div>
+
+            <!-----------------LOGIN ARCHIVE MAINTENANCE DATA---------------->
+            <asp:SqlDataSource ID="SqlDataSourceLoginArchive" runat="server"
+                ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                SelectCommand="SELECT * FROM [Logins_Archive]"></asp:SqlDataSource>
+
+            <!-----------------LOGIN ARCHIVE MAINTENANCE DETAILS LIST---------------->
+            <asp:DetailsView ID="DetailsViewLoginArchive" runat="server"
+                DataSourceID="SqlDataSourceLoginArchiveDetails" DataKeyNames="LogId"
+                AutoGenerateRows="false"
+                OnItemDeleted="DetailsViewLoginArchive_ItemDeleted">
+                <Fields>
+                    <asp:TemplateField HeaderText="User ID:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewUserId" runat="server"
+                                Text='<%# Eval("logId") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Full Name:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewFullName" runat="server"
+                                Text='<%# Eval("Name") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Username:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewUserName" runat="server"
+                                Text='<%# Eval("UserName") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Password:">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDetailsViewPassword" runat="server"
+                                Text='<%# Eval("Password") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:CommandField ButtonType="Button"
+                        ShowDeleteButton="true"
+                        ShowEditButton="false"
+                        ShowInsertButton="false" />
+                </Fields>
+
+                <EmptyDataTemplate>
+                    <table cellspacing="0" rules="rows" border="1" id="DetailsViewLoginArchive" style="border-collapse: collapse;">
+                        <tr>
+                            <td>User ID:</td>
+                            <td>
+                                <span id="DetailsViewLogin_lblDetailsViewUserId"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Full Name:</td>
+                            <td>
+                                <span id="DetailsViewLogin_lblDetailsViewFullName"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Username:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewUserName"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td>
+                                <span id="DetailsViewBuildings_lblDetailsViewPassword"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </EmptyDataTemplate>
+            </asp:DetailsView>
+
+            <!-----------------LOGIN ARCHIVE MAINTENANCE DETAILS DATA---------------->
+            <asp:SqlDataSource ID="SqlDataSourceLoginArchiveDetails" runat="server"
+                ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins_Archive] WHERE ([LogId] = @LogId)"
+                DeleteCommand="DELETE FROM [Logins_Archive] WHERE [LogId] = @LogId">
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="GridViewLoginArchive" Name="LogId" PropertyName="SelectedValue" Type="Int32" />
+                </SelectParameters>
+                <DeleteParameters>
+                    <asp:Parameter Name="LogId" Type="Int32" />
+                </DeleteParameters>
+            </asp:SqlDataSource>
 
             <!-----------------PICTURES MAINTENANCE DATA---------------->
             <header>Images</header>
