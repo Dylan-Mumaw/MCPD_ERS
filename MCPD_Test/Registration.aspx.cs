@@ -62,10 +62,11 @@ public partial class Registration : System.Web.UI.Page
         {
             client.Send(emailMsg);
             Response.Write("<B>Email has been sent successfully.</B>");
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Email has been sent successfully.')", true);
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Exception caught in ButtonSubmit_Click(): { 0}", ex.ToString());
+            Console.WriteLine("Exception caught in ButtonSubmit_Click(): {0}", ex.ToString());
         }
     }
 }

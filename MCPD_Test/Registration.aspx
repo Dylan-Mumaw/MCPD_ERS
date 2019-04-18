@@ -57,7 +57,7 @@
 
             <div class="item">
                 <asp:Label ID="LabelPhone" runat="server" Text="Phone Number:" CssClass="label"></asp:Label>
-                <asp:TextBox ID="TextBoxPhone" runat="server" CssClass="textbox" Text="(___) ___-____"></asp:TextBox>
+                <asp:TextBox ID="TextBoxPhone" runat="server" CssClass="textbox" placeholder="(___) ___-____"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="validatePhone"
                     runat="server" ControlToValidate="TextBoxPhone"
                     ErrorMessage="Required"
