@@ -694,7 +694,7 @@
                 </asp:DetailsView>
 
                 <!-----------------LOGIN MAINTENANCE DETAILS DATA---------------->
-                
+
                 <asp:SqlDataSource ID="SqlDataSourceLoginDetails" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT [LogId], [Name], [UserName], [Password], [Role] FROM [Logins] WHERE ([LogId] = @LogId)"
@@ -863,6 +863,7 @@
                     AutoGenerateRows="false"
                     OnItemDeleted="DetailsViewPictures_ItemDeleted"
                     OnItemInserted="DetailsViewPictures_ItemInserted"
+                    OnItemUpdating="DetailsViewPictures_ItemUpdating"
                     OnItemUpdated="DetailsViewPictures_ItemUpdated"
                     OnItemInserting="DetailsViewPictures_ItemInserting">
                     <Fields>
@@ -873,7 +874,7 @@
                             </ItemTemplate>
                             <EditItemTemplate>
                                 <asp:Label ID="lblDetailsViewPicId" runat="server"
-                                    Text='<%# Eval("picId") %>'></asp:Label>
+                                    Text='<%# Bind("picId") %>'></asp:Label>
                             </EditItemTemplate>
                             <InsertItemTemplate>
                                 <asp:Label ID="lblDetailsViewPicId" runat="server"
@@ -973,7 +974,6 @@
                     </InsertParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="buildId" Type="Int32" />
-                        <asp:Parameter Name="refLoc" Type="String" />
                         <asp:Parameter Name="picId" Type="Int32" />
                     </UpdateParameters>
                 </asp:SqlDataSource>
