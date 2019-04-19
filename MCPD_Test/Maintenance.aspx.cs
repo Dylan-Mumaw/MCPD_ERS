@@ -21,7 +21,6 @@ public partial class Maintenance : System.Web.UI.Page
             url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
         }
-        //if(Session["UploadPicture"] == null && )
     }
 
     private string GetConnectionString()
@@ -605,9 +604,9 @@ public partial class Maintenance : System.Web.UI.Page
 
                                 string fileName = lblDetailsViewRefLoc.Text.Substring(lastSlashIndex + 1);
 
-                                string oldDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + e.OldValues["refLoc"].ToString() + "\\\\" + oldBuildingName + "\\\\" + fileName;
+                                string oldDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + oldBuildingType + "\\\\" + oldBuildingName + "\\\\" + fileName;
                                 string newDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + newBuildingType + "\\\\" + newBuildingName + "\\\\" + fileName;
-                                // oldBuildingType
+
                                 File.Move(oldDirectory, newDirectory);
                             }
                         }
