@@ -22,6 +22,7 @@
                 </div>
 
                 <div class="usernameitem" id="UsernameItem">
+                    <asp:Label ID="lblUserName" runat="server" Visible="false" Text="label"></asp:Label>
                     <asp:Label ID="LabelUsername" runat="server" Text="Username" CssClass="label"></asp:Label><br />
                     <asp:TextBox ID="TextBoxUsername" runat="server" CssClass="textbox"></asp:TextBox><br />
                     <asp:RequiredFieldValidator ID="validateLogin"
@@ -42,6 +43,8 @@
                 <div id="ButtonItem" class="buttonitem">
                     <asp:Button ID="ButtonLogin" runat="server" Text="Login" CssClass="button" OnClick="ButtonLogin_Click" />
                     <asp:Button ID="ButtonCreate" runat="server" Text="Create Account" CssClass="button" CausesValidation="false" OnClick="ButtonCreate_Click" />
+                    <asp:Button ID="ButtonDisplay" runat="server" Text="Go To Display Page" CssClass="button" OnClick="ButtonDisplay_Click" Visible="false" />
+                    <asp:Button ID="ButtonLogout" runat="server" Text="Logout" CssClass="button" OnClick="ButtonLogout_Click" visible="false" />
                 </div>
 
                 <div id="LabelItem" class="labelitem">

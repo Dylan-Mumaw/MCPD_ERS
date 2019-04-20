@@ -54,7 +54,7 @@ public partial class Display : System.Web.UI.Page
 
                     ButtonContainer.Controls.Add(currentButton);
                 }
-
+                
                 Button searchAllButton = new Button
                 {
                     ID = "btnSelectAll",
@@ -456,7 +456,7 @@ public partial class Display : System.Web.UI.Page
                     double ratio = bigImage.Width.Value / naturalWidth;
                     int scaledHeight = (int)(naturalHeight * ratio);
 
-                    bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:520px;height:{0}px;", scaledHeight + 4);
+                    bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:820px;height:{0}px;", scaledHeight + 6);
                 }
             }
         }
@@ -674,5 +674,12 @@ public partial class Display : System.Web.UI.Page
 
             e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewGallery, "Select$" + e.Row.RowIndex);
         }
+    }
+
+    protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        Session["Flag"] = "";
+        Session["User"] = "";
+        Response.Redirect("Home.aspx", false);
     }
 }

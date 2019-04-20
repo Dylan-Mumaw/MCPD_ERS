@@ -17,13 +17,36 @@ public partial class Home : Page
     {
         return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
     }
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!string.IsNullOrEmpty((String)Session["DisplayInvalid"]))
+        {
+            Label1.Text = "Please enter correct data.";
+        }
+        
         flag = (String)Session["Flag"];
         if (!Request.IsSecureConnection)
         {
             string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
+        }
+        
+        if(!string.IsNullOrEmpty((String)Session["Flag"]) && lblUserName.Visible == false)
+        {
+            lblUserName.Text = "Hello, " + Session["User"].ToString() + "!";
+            lblUserName.Visible = true;
+            ButtonLogout.Visible = true;
+            ButtonDisplay.Visible = true;
+
+            LabelUsername.Visible = false;
+            TextBoxUsername.Visible = false;
+            LabelPassword.Visible = false;
+            TextBoxPassword.Visible = false;
+            ButtonLogin.Visible = false;
+            ButtonCreate.Visible = false;
+            validateLogin.Enabled = false;
+            validatePass.Enabled = false;
         }
     }
 
@@ -33,9 +56,11 @@ public partial class Home : Page
         Pass = TextBoxPassword.Text;
         SelectQuery();
         if (string.IsNullOrEmpty(flag) || flag.Length <= 0)
-            //Response.Redirect("Home.aspx");
-            Label1.Text = "Please enter correct data.";
-        else if (flag.Length > 0) Response.Redirect("Display.aspx", false);
+        {
+            Session["DisplayInvalid"] = "true";
+        }
+
+        Response.Redirect("Home.aspx", false);
     }
     protected void SelectQuery()
     {
@@ -54,6 +79,8 @@ public partial class Home : Page
         while (reader.Read())
         {
             flag = reader["Role"].ToString();
+            Session["User"] = User;
+            Session["DisplayInvalid"] = "";
         }
         Session["Flag"] = flag;
     }
@@ -61,5 +88,17 @@ public partial class Home : Page
     protected void ButtonCreate_Click(object sender, EventArgs e)
     {
         Server.Transfer("Registration.aspx");
+    }
+
+    protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        Session["Flag"] = "";
+        Session["User"] = "";
+        Response.Redirect("Home.aspx", false);
+    }
+
+    protected void ButtonDisplay_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Display.aspx", false);
     }
 }
