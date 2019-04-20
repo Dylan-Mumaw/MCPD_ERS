@@ -19,7 +19,7 @@
         }
         function handleEnter(obj, event) {
             var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-            if (keyCode == 13) {
+            if (keyCode == 13 && obj == document.getElementById('TextBoxSearch')) {
                 document.getElementById(obj).click();
                 return false;
             }
@@ -75,10 +75,6 @@
         function onPossibleResultsFailure(error) {
             alert(error);
         }
-        function onSearchSuccess(result) {
-        }
-        function onSearchFailure(error) {
-        }
     </script>
 
     <script runat="server">
@@ -106,6 +102,8 @@
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" OnClick="SearchButton_Click" />
                 <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance"
                     CausesValidation="false" PostBackUrl="~/Maintenance.aspx" CssClass="button" />
+                <asp:Button ID="ButtonLogout" runat="server" Text="Logout"
+                    CausesValidation="false" OnClick="ButtonLogout_Click" CssClass="button" />
                 <div id="LabelSearchItem" class="labelSearchItem">
                    <%-- <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>--%>
                     <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" OnTextChanged="TextBoxSearch_TextChanged" Placeholder="Search"></asp:TextBox>&nbsp<br />
@@ -180,13 +178,13 @@
              <div id="RightContainer" class="item rightContainer">
                 <div id="BigImageContainer bordercontainer">
                     <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
-                        <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />
+                        <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="800px" ResizeMode="Fit" />
                     </div>
                 </div>
                 <div id="ZoomButtonContainer">
                     <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" class="button" />
                     <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" class="button" />
-                    <input id="TestTextbox" class="textbox" type="text" runat="server" />
+                    <input id="TestTextbox" class="textbox" type="text" runat="server" readonly="true" />
                 </div>
             </div>
             <asp:SqlDataSource ID="SqlDataSourceContactDdl" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT FullName FROM Contacts"></asp:SqlDataSource>
