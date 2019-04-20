@@ -2,7 +2,10 @@
 
 CNIT485 Final Project.
 
-Personnel:
-Dylan Mumaw - Project Manager/Dev
-Robert Birkmeyer - Developer
+Project Personnel:
+Dylan Mumaw - Project Manager/Developer
+Robert Birkmeyer - Senior Developer
 Korban Day - Developer
+
+External Consultant/Developer:
+Sarah Combs - UI Design/Front-End Developer
