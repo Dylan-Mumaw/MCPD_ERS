@@ -5,7 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="App_Themes/MaintenanceStyle.css" />
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <title>Maintenance</title>
 </head>
 <body>
@@ -29,27 +28,7 @@
                                 <PagerStyle BackColor="#ff00ff" />
                             </asp:GridView>
                         </div>
-                        <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                            SelectCommand="building">
-                            <%--DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
-                            InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Alias]) VALUES (@Name, @Address, @Alias)"
-                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id" SelectCommandType="StoredProcedure">
-                            <DeleteParameters>
-                                <asp:Parameter Name="Id" Type="Int32" />
-                            </DeleteParameters>
-                            <InsertParameters>
-                                <asp:Parameter Name="Name" Type="String" />
-                                <asp:Parameter Name="Address" Type="String" />
-                                <asp:Parameter Name="Alias" Type="String" />
-                            </InsertParameters>
-                            <UpdateParameters>
-                                <asp:Parameter Name="Name" Type="String" />
-                                <asp:Parameter Name="Address" Type="String" />
-                                <asp:Parameter Name="Type" />
-                                <asp:Parameter Name="Alias" Type="String" />
-                                <asp:Parameter Name="Id" Type="Int32" />
-                            </UpdateParameters>--%>
-                        </asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="building"></asp:SqlDataSource>
 
                         <!-----------------BUILDING MAINTENANCE DETAILS LIST---------------->
                         <div id="DetailsViewBox">

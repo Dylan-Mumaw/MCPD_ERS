@@ -4,10 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-
     <link rel="stylesheet" href="App_Themes/HomeStyle.css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
     <title>Login</title>
 </head>
 <body>
@@ -44,7 +42,7 @@
                     <asp:Button ID="ButtonLogin" runat="server" Text="Login" CssClass="button" OnClick="ButtonLogin_Click" />
                     <asp:Button ID="ButtonCreate" runat="server" Text="Create Account" CssClass="button" CausesValidation="false" OnClick="ButtonCreate_Click" />
                     <asp:Button ID="ButtonDisplay" runat="server" Text="Go To Display Page" CssClass="button" OnClick="ButtonDisplay_Click" Visible="false" />
-                    <asp:Button ID="ButtonLogout" runat="server" Text="Logout" CssClass="button" OnClick="ButtonLogout_Click" visible="false" />
+                    <asp:Button ID="ButtonLogout" runat="server" Text="Logout" CssClass="button" OnClick="ButtonLogout_Click" Visible="false" />
                 </div>
 
                 <div id="LabelItem" class="labelitem">
