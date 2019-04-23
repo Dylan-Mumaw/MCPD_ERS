@@ -12,7 +12,8 @@ body {
     align-items: center;
     justify-content: center;
     background: url(../StylePhotos/PoliceStation.jpg) no-repeat center center fixed;
-    background-size:cover;
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;
 }
 
 form{
@@ -68,9 +69,13 @@ form{
     letter-spacing: .5px;
 }
 
+.imageitem{
+    margin-bottom:280px;
+    position:absolute;
+}
+
 .usernameitem{
     margin-bottom: 15px;
-    margin-top: 40px;
 }
 
 .passworditem{
