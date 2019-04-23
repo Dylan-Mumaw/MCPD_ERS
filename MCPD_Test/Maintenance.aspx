@@ -38,6 +38,7 @@
                                 OnItemDeleting="DetailsViewBuildings_ItemDeleting"
                                 OnItemDeleted="DetailsViewBuildings_ItemDeleted"
                                 OnItemInserted="DetailsViewBuildings_ItemInserted"
+                                OnItemUpdating="DetailsViewBuildings_ItemUpdating"
                                 OnItemUpdated="DetailsViewBuildings_ItemUpdated">
                                 <Fields>
 
@@ -260,6 +261,7 @@
                                     AutoGenerateRows="false"
                                     OnItemDeleted="DetailsViewTypes_ItemDeleted"
                                     OnItemInserted="DetailsViewTypes_ItemInserted"
+                                    OnItemUpdating="DetailsViewTypes_ItemUpdating"
                                     OnItemUpdated="DetailsViewTypes_ItemUpdated">
                                     <Fields>
                                         <asp:TemplateField HeaderText="Type ID:">
