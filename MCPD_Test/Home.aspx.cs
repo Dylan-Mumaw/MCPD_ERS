@@ -20,6 +20,7 @@ public partial class Home : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        SetFocus(TextBoxUsername);
         if (!string.IsNullOrEmpty((String)Session["DisplayInvalid"]))
         {
             Label1.Text = "Please enter correct data.";
