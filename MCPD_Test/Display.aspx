@@ -29,6 +29,8 @@
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" OnClick="SearchButton_Click" />
                 <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance"
                     CausesValidation="false" PostBackUrl="~/Maintenance.aspx" CssClass="button" />
+                <asp:Button ID="ButtonLogout" runat="server" Text="Logout"
+                    CausesValidation="false" OnClick="ButtonLogout_Click" CssClass="button" />
                 <div id="LabelSearchItem" class="labelSearchItem">
                     <%-- <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>--%>
                     <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" OnTextChanged="TextBoxSearch_TextChanged" Placeholder="Search"></asp:TextBox>&nbsp<br />
