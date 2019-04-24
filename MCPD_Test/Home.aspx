@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="App_Themes/HomeStyle.css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+<%--    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />--%>
     <title>Login</title>
 </head>
 <body>
@@ -20,8 +20,8 @@
                 </div>
 
                 <div class="usernameitem" id="UsernameItem">
-                    <asp:Label ID="lblUserName" runat="server" Visible="false" Text="label"></asp:Label>
-                    <asp:Label ID="LabelUsername" runat="server" Text="Username" CssClass="label"></asp:Label><br />
+                    <asp:Label ID="lblUserName" runat="server" CssClass="lblUserName" Visible="false" Text="label"></asp:Label>
+                    <asp:Label ID="LabelUsername" runat="server" CssClass="label" Text="Username"></asp:Label><br />
                     <asp:TextBox ID="TextBoxUsername" runat="server" CssClass="textbox"></asp:TextBox><br />
                     <asp:RequiredFieldValidator ID="validateLogin"
                         runat="server" ControlToValidate="TextBoxUserName"
