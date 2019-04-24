@@ -26,8 +26,8 @@
             <div id="LeftContainer" class="item leftContainer">
                 <asp:Panel ID="ButtonContainer" runat="server" CssClass="buttonContainer"></asp:Panel>
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" OnClick="SearchButton_Click" />
-                <asp:Button ID="ButtonLogout" runat="server" Text="Logout"
-                    CausesValidation="false" OnClick="ButtonLogout_Click" CssClass="button" />
+                <asp:Button ID="ButtonHome" runat="server" Text="Home Page"
+                    CausesValidation="false" OnClick="ButtonHome_Click" CssClass="button" />
                 <div id="LabelSearchItem" class="labelSearchItem">
                     <%-- <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>--%>
                     <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Placeholder="Search"></asp:TextBox>&nbsp<br />

@@ -682,10 +682,8 @@ public partial class Display : System.Web.UI.Page
         }
     }
 
-    protected void ButtonLogout_Click(object sender, EventArgs e)
+    protected void ButtonHome_Click(object sender, EventArgs e)
     {
-        Session["Flag"] = "";
-        Session["User"] = "";
         Response.Redirect("Home.aspx", false);
     }
 }
