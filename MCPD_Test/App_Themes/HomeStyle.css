@@ -56,6 +56,7 @@ form{
     font-family: 'Open Sans', sans-serif;
     height: 30px;
     background: #fff;
+    margin: 1px;
 }
 
 .button:hover{
@@ -74,19 +75,19 @@ form{
     position:absolute;
 }
 
-.usernameitem{
-    margin-bottom: 15px;
+
+.lblUserName {
+    position: relative;
+    bottom: -30px;
 }
 
-.passworditem{
-    margin-bottom: 15px;
-}
 
 .buttonitem{
-    margin-bottom: 45px;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction:column;
+    justify-content:space-evenly;
     width: 250px;
+    margin-bottom: 30px;
 }
 
 .pagecontainer{
