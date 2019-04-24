@@ -437,8 +437,12 @@ public partial class Display : System.Web.UI.Page
 
     //<-----------------END DATA BINDING----------------->
 
-    protected void SetBigImageUrl()
+    protected void SetBigImageUrl(string refLoc)
     {
+        // Doesn't work yet
+        bigImage.ImageUrl = refLoc;
+
+        /*
         SqlConnection connection = new SqlConnection(GetConnectionString());
         try
         {
@@ -477,6 +481,7 @@ public partial class Display : System.Web.UI.Page
         {
             connection.Close();
         }
+        */
     }
     //<-----------------BEGIN BUTTON CLICK EVENTS----------------->
 
@@ -522,9 +527,42 @@ public partial class Display : System.Web.UI.Page
     protected void GridViewBuildingList_SelectedIndexChanged(object sender, EventArgs e)
     {
         buildID = Convert.ToInt16(GridViewBuildingList.SelectedDataKey.Value);
-        BindGridViewGallery();
+        PopulateGallery();
+        //BindGridViewGallery();
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
         BindGridViewCurrentContact();
+    }
+
+    protected void PopulateGallery()
+    {
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            connection.Open();
+            SqlCommand cmd = new SqlCommand("BuildRefLoc", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@buildId", buildID);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            int x = 1;
+            while(reader.Read())
+            {
+                ImageButton galleryButton = new ImageButton
+                {
+                    ID = "GalleryButton" + x,
+                    AlternateText = "Gallery Button " + x,
+                    ImageAlign = ImageAlign.Left,
+                    ImageUrl = reader["refLoc"].ToString(),
+                    CssClass = "galleryButton",
+                    Height = 300,
+                    Width = 300
+                };
+
+                galleryButton.Click += (se, args) => { Server.Transfer("Home.aspx"); };
+                GalleryContainer.Controls.Add(galleryButton);
+
+                x++;
+            }
+        }
     }
 
     protected void SearchButton_Click(object sender, EventArgs e)
@@ -542,7 +580,7 @@ public partial class Display : System.Web.UI.Page
     {
         picID = (int)GridViewGallery.SelectedDataKey.Value;
         //SizeDiv();
-        SetBigImageUrl();
+        //SetBigImageUrl();
     }
     //<-----------------END SELECTED INDEX CHANGED----------------->
 
@@ -685,5 +723,11 @@ public partial class Display : System.Web.UI.Page
     protected void ButtonHome_Click(object sender, EventArgs e)
     {
         Response.Redirect("Home.aspx", false);
+    }
+
+    protected void testImageButton_Click(object sender, ImageClickEventArgs e)
+    {
+        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:820px;height:800px;");
+        bigImage.ImageUrl = testImageButton.ImageUrl;
     }
 }

@@ -77,13 +77,18 @@
                 </div>
 
                 <!-----------------BUILDING PHOTO GALLERY---------------->
+                <!--
                 <asp:SqlDataSource ID="SqlDataSourceGallery" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [refLoc], [picId] FROM [Pictures] WHERE ([buildId] = @buildId)">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="GridViewBuildingList" Name="buildId" PropertyName="SelectedValue" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
+                -->
 
-                <div id="GalleryContainer" class="gallery bordercontainer">
+                <div id="GalleryContainer" runat="server" class="gallery bordercontainer">
+                    <asp:ImageButton ID="testImageButton" runat="server" OnClick="testImageButton_Click" ImageUrl="~\\LocationPhotos\\Government\\City Hall of Michigan City\\CityHall_F1.jpg" Height="300px" Width="300px"/>
+                    <!--
+                        
                     <asp:GridView ID="GridViewGallery" runat="server" CssClass="blueTable" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId" OnRowDataBound="GridViewGallery_RowDataBound">
                         <Columns>
                             <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image Gallery">
@@ -92,6 +97,7 @@
                             <asp:CommandField ShowSelectButton="True" ItemStyle-CssClass="hiddencolumn" HeaderStyle-CssClass="hiddencolumn" />
                         </Columns>
                     </asp:GridView>
+                    -->
                 </div>
             </div>
 
@@ -100,7 +106,7 @@
             <!-----------------SELECTED IMAGE---------------->
             <div id="RightContainer" class="item rightContainer">
                 <div id="BigImageContainer bordercontainer">
-                    <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
+                    <div id="bigImageZoom" runat="server" style="display:none;" class="dragscroll">
                         <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="800px" ResizeMode="Fit" />
                     </div>
                 </div>
