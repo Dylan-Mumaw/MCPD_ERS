@@ -6,13 +6,12 @@
 <head runat="server">
     <link rel="stylesheet" href="App_Themes/DisplayStyle.css" />
     <%--<link rel="stylesheet" href="App_Themes/FontStyles.css" />--%>
-    <%--<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />--%>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 
     <%--Search Auto-Suggest and Style--%>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <script type="text/javascript" src="DisplayPageFunctions.js"></script>
 
     <title>Michigan City First Responders</title>
@@ -27,13 +26,11 @@
             <div id="LeftContainer" class="item leftContainer">
                 <asp:Panel ID="ButtonContainer" runat="server" CssClass="buttonContainer"></asp:Panel>
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" OnClick="SearchButton_Click" />
-                <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance"
-                    CausesValidation="false" PostBackUrl="~/Maintenance.aspx" CssClass="button" />
                 <asp:Button ID="ButtonLogout" runat="server" Text="Logout"
                     CausesValidation="false" OnClick="ButtonLogout_Click" CssClass="button" />
                 <div id="LabelSearchItem" class="labelSearchItem">
                     <%-- <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>--%>
-                    <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" OnTextChanged="TextBoxSearch_TextChanged" Placeholder="Search"></asp:TextBox>&nbsp<br />
+                    <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Placeholder="Search"></asp:TextBox>&nbsp<br />
                 </div>
 
                 <div id="GridViewBuildingListContainer" class="bordercontainer">
@@ -89,25 +86,12 @@
                 <div id="GalleryContainer" class="gallery bordercontainer">
                     <asp:GridView ID="GridViewGallery" runat="server" CssClass="blueTable" AutoGenerateColumns="False" DataSourceID="SqlDataSourceGallery" OnSelectedIndexChanged="GridViewGallery_SelectedIndexChanged" DataKeyNames="picId" OnRowDataBound="GridViewGallery_RowDataBound">
                         <Columns>
-                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image">
+                            <asp:ImageField DataImageUrlField="refLoc" HeaderText="Image Gallery">
                             </asp:ImageField>
 
                             <asp:CommandField ShowSelectButton="True" ItemStyle-CssClass="hiddencolumn" HeaderStyle-CssClass="hiddencolumn" />
                         </Columns>
                     </asp:GridView>
-
-
-                    <asp:DataList ID="DataListGallery" runat="server" RepeatDirection="Horizontal" RepeatColumns="5" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" DataSourceID="SqlDataSourceGallery">
-                        <ItemTemplate>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <asp:ImageButton ID="GalleryButton" runat="server" Height="100px" Width="100px" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </ItemTemplate>
-                    </asp:DataList>
                 </div>
             </div>
 
@@ -117,7 +101,7 @@
             <div id="RightContainer" class="item rightContainer">
                 <div id="BigImageContainer bordercontainer">
                     <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
-                        <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />
+                        <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="800px" ResizeMode="Fit" />
                     </div>
                 </div>
                 <div id="ZoomButtonContainer">

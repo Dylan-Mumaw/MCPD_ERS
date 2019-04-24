@@ -14,18 +14,16 @@ public partial class Display : System.Web.UI.Page
     private int buildID = 0;
     private int picID = 0;
     String flag;
+    //List<MyImages> Images = newList<MyImages>();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
         flag = (String)Session["Flag"];
         if (string.IsNullOrEmpty(flag))
         {
             string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
-        }
-        if (!flag.Equals("Admin"))
-        {
-            ButtonMaintenance.Visible = false;
         }
         using (SqlConnection connection = new SqlConnection(GetConnectionString()))
         {
@@ -54,7 +52,7 @@ public partial class Display : System.Web.UI.Page
 
                     ButtonContainer.Controls.Add(currentButton);
                 }
-                
+
                 Button searchAllButton = new Button
                 {
                     ID = "btnSelectAll",
@@ -189,6 +187,11 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewType(String t)
     {
+        bigImageZoom.Dispose();
+        GridViewCurrentContact.DataSource = null;
+        GridViewCurrentContact.DataBind();
+        GridViewGallery.DataSource = null;
+        GridViewGallery.DataBind();
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
         try
@@ -228,6 +231,10 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewSearch(string t)
     {
+        GridViewCurrentContact.DataSource = null;
+        GridViewCurrentContact.DataBind();
+        GridViewGallery.DataSource = null;
+        GridViewGallery.DataBind();
         DataTable recordsMatchedAllWords = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
@@ -237,7 +244,7 @@ public partial class Display : System.Web.UI.Page
 
             string[] searchedWords = t.Split(' ');
 
-            if(searchedWords[0] == "")
+            if (searchedWords[0] == "")
             {
                 DataTable recordsMatched = new DataTable();
 
@@ -263,7 +270,7 @@ public partial class Display : System.Web.UI.Page
             }
             else
             {
-                foreach(string word in searchedWords)
+                foreach (string word in searchedWords)
                 {
                     DataTable recordsMatchedThisWord = new DataTable();
 
@@ -285,14 +292,14 @@ public partial class Display : System.Web.UI.Page
                     {
                         foreach (DataRow matchedRow in recordsMatchedThisWord.Rows)
                         {
-                            for (int x=0; x < recordsMatchedAllWords.Rows.Count; x++)
+                            for (int x = 0; x < recordsMatchedAllWords.Rows.Count; x++)
                             {
                                 if (Convert.ToInt32(matchedRow[0]) == Convert.ToInt32(recordsMatchedAllWords.Rows[x][0]))
                                 {
                                     recordsMatchedAllWords.Rows[x]["Matches"] = Convert.ToInt32(recordsMatchedAllWords.Rows[x]["Matches"]) + Convert.ToInt32(matchedRow["Matches"]);
                                     break;
                                 }
-                                else if(x+1 == recordsMatchedAllWords.Rows.Count)
+                                else if (x + 1 == recordsMatchedAllWords.Rows.Count)
                                 {
                                     DataRow newRow = recordsMatchedAllWords.NewRow();
                                     newRow[0] = matchedRow[0];
@@ -475,6 +482,10 @@ public partial class Display : System.Web.UI.Page
 
     protected void SearchAll()
     {
+        GridViewCurrentContact.DataSource = null;
+        GridViewCurrentContact.DataBind();
+        GridViewGallery.DataSource = null;
+        GridViewGallery.DataBind();
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
@@ -516,17 +527,12 @@ public partial class Display : System.Web.UI.Page
         BindGridViewCurrentContact();
     }
 
-    protected void TextBoxSearch_TextChanged(object sender, EventArgs e)
-    {
-        /*
-        string search = TextBoxSearch.Text;
-        BindGridViewSearch(search);
-        bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
-        */
-    }
-
     protected void SearchButton_Click(object sender, EventArgs e)
     {
+        GridViewCurrentContact.DataSource = null;
+        GridViewCurrentContact.DataBind();
+        GridViewGallery.DataSource = null;
+        GridViewGallery.DataBind();
         string search = TextBoxSearch.Text;
         BindGridViewSearch(search);
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
