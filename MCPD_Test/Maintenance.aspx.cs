@@ -937,4 +937,13 @@ public partial class Maintenance : System.Web.UI.Page
         return path.Substring(0, endIndex + 1);
     }
 
+    protected void ButtonDisplay_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Display.aspx", false);
+    }
+    protected void ButtonHome_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Home.aspx", false);
+    }
+
 }

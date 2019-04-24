@@ -10,6 +10,8 @@
 <body>
     <form id="form1" runat="server">
         <div id="MainContainer" class="container">
+            <asp:Button ID="ButtonDisplay" runat="server" Text="Go To Display Page" CssClass="button" OnClick="ButtonDisplay_Click"/>
+            <asp:Button ID="ButtonHome" runat="server" Text="Home Page" CausesValidation="false" OnClick="ButtonHome_Click" CssClass="button" />
             <div class="container" id="TopRowContainer">
                 <!-----------------BUILDING MAINTENANCE GRIDVIEW---------------->
                 <div id="BuildingItem">
