@@ -20,26 +20,33 @@ public partial class Home : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!flag.Equals("Admin"))
+        {
+            ButtonMaintenance.Visible = false;
+        }
         SetFocus(TextBoxUsername);
         if (!string.IsNullOrEmpty((String)Session["DisplayInvalid"]))
         {
             Label1.Text = "Please enter correct data.";
         }
-        
+
         flag = (String)Session["Flag"];
         if (!Request.IsSecureConnection)
         {
             string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
         }
-        
-        if(!string.IsNullOrEmpty((String)Session["Flag"]) && lblUserName.Visible == false)
+
+        if (!string.IsNullOrEmpty((String)Session["Flag"]) && lblUserName.Visible == false)
         {
             lblUserName.Text = "Hello, " + Session["User"].ToString() + "!";
             lblUserName.Visible = true;
             ButtonLogout.Visible = true;
             ButtonDisplay.Visible = true;
-
+            if (flag.Equals("Admin"))
+            {
+                ButtonMaintenance.Visible = true;
+            }
             LabelUsername.Visible = false;
             TextBoxUsername.Visible = false;
             LabelPassword.Visible = false;
@@ -48,6 +55,7 @@ public partial class Home : Page
             ButtonCreate.Visible = false;
             validateLogin.Enabled = false;
             validatePass.Enabled = false;
+
         }
     }
 

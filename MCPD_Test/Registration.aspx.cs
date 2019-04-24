@@ -34,7 +34,7 @@ public partial class Registration : System.Web.UI.Page
 
             Body = ("New User Account Requested." +
                     "\nUser Information: " +
-                    "\nFirst Name: "  + firstName +
+                    "\nFirst Name: " + firstName +
                     "\nLast Name: " + lastName +
                     "\nPosition: " + empPosition +
                     "\nEmployee ID Number: " + empNumber +
@@ -68,5 +68,10 @@ public partial class Registration : System.Web.UI.Page
         {
             Console.WriteLine("Exception caught in ButtonSubmit_Click(): {0}", ex.ToString());
         }
+    }
+
+    protected void ButtonCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Home.aspx", false);
     }
 }

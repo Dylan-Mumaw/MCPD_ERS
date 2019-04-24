@@ -164,6 +164,7 @@
 
             <div class="bottomitem">
                 <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="button" OnClick="ButtonSubmit_Click" />
+                <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" CssClass="button" OnClick="ButtonCancel_Click" CausesValidation="false" />
             </div>
 
             <asp:Label ID="TestLabel" runat="server" Text="" />

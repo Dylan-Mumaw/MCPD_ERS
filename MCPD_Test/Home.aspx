@@ -42,6 +42,7 @@
                     <asp:Button ID="ButtonLogin" runat="server" Text="Login" CssClass="button" OnClick="ButtonLogin_Click" />
                     <asp:Button ID="ButtonCreate" runat="server" Text="Create Account" CssClass="button" CausesValidation="false" OnClick="ButtonCreate_Click" />
                     <asp:Button ID="ButtonDisplay" runat="server" Text="Go To Display Page" CssClass="button" OnClick="ButtonDisplay_Click" Visible="false" />
+                    <asp:Button ID="ButtonMaintenance" runat="server" Text="Go To Maintenance" CausesValidation="false" PostBackUrl="~/Maintenance.aspx" CssClass="button" />
                     <asp:Button ID="ButtonLogout" runat="server" Text="Logout" CssClass="button" OnClick="ButtonLogout_Click" Visible="false" />
                 </div>
 
