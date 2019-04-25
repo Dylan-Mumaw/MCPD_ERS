@@ -14,6 +14,8 @@ public partial class Maintenance : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Session["GalleryBuildId"] = null;
+
         string url;
         string flag = (String)Session["Flag"];
         if (string.IsNullOrEmpty(flag) || !flag.Equals("Admin"))
