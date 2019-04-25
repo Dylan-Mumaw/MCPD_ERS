@@ -9,231 +9,230 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <div id="ButtonBox" class="button">
+                <asp:Button ID="ButtonDisplay" runat="server" Text="Go To Display Page" CssClass="button" OnClick="ButtonDisplay_Click" />
+                <asp:Button ID="ButtonHome" runat="server" Text="Home Page" CausesValidation="false" OnClick="ButtonHome_Click" CssClass="button" />
+            </div>
         <div id="MainContainer" class="container">
-            <asp:Button ID="ButtonDisplay" runat="server" Text="Go To Display Page" CssClass="button" OnClick="ButtonDisplay_Click"/>
-            <asp:Button ID="ButtonHome" runat="server" Text="Home Page" CausesValidation="false" OnClick="ButtonHome_Click" CssClass="button" />
-            <div class="container" id="TopRowContainer">
-                <!-----------------BUILDING MAINTENANCE GRIDVIEW---------------->
-                <div id="BuildingItem">
+            <!-----------------BUILDING MAINTENANCE GRIDVIEW---------------->
+
+            <div id="LocationsBox" class="box">
+                <div id="LocationItem" class="item">
                     <header>Buildings</header>
-                    <div class="item">
-                        <div id="GridViewBox">
-                            <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="True" OnRowCreated="GridViewBuildings_RowCreated">
-                                <Columns>
-                                    <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
-                                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                                    <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
-                                    <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
-                                    <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
-                                    <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
-                                </Columns>
-                                <PagerStyle BackColor="#ff00ff" />
-                            </asp:GridView>
-                        </div>
-                        <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="building"></asp:SqlDataSource>
+                    <asp:GridView ID="GridViewBuildings" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildings" AllowSorting="True" OnRowCreated="GridViewBuildings_RowCreated">
+                            <Columns>
+                                <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                                <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
+                                <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                                <asp:BoundField DataField="Alias" HeaderText="Alias" SortExpression="Alias" />
+                                <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
+                            </Columns>
+                            <PagerStyle BackColor="#ff00ff" />
+                        </asp:GridView>
+                  
+                    <asp:SqlDataSource ID="SqlDataSourceBuildings" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="building"></asp:SqlDataSource>
 
-                        <!-----------------BUILDING MAINTENANCE DETAILS LIST---------------->
-                        <div id="DetailsViewBox">
-                            <asp:DetailsView ID="DetailsViewBuildings" runat="server"
-                                DataSourceID="SqlDataSourceBuildingsDetails" DataKeyNames="Id"
-                                AutoGenerateRows="false"
-                                OnItemDeleting="DetailsViewBuildings_ItemDeleting"
-                                OnItemDeleted="DetailsViewBuildings_ItemDeleted"
-                                OnItemInserted="DetailsViewBuildings_ItemInserted"
-                                OnItemUpdated="DetailsViewBuildings_ItemUpdated"
-                                OnItemUpdating="DetailsViewBuildings_ItemUpdating">
-                                <Fields>
+                    <!-----------------BUILDING MAINTENANCE DETAILS LIST---------------->
+                    
+                        <asp:DetailsView ID="DetailsViewBuildings" runat="server"
+                            DataSourceID="SqlDataSourceBuildingsDetails" DataKeyNames="Id"
+                            AutoGenerateRows="false"
+                            OnItemDeleting="DetailsViewBuildings_ItemDeleting"
+                            OnItemDeleted="DetailsViewBuildings_ItemDeleted"
+                            OnItemInserted="DetailsViewBuildings_ItemInserted"
+                            OnItemUpdated="DetailsViewBuildings_ItemUpdated"
+                            OnItemUpdating="DetailsViewBuildings_ItemUpdating">
+                            <Fields>
 
-                                    <asp:TemplateField HeaderText="Building ID:">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingId" runat="server"
-                                                Text='<%# Eval("Id") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingId" runat="server"
-                                                Text='<%# Eval("Id") %>'></asp:Label>
-                                        </EditItemTemplate>
-                                        <InsertItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingId" runat="server"
-                                                Text='<%# GetNextId("Buildings") %>'></asp:Label>
-                                        </InsertItemTemplate>
-                                    </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Building ID:">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingId" runat="server"
+                                            Text='<%# Eval("Id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingId" runat="server"
+                                            Text='<%# Eval("Id") %>'></asp:Label>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingId" runat="server"
+                                            Text='<%# GetNextId("Buildings") %>'></asp:Label>
+                                    </InsertItemTemplate>
+                                </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Building Name:">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingName" runat="server"
-                                                Text='<%# Eval("Name") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtDetailsViewBuildingName" runat="server"
-                                                Text='<%# Bind("Name") %>' Width="200px"></asp:TextBox>
-                                            <asp:RequiredFieldValidator
-                                                ID="RequiredFieldValidatorBuildingName" runat="server"
-                                                ControlToValidate="txtDetailsViewBuildingName"
-                                                ErrorMessage="Name is a required field.">
-                                            </asp:RequiredFieldValidator>
-                                        </EditItemTemplate>
-                                        <InsertItemTemplate>
-                                            <asp:TextBox ID="txtDetailsViewBuildingName" runat="server"
-                                                Text='<%# Bind("Name") %>' Width="200px"></asp:TextBox>
-                                            <asp:RequiredFieldValidator
-                                                ID="RequiredFieldValidatorBuildingName" runat="server"
-                                                ControlToValidate="txtDetailsViewBuildingName"
-                                                ErrorMessage="Name is a required field.">
-                                            </asp:RequiredFieldValidator>
-                                        </InsertItemTemplate>
-                                    </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Building Name:">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingName" runat="server"
+                                            Text='<%# Eval("Name") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDetailsViewBuildingName" runat="server"
+                                            Text='<%# Bind("Name") %>' Width="200px"></asp:TextBox>
+                                        <asp:RequiredFieldValidator
+                                            ID="RequiredFieldValidatorBuildingName" runat="server"
+                                            ControlToValidate="txtDetailsViewBuildingName"
+                                            ErrorMessage="Name is a required field.">
+                                        </asp:RequiredFieldValidator>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:TextBox ID="txtDetailsViewBuildingName" runat="server"
+                                            Text='<%# Bind("Name") %>' Width="200px"></asp:TextBox>
+                                        <asp:RequiredFieldValidator
+                                            ID="RequiredFieldValidatorBuildingName" runat="server"
+                                            ControlToValidate="txtDetailsViewBuildingName"
+                                            ErrorMessage="Name is a required field.">
+                                        </asp:RequiredFieldValidator>
+                                    </InsertItemTemplate>
+                                </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Building Address:">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingAddress" runat="server"
-                                                Text='<%# Eval("Address") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtDetailsViewBuildingAddress" runat="server"
-                                                Text='<%# Bind("Address") %>' Width="200px"></asp:TextBox>
-                                            <asp:RequiredFieldValidator
-                                                ID="RequiredFieldValidatorBuildingAddress" runat="server"
-                                                ControlToValidate="txtDetailsViewBuildingAddress"
-                                                ErrorMessage="Address is a required field.">
-                                            </asp:RequiredFieldValidator>
-                                        </EditItemTemplate>
-                                        <InsertItemTemplate>
-                                            <asp:TextBox ID="txtDetailsViewBuildingAddress" runat="server"
-                                                Text='<%# Bind("Address") %>' Width="200px"></asp:TextBox>
-                                            <asp:RequiredFieldValidator
-                                                ID="RequiredFieldValidatorBuildingAddress" runat="server"
-                                                ControlToValidate="txtDetailsViewBuildingAddress"
-                                                ErrorMessage="Address is a required field.">
-                                            </asp:RequiredFieldValidator>
-                                        </InsertItemTemplate>
-                                    </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Building Address:">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingAddress" runat="server"
+                                            Text='<%# Eval("Address") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDetailsViewBuildingAddress" runat="server"
+                                            Text='<%# Bind("Address") %>' Width="200px"></asp:TextBox>
+                                        <asp:RequiredFieldValidator
+                                            ID="RequiredFieldValidatorBuildingAddress" runat="server"
+                                            ControlToValidate="txtDetailsViewBuildingAddress"
+                                            ErrorMessage="Address is a required field.">
+                                        </asp:RequiredFieldValidator>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:TextBox ID="txtDetailsViewBuildingAddress" runat="server"
+                                            Text='<%# Bind("Address") %>' Width="200px"></asp:TextBox>
+                                        <asp:RequiredFieldValidator
+                                            ID="RequiredFieldValidatorBuildingAddress" runat="server"
+                                            ControlToValidate="txtDetailsViewBuildingAddress"
+                                            ErrorMessage="Address is a required field.">
+                                        </asp:RequiredFieldValidator>
+                                    </InsertItemTemplate>
+                                </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Building Type:">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingType" runat="server"
-                                                Text='<%# Eval("Type") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:DropDownList ID="ddlBuildingType" runat="server"
-                                                DataSourceID="SqlDataSourceTypesDdl"
-                                                DataTextField="Type" DataValueField="Type"
-                                                SelectedValue='<%# Bind("Type") %>' Width="130px">
-                                            </asp:DropDownList>
-                                        </EditItemTemplate>
-                                        <InsertItemTemplate>
-                                            <asp:DropDownList ID="ddlBuildingType" runat="server"
-                                                DataSourceID="SqlDataSourceTypesDdl"
-                                                DataTextField="Type" DataValueField="Type"
-                                                SelectedValue='<%# Bind("Type") %>' Width="130px">
-                                            </asp:DropDownList>
-                                        </InsertItemTemplate>
-                                    </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Building Type:">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingType" runat="server"
+                                            Text='<%# Eval("Type") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlBuildingType" runat="server"
+                                            DataSourceID="SqlDataSourceTypesDdl"
+                                            DataTextField="Type" DataValueField="Type"
+                                            SelectedValue='<%# Bind("Type") %>' Width="130px">
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:DropDownList ID="ddlBuildingType" runat="server"
+                                            DataSourceID="SqlDataSourceTypesDdl"
+                                            DataTextField="Type" DataValueField="Type"
+                                            SelectedValue='<%# Bind("Type") %>' Width="130px">
+                                        </asp:DropDownList>
+                                    </InsertItemTemplate>
+                                </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Building Alias:">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDetailsViewBuildingAlias" runat="server"
-                                                Text='<%# Eval("Alias") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtDetailsViewBuildingAlias" runat="server"
-                                                Text='<%# Bind("Alias") %>' Width="200px"></asp:TextBox>
-                                        </EditItemTemplate>
-                                        <InsertItemTemplate>
-                                            <asp:TextBox ID="txtDetailsViewBuildingAlias" runat="server"
-                                                Text='<%# Bind("Alias") %>' Width="200px"></asp:TextBox>
-                                        </InsertItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:CommandField ButtonType="Button"
-                                        ShowDeleteButton="true"
-                                        ShowEditButton="true"
-                                        ShowInsertButton="true" />
-                                </Fields>
+                                <asp:TemplateField HeaderText="Building Alias:">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDetailsViewBuildingAlias" runat="server"
+                                            Text='<%# Eval("Alias") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDetailsViewBuildingAlias" runat="server"
+                                            Text='<%# Bind("Alias") %>' Width="200px"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <InsertItemTemplate>
+                                        <asp:TextBox ID="txtDetailsViewBuildingAlias" runat="server"
+                                            Text='<%# Bind("Alias") %>' Width="200px"></asp:TextBox>
+                                    </InsertItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CommandField ButtonType="Button"
+                                    ShowDeleteButton="true"
+                                    ShowEditButton="true"
+                                    ShowInsertButton="true" />
+                            </Fields>
 
-                                <EmptyDataTemplate>
-                                    <table cellspacing="0" rules="rows" border="1" id="DetailsViewBuildings" style="border-collapse: collapse;">
-                                        <tr>
-                                            <td>Building ID:</td>
-                                            <td>
-                                                <span id="DetailsViewBuildings_lblDetailsViewBuildingId"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Building Name:</td>
-                                            <td>
-                                                <span id="DetailsViewBuildings_lblDetailsViewBuildingName"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Building Address:</td>
-                                            <td>
-                                                <span id="DetailsViewBuildings_lblDetailsViewBuildingAddress"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Building Type:</td>
-                                            <td>
-                                                <span id="DetailsViewBuildings_lblDetailsViewBuildingType"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Building Alias:</td>
-                                            <td>
-                                                <span id="DetailsViewBuildings_lblDetailsViewBuildingAlias"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <asp:Button runat="server" ID="newBuilding" Text="New" OnClick="NewBuilding_Click" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </EmptyDataTemplate>
-                            </asp:DetailsView>
-                        </div>
+                            <EmptyDataTemplate>
+                                <table cellspacing="0" rules="rows" border="1" id="DetailsViewBuildings" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td>Building ID:</td>
+                                        <td>
+                                            <span id="DetailsViewBuildings_lblDetailsViewBuildingId"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Building Name:</td>
+                                        <td>
+                                            <span id="DetailsViewBuildings_lblDetailsViewBuildingName"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Building Address:</td>
+                                        <td>
+                                            <span id="DetailsViewBuildings_lblDetailsViewBuildingAddress"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Building Type:</td>
+                                        <td>
+                                            <span id="DetailsViewBuildings_lblDetailsViewBuildingType"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Building Alias:</td>
+                                        <td>
+                                            <span id="DetailsViewBuildings_lblDetailsViewBuildingAlias"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <asp:Button runat="server" ID="newBuilding" Text="New" OnClick="NewBuilding_Click" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </EmptyDataTemplate>
+                        </asp:DetailsView>
                     </div>
-                </div>
+                
 
                 <!-----------------BUILDING MAINTENANCE DETAILS DATA SOURCE---------------->
-                <div id="MaintenanceItem">
-                    <header id="MaintenanceHeader">Types</header>
-                    <div class="item">
-                        <asp:SqlDataSource ID="SqlDataSourceBuildingsDetails" runat="server"
-                            ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                            SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings] WHERE ([Id] = @Id)"
-                            DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
-                            InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Type], [Alias]) VALUES (@Name, @Address, @Type, @Alias)"
-                            UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id">
-                            <SelectParameters>
-                                <asp:ControlParameter ControlID="GridViewBuildings" Name="Id" PropertyName="SelectedValue" Type="Int32" />
-                            </SelectParameters>
-                            <DeleteParameters>
-                                <asp:Parameter Name="Id" Type="Int32" />
-                            </DeleteParameters>
-                            <InsertParameters>
-                                <asp:Parameter Name="Name" Type="String" />
-                                <asp:Parameter Name="Address" Type="String" />
-                                <asp:Parameter Name="Type" Type="String" />
-                                <asp:Parameter Name="Alias" Type="String" />
-                            </InsertParameters>
-                            <UpdateParameters>
-                                <asp:Parameter Name="Name" Type="String" />
-                                <asp:Parameter Name="Address" Type="String" />
-                                <asp:Parameter Name="Type" Type="String" />
-                                <asp:Parameter Name="Alias" Type="String" />
-                                <asp:Parameter Name="Id" Type="Int32" />
-                            </UpdateParameters>
-                        </asp:SqlDataSource>
+                <div id="TypeBox" class="box">
+                <header>Types</header>
+                    <asp:SqlDataSource ID="SqlDataSourceBuildingsDetails" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                        SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings] WHERE ([Id] = @Id)"
+                        DeleteCommand="DELETE FROM [Buildings] WHERE [Id] = @Id"
+                        InsertCommand="INSERT INTO [Buildings] ([Name], [Address], [Type], [Alias]) VALUES (@Name, @Address, @Type, @Alias)"
+                        UpdateCommand="UPDATE [Buildings] SET [Name] = @Name, [Address] = @Address, [Type] = @Type, [Alias] = @Alias WHERE [Id] = @Id">
+                        <SelectParameters>
+                            <asp:ControlParameter ControlID="GridViewBuildings" Name="Id" PropertyName="SelectedValue" Type="Int32" />
+                        </SelectParameters>
+                        <DeleteParameters>
+                            <asp:Parameter Name="Id" Type="Int32" />
+                        </DeleteParameters>
+                        <InsertParameters>
+                            <asp:Parameter Name="Name" Type="String" />
+                            <asp:Parameter Name="Address" Type="String" />
+                            <asp:Parameter Name="Type" Type="String" />
+                            <asp:Parameter Name="Alias" Type="String" />
+                        </InsertParameters>
+                        <UpdateParameters>
+                            <asp:Parameter Name="Name" Type="String" />
+                            <asp:Parameter Name="Address" Type="String" />
+                            <asp:Parameter Name="Type" Type="String" />
+                            <asp:Parameter Name="Alias" Type="String" />
+                            <asp:Parameter Name="Id" Type="Int32" />
+                        </UpdateParameters>
+                    </asp:SqlDataSource>
 
-
+               
+                
                         <!-----------------TYPE MAINTENANCE DROP-DOWN DATA---------------->
-                        <div id="maintenanceItem" class="item">
                             <asp:SqlDataSource ID="SqlDataSourceTypesDdl" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                                 SelectCommand="SELECT type FROM types"></asp:SqlDataSource>
 
                             <!-----------------TYPE MAINTENANCE GRIDVIEW---------------->
-                            <div id="GridViewTypesBox">
+                            
                                 <asp:GridView ID="GridViewTypes" runat="server" AutoGenerateColumns="False" DataKeyNames="typeId" DataSourceID="SqlDataSourceTypes" AllowSorting="true" OnRowCreated="GridViewTypes_RowCreated">
                                     <Columns>
                                         <asp:BoundField DataField="typeId" HeaderText="Type ID" InsertVisible="False" ReadOnly="True" SortExpression="typeId" />
@@ -241,7 +240,7 @@
                                         <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="True" ShowHeader="True" />
                                     </Columns>
                                 </asp:GridView>
-                            </div>
+                            
 
                             <asp:SqlDataSource ID="SqlDataSourceTypes" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Types] ORDER BY [typeId]" DeleteCommand="DELETE FROM [Types] WHERE [typeId] = @typeId" InsertCommand="INSERT INTO [Types] ([type]) VALUES (@type)" UpdateCommand="UPDATE [Types] SET [type] = @type WHERE [typeId] = @typeId">
                                 <DeleteParameters>
@@ -334,7 +333,7 @@
                                     </EmptyDataTemplate>
                                 </asp:DetailsView>
                             </div>
-
+                             
                             <!-----------------TYPE MAINTENANCE DETAILS DATA---------------->
                             <asp:SqlDataSource ID="SqlDataSourceTypesDetails" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
@@ -357,10 +356,14 @@
                                 </UpdateParameters>
                             </asp:SqlDataSource>
                         </div>
-                    </div>
-                </div>
-
+               </div>
+             
+            <div id="ArchivesBox" class="box">
+              <header>Archives</header>
+            <div id="ArchivesWrapper" class="wrapper"> 
+            <div id="BuildingBox" class="item">
                 <!-----------------BUILDING ARCHIVE MAINTENANCE GRIDVIEW---------------->
+                <header>Buildings</header>
                 <asp:GridView ID="GridViewBuildingsArchive" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceBuildingsArchive" AllowSorting="True" OnRowCreated="GridViewBuildingsArchive_RowCreated">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
@@ -372,109 +375,214 @@
                     </Columns>
                     <PagerStyle BackColor="#ff00ff" />
                 </asp:GridView>
+
+                <asp:SqlDataSource ID="SqlDataSourceBuildingsArchive" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                    SelectCommand="SELECT * FROM [Buildings_Archive]"></asp:SqlDataSource>
+
+                <!-----------------BUILDING ARCHIVE MAINTENANCE DETAILS LIST---------------->
+                <asp:DetailsView ID="DetailsViewBuildingsArchive" runat="server"
+                    DataSourceID="SqlDataSourceBuildingsArchiveDetails" DataKeyNames="Id"
+                    AutoGenerateRows="false"
+                    OnItemDeleted="DetailsViewBuildingsArchive_ItemDeleted">
+                    <Fields>
+                        <asp:TemplateField HeaderText="Building ID:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewBuildingId" runat="server"
+                                    Text='<%# Eval("Id") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Building Name:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewBuildingName" runat="server"
+                                    Text='<%# Eval("Name") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Building Address:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewBuildingAddress" runat="server"
+                                    Text='<%# Eval("Address") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Building Type:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewBuildingType" runat="server"
+                                    Text='<%# Eval("Type") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Building Alias:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewBuildingAlias" runat="server"
+                                    Text='<%# Eval("Alias") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:CommandField ButtonType="Button"
+                            ShowDeleteButton="true"
+                            ShowEditButton="false"
+                            ShowInsertButton="false" />
+                    </Fields>
+
+                    <EmptyDataTemplate>
+                        <table cellspacing="0" rules="rows" border="1" id="DetailsViewBuildings" style="border-collapse: collapse;">
+                            <tr>
+                                <td>Building ID:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewBuildingId"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Building Name:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewBuildingName"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Building Address:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewBuildingAddress"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Building Type:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewBuildingType"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Building Alias:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewBuildingAlias"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </EmptyDataTemplate>
+                </asp:DetailsView>
+
+                <!-----------------BUILDING ARCHIVE MAINTENANCE DETAILS DATA SOURCE---------------->
+                <asp:SqlDataSource ID="SqlDataSourceBuildingsArchiveDetails" runat="server"
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                    SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings_Archive] WHERE ([Id] = @Id)"
+                    DeleteCommand="DELETE FROM [Buildings_Archive] WHERE [Id] = @Id">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="GridViewBuildingsArchive" Name="Id" PropertyName="SelectedValue" Type="Int32" />
+                    </SelectParameters>
+                    <DeleteParameters>
+                        <asp:Parameter Name="Id" Type="Int32" />
+                    </DeleteParameters>
+                </asp:SqlDataSource>
+            </div >
+            <div id="LoginArchiveBox" class="item">
+                <!-----------------LOGIN ARCHIVE MAINTENANCE GRIDVIEW---------------->
+                <div id="GridViewLoginArchiveBox">
+                    <header>Accounts Archive</header>
+                    <asp:GridView ID="GridViewLoginArchive" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLoginArchive" AllowSorting="true" OnRowCreated="GridViewLoginArchive_RowCreated">
+                        <Columns>
+                            <asp:BoundField DataField="LogId" HeaderText="LogId" InsertVisible="False" ReadOnly="True" SortExpression="LogId" />
+                            <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                            <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
+                            <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
+                            <asp:BoundField DataField="Role" HeaderText="Level" SortExpression="Role" />
+                            <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="true" ShowHeader="True" />
+                        </Columns>
+                    </asp:GridView>
+                </div>
+
+                <!-----------------LOGIN ARCHIVE MAINTENANCE DATA---------------->
+                <asp:SqlDataSource ID="SqlDataSourceLoginArchive" runat="server"
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                    SelectCommand="SELECT * FROM [Logins_Archive]"></asp:SqlDataSource>
+
+                <!-----------------LOGIN ARCHIVE MAINTENANCE DETAILS LIST---------------->
+                <asp:DetailsView ID="DetailsViewLoginArchive" runat="server"
+                    DataSourceID="SqlDataSourceLoginArchiveDetails" DataKeyNames="LogId"
+                    AutoGenerateRows="false"
+                    OnItemDeleted="DetailsViewLoginArchive_ItemDeleted">
+                    <Fields>
+                        <asp:TemplateField HeaderText="User ID:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewUserId" runat="server"
+                                    Text='<%# Eval("logId") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Full Name:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewFullName" runat="server"
+                                    Text='<%# Eval("Name") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Username:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewUserName" runat="server"
+                                    Text='<%# Eval("UserName") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Password:">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDetailsViewPassword" runat="server"
+                                    Text='<%# Eval("Password") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:CommandField ButtonType="Button"
+                            ShowDeleteButton="true"
+                            ShowEditButton="false"
+                            ShowInsertButton="false" />
+                    </Fields>
+
+                    <EmptyDataTemplate>
+                        <table cellspacing="0" rules="rows" border="1" id="DetailsViewLoginArchive" style="border-collapse: collapse;">
+                            <tr>
+                                <td>User ID:</td>
+                                <td>
+                                    <span id="DetailsViewLogin_lblDetailsViewUserId"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Full Name:</td>
+                                <td>
+                                    <span id="DetailsViewLogin_lblDetailsViewFullName"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Username:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewUserName"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td>
+                                    <span id="DetailsViewBuildings_lblDetailsViewPassword"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </EmptyDataTemplate>
+                </asp:DetailsView>
+
+                <!-----------------LOGIN ARCHIVE MAINTENANCE DETAILS DATA---------------->
+                <asp:SqlDataSource ID="SqlDataSourceLoginArchiveDetails" runat="server"
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                    SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins_Archive] WHERE ([LogId] = @LogId)"
+                    DeleteCommand="DELETE FROM [Logins_Archive] WHERE [LogId] = @LogId">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="GridViewLoginArchive" Name="LogId" PropertyName="SelectedValue" Type="Int32" />
+                    </SelectParameters>
+                    <DeleteParameters>
+                        <asp:Parameter Name="LogId" Type="Int32" />
+                    </DeleteParameters>
+                </asp:SqlDataSource>
             </div>
-            <asp:SqlDataSource ID="SqlDataSourceBuildingsArchive" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                SelectCommand="SELECT * FROM [Buildings_Archive]"></asp:SqlDataSource>
-
-            <!-----------------BUILDING ARCHIVE MAINTENANCE DETAILS LIST---------------->
-            <asp:DetailsView ID="DetailsViewBuildingsArchive" runat="server"
-                DataSourceID="SqlDataSourceBuildingsArchiveDetails" DataKeyNames="Id"
-                AutoGenerateRows="false"
-                OnItemDeleted="DetailsViewBuildingsArchive_ItemDeleted">
-                <Fields>
-                    <asp:TemplateField HeaderText="Building ID:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewBuildingId" runat="server"
-                                Text='<%# Eval("Id") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Building Name:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewBuildingName" runat="server"
-                                Text='<%# Eval("Name") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Building Address:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewBuildingAddress" runat="server"
-                                Text='<%# Eval("Address") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Building Type:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewBuildingType" runat="server"
-                                Text='<%# Eval("Type") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Building Alias:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewBuildingAlias" runat="server"
-                                Text='<%# Eval("Alias") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:CommandField ButtonType="Button"
-                        ShowDeleteButton="true"
-                        ShowEditButton="false"
-                        ShowInsertButton="false" />
-                </Fields>
-
-                <EmptyDataTemplate>
-                    <table cellspacing="0" rules="rows" border="1" id="DetailsViewBuildings" style="border-collapse: collapse;">
-                        <tr>
-                            <td>Building ID:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewBuildingId"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Building Name:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewBuildingName"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Building Address:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewBuildingAddress"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Building Type:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewBuildingType"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Building Alias:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewBuildingAlias"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </EmptyDataTemplate>
-            </asp:DetailsView>
-
-            <!-----------------BUILDING ARCHIVE MAINTENANCE DETAILS DATA SOURCE---------------->
-            <asp:SqlDataSource ID="SqlDataSourceBuildingsArchiveDetails" runat="server"
-                ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                SelectCommand="SELECT [Id], [Name], [Address], [Type], [Alias] FROM [Buildings_Archive] WHERE ([Id] = @Id)"
-                DeleteCommand="DELETE FROM [Buildings_Archive] WHERE [Id] = @Id">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="GridViewBuildingsArchive" Name="Id" PropertyName="SelectedValue" Type="Int32" />
-                </SelectParameters>
-                <DeleteParameters>
-                    <asp:Parameter Name="Id" Type="Int32" />
-                </DeleteParameters>
-            </asp:SqlDataSource>
-
-
+                </div> 
+          </div>
             <!-----------------LOGIN MAINTENANCE DATA---------------->
-            <header>Accounts</header>
-            <div id="MiddleRowContainer" class="container">
+            
+                <div id="AccountsBox" class="box">
+                    <header>Accounts</header>
                 <asp:SqlDataSource ID="SqlDataSourceLogin" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT * FROM [Logins]"
@@ -704,113 +812,11 @@
                         <asp:Parameter Name="LogId" Type="Int32" />
                     </UpdateParameters>
                 </asp:SqlDataSource>
-            </div>
-
-            <!-----------------LOGIN ARCHIVE MAINTENANCE GRIDVIEW---------------->
-            <div id="GridViewLoginArchiveBox">
-                <header>Accounts Archive</header>
-                <asp:GridView ID="GridViewLoginArchive" runat="server" AllowPaging="true" AutoGenerateColumns="False" DataKeyNames="LogId" DataSourceID="SqlDataSourceLoginArchive" AllowSorting="true" OnRowCreated="GridViewLoginArchive_RowCreated">
-                    <Columns>
-                        <asp:BoundField DataField="LogId" HeaderText="LogId" InsertVisible="False" ReadOnly="True" SortExpression="LogId" />
-                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                        <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
-                        <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
-                        <asp:BoundField DataField="Role" HeaderText="Level" SortExpression="Role" />
-                        <asp:CommandField ButtonType="Button" HeaderText="Select" ShowSelectButton="true" ShowHeader="True" />
-                    </Columns>
-                </asp:GridView>
-            </div>
-
-            <!-----------------LOGIN ARCHIVE MAINTENANCE DATA---------------->
-            <asp:SqlDataSource ID="SqlDataSourceLoginArchive" runat="server"
-                ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                SelectCommand="SELECT * FROM [Logins_Archive]"></asp:SqlDataSource>
-
-            <!-----------------LOGIN ARCHIVE MAINTENANCE DETAILS LIST---------------->
-            <asp:DetailsView ID="DetailsViewLoginArchive" runat="server"
-                DataSourceID="SqlDataSourceLoginArchiveDetails" DataKeyNames="LogId"
-                AutoGenerateRows="false"
-                OnItemDeleted="DetailsViewLoginArchive_ItemDeleted">
-                <Fields>
-                    <asp:TemplateField HeaderText="User ID:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewUserId" runat="server"
-                                Text='<%# Eval("logId") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Full Name:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewFullName" runat="server"
-                                Text='<%# Eval("Name") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Username:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewUserName" runat="server"
-                                Text='<%# Eval("UserName") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Password:">
-                        <ItemTemplate>
-                            <asp:Label ID="lblDetailsViewPassword" runat="server"
-                                Text='<%# Eval("Password") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:CommandField ButtonType="Button"
-                        ShowDeleteButton="true"
-                        ShowEditButton="false"
-                        ShowInsertButton="false" />
-                </Fields>
-
-                <EmptyDataTemplate>
-                    <table cellspacing="0" rules="rows" border="1" id="DetailsViewLoginArchive" style="border-collapse: collapse;">
-                        <tr>
-                            <td>User ID:</td>
-                            <td>
-                                <span id="DetailsViewLogin_lblDetailsViewUserId"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Full Name:</td>
-                            <td>
-                                <span id="DetailsViewLogin_lblDetailsViewFullName"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Username:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewUserName"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Password:</td>
-                            <td>
-                                <span id="DetailsViewBuildings_lblDetailsViewPassword"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </EmptyDataTemplate>
-            </asp:DetailsView>
-
-            <!-----------------LOGIN ARCHIVE MAINTENANCE DETAILS DATA---------------->
-            <asp:SqlDataSource ID="SqlDataSourceLoginArchiveDetails" runat="server"
-                ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
-                SelectCommand="SELECT [LogId], [Name], [UserName], [Password] FROM [Logins_Archive] WHERE ([LogId] = @LogId)"
-                DeleteCommand="DELETE FROM [Logins_Archive] WHERE [LogId] = @LogId">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="GridViewLoginArchive" Name="LogId" PropertyName="SelectedValue" Type="Int32" />
-                </SelectParameters>
-                <DeleteParameters>
-                    <asp:Parameter Name="LogId" Type="Int32" />
-                </DeleteParameters>
-            </asp:SqlDataSource>
-
+                    </div>
+          
             <!-----------------PICTURES MAINTENANCE DATA---------------->
+            <div id="ImagesBox" class="box">
             <header>Images</header>
-            <div id="BottomRowContainer" class="container">
                 <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT * FROM [Pictures]" DeleteCommand="DELETE FROM [Pictures] WHERE [picId] = @picId"
@@ -967,8 +973,8 @@
 
 
             <!-----------------CONTACT MAINTENANCE DATA---------------->
+            <div id="ContactBox" class="box">
             <header>Contacts</header>
-            <div id="BottomRowContainer" class="container">
                 <asp:SqlDataSource ID="SqlDataSourceContacts" runat="server"
                     ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
                     SelectCommand="SELECT * FROM [Contacts]"
