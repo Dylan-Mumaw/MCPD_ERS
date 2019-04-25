@@ -5,7 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link href="App_Themes/RegistrationStyle.css" rel="stylesheet" type="text/css" />
+    <!-- Include JQuery -->
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <!-- Mask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <title>User Registration</title>
+
+    <script type='text/javascript'>
+        $( document ).ready(function () {
+            $('#TextBoxPhone').mask('(999) 999-9999', {autoclear: false});
+        });
+
+    </script>
+
 </head>
 <body>
     <form id="registrationForm" runat="server">
@@ -57,12 +69,16 @@
 
             <div class="item">
                 <asp:Label ID="LabelPhone" runat="server" Text="Phone Number:" CssClass="label"></asp:Label>
-                <asp:TextBox ID="TextBoxPhone" runat="server" CssClass="textbox" placeholder="(___) ___-____"></asp:TextBox>
+                <asp:TextBox ID="TextBoxPhone" runat="server" CssClass="textbox" placeholder="(___) ___-____" ></asp:TextBox>
                 <asp:RequiredFieldValidator ID="validatePhone"
                     runat="server" ControlToValidate="TextBoxPhone"
                     ErrorMessage="Required"
                     InitialValue=""> 
                 </asp:RequiredFieldValidator>
+                <asp:RegularExpressionValidator ID="validatePhoneRegEx" runat="server"
+                    ControlToValidate="TextBoxPhone"
+                    ErrorMessage="You must enter a full phone number" ValidationExpression="\([0-9]{3}\) [0-9]{3}-[0-9]{4}">
+                </asp:RegularExpressionValidator>
             </div>
 
             <div class="item">
@@ -164,7 +180,6 @@
 
             <div class="bottomitem">
                 <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="button" OnClick="ButtonSubmit_Click" />
-                <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" CssClass="button" OnClick="ButtonCancel_Click" CausesValidation="false" />
             </div>
 
             <asp:Label ID="TestLabel" runat="server" Text="" />
