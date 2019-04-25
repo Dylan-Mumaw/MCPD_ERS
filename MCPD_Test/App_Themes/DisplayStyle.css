@@ -220,7 +220,7 @@ table.blueTable tr:last-child:hover {
     
 .dragscroll{
     background-color:transparent;
-    /*! min-height: 100%; */
+    min-height: 100%; 
 }
 .dragscroll img{
     
