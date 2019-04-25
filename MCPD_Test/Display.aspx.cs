@@ -18,13 +18,23 @@ public partial class Display : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         flag = (String)Session["Flag"];
         if (string.IsNullOrEmpty(flag))
         {
             string url = "https:" + ConfigurationManager.AppSettings["SecureAppPath"] + "Home.aspx";
             Response.Redirect(url);
         }
+        
+        if(Session["GalleryBuildId"] != null)
+        {
+            buildID = Convert.ToInt32(Session["GalleryBuildId"]);
+        }
+        
+        if (buildID > 0)
+        {
+            PopulateGallery();
+        }
+
         using (SqlConnection connection = new SqlConnection(GetConnectionString()))
         {
             SqlCommand cmd = new SqlCommand("getType", connection)
@@ -119,49 +129,6 @@ public partial class Display : System.Web.UI.Page
         }
     }
 
-    //Retrieves image selected from photo gallery
-    //Sizes selected image appropriately
-    protected void SizeDiv()
-    {
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-        try
-        {
-            {
-                connection.Open();
-                SqlCommand cmd = new SqlCommand("getRefLoc", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@picId", picID);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
-                    int naturalWidth = b.Width;
-                    int naturalHeight = b.Height;
-                    b.Dispose();
-
-                    //int adjustedDivWidth = naturalWidth + 20;
-                    //int adjustedDivHeight = naturalHeight + 30;
-
-                    //bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:{0}px;height:{1}px;", adjustedDivWidth, adjustedDivHeight);
-                    bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:200%;");
-                }
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
-    }
-
     //<-----------------GET CONNECTION STRING----------------->
     private string GetConnectionString()
     {
@@ -187,11 +154,12 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewType(String t)
     {
+        
         bigImageZoom.Dispose();
         GridViewCurrentContact.DataSource = null;
         GridViewCurrentContact.DataBind();
-        GridViewGallery.DataSource = null;
-        GridViewGallery.DataBind();
+        GalleryContainer.Controls.Clear();
+        Session["GalleryBuildId"] = null;
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
         try
@@ -227,14 +195,15 @@ public partial class Display : System.Web.UI.Page
         {
             connection.Close();
         }
+        
     }
 
     private void BindGridViewSearch(string t)
     {
         GridViewCurrentContact.DataSource = null;
         GridViewCurrentContact.DataBind();
-        GridViewGallery.DataSource = null;
-        GridViewGallery.DataBind();
+        GalleryContainer.Controls.Clear();
+        Session["GalleryBuildId"] = null;
         DataTable recordsMatchedAllWords = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
@@ -355,41 +324,6 @@ public partial class Display : System.Web.UI.Page
         }
     }
 
-    private void BindGridViewGallery()
-    {
-        DataTable dt = new DataTable();
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-
-        try
-        {
-            connection.Open();
-            SqlCommand sqlCmd = new SqlCommand("BuildRefLoc", connection)
-            {
-                CommandType = CommandType.StoredProcedure
-            };
-            sqlCmd.Parameters.AddWithValue("@buildID", buildID);
-            SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
-            sqlDa.Fill(dt);
-
-            if (dt.Rows.Count > 0)
-            {
-                //GridViewGallery.DataSource = dt;
-                GridViewGallery.DataBind();
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
-    }
-
-
     private void BindGridViewCurrentContact()
     {
         DataTable dt = new DataTable();
@@ -437,46 +371,9 @@ public partial class Display : System.Web.UI.Page
 
     //<-----------------END DATA BINDING----------------->
 
-    protected void SetBigImageUrl()
+    protected void SetBigImageUrl(string refLoc)
     {
-        SqlConnection connection = new SqlConnection(GetConnectionString());
-        try
-        {
-            {
-                connection.Open();
-                SqlCommand cmd = new SqlCommand("getRefLoc", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@picId", picID);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    bigImage.ImageUrl = reader[0].ToString();
-
-                    System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(reader[0].ToString()));
-                    int naturalWidth = b.Width;
-                    int naturalHeight = b.Height;
-                    b.Dispose();
-
-                    double ratio = bigImage.Width.Value / naturalWidth;
-                    int scaledHeight = (int)(naturalHeight * ratio);
-
-                    bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:820px;height:{0}px;", scaledHeight + 6);
-                }
-            }
-        }
-        catch (System.Data.SqlClient.SqlException ex)
-        {
-            string msg = "Fetch Error:";
-            msg += ex.Message;
-            throw new Exception(msg);
-        }
-        finally
-        {
-            connection.Close();
-        }
+        bigImage.ImageUrl = refLoc;
     }
     //<-----------------BEGIN BUTTON CLICK EVENTS----------------->
 
@@ -484,8 +381,8 @@ public partial class Display : System.Web.UI.Page
     {
         GridViewCurrentContact.DataSource = null;
         GridViewCurrentContact.DataBind();
-        GridViewGallery.DataSource = null;
-        GridViewGallery.DataBind();
+        GalleryContainer.Controls.Clear();
+        Session["GalleryBuildId"] = null;
         DataTable dt = new DataTable();
         SqlConnection connection = new SqlConnection(GetConnectionString());
 
@@ -521,29 +418,75 @@ public partial class Display : System.Web.UI.Page
     //<-----------------BEGIN SELECTED INDEX CHANGED----------------->
     protected void GridViewBuildingList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        buildID = Convert.ToInt16(GridViewBuildingList.SelectedDataKey.Value);
-        BindGridViewGallery();
+        buildID = Convert.ToInt32(GridViewBuildingList.SelectedValue);
+        Session["GalleryBuildId"] = buildID;
+        PopulateGallery();
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
         BindGridViewCurrentContact();
+    }
+
+    protected void PopulateGallery()
+    {
+        if(GalleryContainer.Controls.Count > 0)
+        {
+            GalleryContainer.Controls.Clear();
+        }
+        using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+        {
+            connection.Open();
+            SqlCommand cmd = new SqlCommand("BuildRefLoc", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@buildId", buildID);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            int x = 1;
+            while(reader.Read())
+            {
+                ImageButton galleryButton = new ImageButton
+                {
+                    ID = "GalleryImageButton" + x,
+                    AlternateText = "Gallery Image Button " + x,
+                    ImageAlign = ImageAlign.Left,
+                    ImageUrl = reader["refLoc"].ToString(),
+                    CssClass = "galleryButton",
+                    Height = 300,
+                    Width = 300
+                };
+
+                galleryButton.Click += new ImageClickEventHandler(galleryButton_Click);
+                GalleryContainer.Controls.Add(galleryButton);
+                
+                x++;
+            }
+        }
+    }
+
+    protected void galleryButton_Click(object sender, EventArgs e)
+    {
+        ImageButton galleryButton = (ImageButton)sender;
+
+        SetBigImageUrl(galleryButton.ImageUrl);
+
+        System.Drawing.Bitmap b = new System.Drawing.Bitmap(Server.MapPath(galleryButton.ImageUrl));
+        int naturalWidth = b.Width;
+        int naturalHeight = b.Height;
+        b.Dispose();
+
+        double ratio = bigImage.Width.Value / naturalWidth;
+        int scaledHeight = (int)(naturalHeight * ratio);
+
+        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:820px;height:{0}px;", scaledHeight + 6);
     }
 
     protected void SearchButton_Click(object sender, EventArgs e)
     {
         GridViewCurrentContact.DataSource = null;
         GridViewCurrentContact.DataBind();
-        GridViewGallery.DataSource = null;
-        GridViewGallery.DataBind();
         string search = TextBoxSearch.Text;
         BindGridViewSearch(search);
         bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
     }
 
-    protected void GridViewGallery_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        picID = (int)GridViewGallery.SelectedDataKey.Value;
-        //SizeDiv();
-        SetBigImageUrl();
-    }
     //<-----------------END SELECTED INDEX CHANGED----------------->
 
     protected void GridViewCurrentContact_RowCreated(object sender, GridViewRowEventArgs e)
@@ -668,17 +611,6 @@ public partial class Display : System.Web.UI.Page
 
             e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewBuildingList, "Select$" + e.Row.RowIndex);
             //e.Row.Cells[4].Style["display"] = "none";
-        }
-    }
-
-    protected void GridViewGallery_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            e.Row.Attributes["onmouseover"] = "this.style.cursor='hand';this.style.textDecoration='none';";
-            e.Row.Attributes["onmouseout"] = "this.style.textDecoration='none';";
-
-            e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(this.GridViewGallery, "Select$" + e.Row.RowIndex);
         }
     }
 
