@@ -477,7 +477,7 @@ public partial class Display : System.Web.UI.Page
         double ratio = bigImage.Width.Value / naturalWidth;
         int scaledHeight = (int)(naturalHeight * ratio);
 
-        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:820px;height:{0}px;", scaledHeight + 6);
+        bigImageZoom.Attributes["Style"] = String.Format("overflow:hidden;width:/*820px*/;height:{0}px;", scaledHeight + 6);
     }
 
     protected void SearchButton_Click(object sender, EventArgs e)
