@@ -26,8 +26,10 @@
             <div id="LeftContainer" class="item leftContainer">
                 <asp:Panel ID="ButtonContainer" runat="server" CssClass="buttonContainer"></asp:Panel>
                 <asp:Button ID="searchButton" runat="server" Style="display: none;" OnClick="SearchButton_Click" />
-                <asp:Button ID="ButtonHome" runat="server" Text="Home Page"
-                    CausesValidation="false" OnClick="ButtonHome_Click" CssClass="button" />
+                <div id="ButtonContainer_Bottom" class="buttonContainerBelow">
+                    <asp:Button ID="ButtonHome" runat="server" Text="Home Page"
+                        CausesValidation="false" OnClick="ButtonHome_Click" CssClass="button" />
+                </div>
                 <div id="LabelSearchItem" class="labelSearchItem">
                     <%-- <asp:Label ID="LabelSearch" runat="server" CssClass="label" Text="Search"></asp:Label>--%>
                     <asp:TextBox ID="TextBoxSearch" CssClass="textbox" runat="server" Placeholder="Search"></asp:TextBox>&nbsp<br />
@@ -84,15 +86,16 @@
 
             <!-----------------SELECTED IMAGE---------------->
             <div id="RightContainer" class="item rightContainer">
-                <div id="BigImageContainer bordercontainer">
-                    <div id="bigImageZoom" runat="server" style="display:none;" class="dragscroll">
-                        <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="800px" ResizeMode="Fit" />
+                
+                    <div id="BigImageContainer" class="bigImageContainer">
+                        <div id="bigImageZoom" runat="server" style="display: none;" class="dragscroll">
+                            <asp:Image ID="bigImage" CssClass="grabbable" runat="server" Width="500px" ResizeMode="Fit" />
+                        </div>
                     </div>
-                </div>
-                <div id="ZoomButtonContainer">
-                    <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" class="button" />
-                    <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" class="button" />
-                </div>
+                    <div id="ZoomButtonContainer" class="zoomButtonContainer">
+                        <input id="ZoomIn" type="button" value="Zoom In" onclick="zoomin()" class="button zoomButton" />
+                        <input id="ZoomOut" type="button" value="Zoom Out" onclick="zoomout()" class="button zoomButton" />
+                    </div>
             </div>
             <asp:SqlDataSource ID="SqlDataSourceContactDdl" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT FullName FROM Contacts"></asp:SqlDataSource>
             <asp:SqlDataSource ID="SqlDataSourcePictures" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Buildings]"></asp:SqlDataSource>
