@@ -154,7 +154,7 @@ public partial class Display : System.Web.UI.Page
 
     private void BindGridViewType(String t)
     {
-        
+        bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
         bigImageZoom.Dispose();
         GridViewCurrentContact.DataSource = null;
         GridViewCurrentContact.DataBind();
@@ -379,6 +379,8 @@ public partial class Display : System.Web.UI.Page
 
     protected void SearchAll()
     {
+        bigImageZoom.Attributes["style"] = "width:0px;height:0px;display:none;";
+        bigImageZoom.Dispose();
         GridViewCurrentContact.DataSource = null;
         GridViewCurrentContact.DataBind();
         GalleryContainer.Controls.Clear();
