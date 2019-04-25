@@ -119,14 +119,14 @@
                                         <asp:DropDownList ID="ddlBuildingType" runat="server"
                                             DataSourceID="SqlDataSourceTypesDdl"
                                             DataTextField="Type" DataValueField="Type"
-                                            SelectedValue='<%# Bind("Type") %>' Width="130px">
+                                            SelectedValue='<%# Bind("Type") %>'>
                                         </asp:DropDownList>
                                     </EditItemTemplate>
                                     <InsertItemTemplate>
                                         <asp:DropDownList ID="ddlBuildingType" runat="server"
                                             DataSourceID="SqlDataSourceTypesDdl"
                                             DataTextField="Type" DataValueField="Type"
-                                            SelectedValue='<%# Bind("Type") %>' Width="130px">
+                                            SelectedValue='<%# Bind("Type") %>'>
                                         </asp:DropDownList>
                                     </InsertItemTemplate>
                                 </asp:TemplateField>
