@@ -7,8 +7,7 @@ html {
 body {
     background-color: #eaebf2;
     font-family: 'Open Sans', sans-serif;
-    max-height: 100%;
-    overflow: hidden;
+    /*max-height: 100%;*/
 }
 
 .background {
@@ -54,12 +53,15 @@ body {
     box-sizing:border-box;
 }
 .leftContainer {
+    width:50%;
     flex-direction:column;
     box-sizing: border-box;
     padding-right: 10px;
 }
 
 .rightContainer {
+    width:50vw;
+    height:100vh;
     box-sizing: border-box;
     padding-left: 10px;
 }
@@ -76,10 +78,24 @@ body {
     border-radius: 5px;
 }
 
-
-
 .labelSearchItem {
     margin-top: 20px;
+}
+
+.zoomButtonContainer{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+}
+
+.bigImageContainer{
+    background-color:transparent;
+    height: 90vh;
+    box-sizing: border-box;
+    border: 5px solid #6191a1;
+    border-radius: 5px;
+    overflow: hidden;
+   
 }
 
 
@@ -136,62 +152,6 @@ table.blueTable tr:last-child:hover {
     display:none;
 }
 
-/*.pagination-ys {
-    padding-left: 0;
-    border-radius: 4px;
-}
-
-    .pagination-ys table > tbody > tr > td {
-        display: inline-block;
-        margin-bottom:-18px;
-    }
-
-        .pagination-ys table > tbody > tr > td > a,
-        .pagination-ys table > tbody > tr > td > span {
-            position: relative;
-            padding: 5px 9px;
-            text-decoration: none;
-            color: #323232;
-            background-color: #ffffff;
-            border: 1px solid #dddddd;
-            margin-left: -1px;
-        }
-
-        .pagination-ys table > tbody > tr > td > span {
-            position: relative;
-            padding: 5px 9px;
-            text-decoration: none;
-            margin-left: -1px;
-            color: #323232;
-            background-color: #f5f5f5;
-            border-color: #dddddd;
-            cursor: default;
-        }
-
-        .pagination-ys table > tbody > tr > td:first-child > a,
-        .pagination-ys table > tbody > tr > td:first-child > span {
-            margin-left: 0;
-            border-bottom-left-radius: 4px;
-            border-top-left-radius: 4px;
-        }
-
-        .pagination-ys table > tbody > tr > td:last-child > a,
-        .pagination-ys table > tbody > tr > td:last-child > span {
-            border-bottom-right-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-
-        .pagination-ys table > tbody > tr > td > a:hover,
-        .pagination-ys table > tbody > tr > td > span:hover,
-        .pagination-ys table > tbody > tr > td > a:focus,
-        .pagination-ys table > tbody > tr > td > span:focus {
-            color: #97310e;
-            background-color: #eeeeee;
-            border-color: #dddddd;
-            cursor:pointer;
-        }*/
-    
-
 .currentPicItem{
     margin-top:10px;
 }
@@ -203,20 +163,23 @@ table.blueTable tr:last-child:hover {
     justify-content: space-between;
 }
 
+.buttonContainerBelow{
+    margin-top:5px;
+}
+
+
 .button {
     width: 16%;
     height: 50px;
     background-color: #ffffff;
     border-radius: 3px;
     color: #323232;
-    font-family: calibri;
-    font-size: large;
-    white-space:normal;
-    padding:0;
+    font-family: 'Open Sans', sans-serif;
+    white-space: normal;
+    padding: 0;
     background-color: white;
-    border: 1px;
-    border-color: #787878;
-    cursor:pointer;
+    border: 1px solid #6191a1;
+    cursor: pointer;
 }
 
     .button:hover {
@@ -225,42 +188,40 @@ table.blueTable tr:last-child:hover {
         background-color: #6191a1;
         color: white;
     }
-   
+ 
+.zoomButton{
+    margin: 5px;
+}
 
-/*Image Gallery*/
-
-.gallery {
-    width: 100%;
-    display:table;
-    box-sizing: border-box;
+.gallery{
+    width:100%;
+    box-sizing:border-box;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    border: 5px solid #6191a1;
     margin-top: 10px;
+    flex-wrap: wrap;
 }
-    .gallery img {
-        width: 25%;
-        height: auto;
-        
-    }
-  
-    .gallery td{
-        width:25%;
-    }
-    .gallery tbody{
-        height:100%;
-    }
-
-
-.dragscroll:hover {
-    cursor: move; /* fallback: no `url()` support or images disabled */
-    cursor: url(images/grab.cur); /* fallback: Internet Explorer */
-    cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
-    cursor: -moz-grab; /* Firefox 1.5-26 */
-    cursor: grab; /* W3C standards syntax, should come last */
+.galleryButton{
+    width:200px;
+    height:200px;
+    margin: 10px;
+    border: 2px solid #6191a1;
+    border-radius: 5px;
 }
 
-    .dragscroll:active {
-        cursor: url(images/grabbing.cur);
-        cursor: -webkit-grabbing;
-        cursor: -moz-grabbing;
-        cursor: grabbing;
+    .galleryButton:hover {
+        transform: translate3d(0,-4px,0);
+        box-shadow: 0 3px 3px 0 rgba(0,0,0,.2);
+        background-color: #6191a1;
+        color: white;
     }
-
+    
+.dragscroll{
+    background-color:transparent;
+    /*! min-height: 100%; */
+}
+.dragscroll img{
+    
+}
