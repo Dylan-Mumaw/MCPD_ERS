@@ -96,14 +96,14 @@ window.onload = function () {
     PageMethods.GetPossibleResults(onPossibleResultsSuccess, onPossibleResultsFailure);
 }
 function handleEnter(obj, event) {
-    var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-    if (keyCode == 13) {
-        document.getElementById(obj).click();
-        return false;
-    }
-    else {
-        return true;
-    }
+            var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+            if (keyCode == 13 && obj == document.getElementById('TextBoxSearch')) {
+                document.getElementById(obj).click();
+                return false;
+            }
+            else {
+                return true;
+            }
 }
 function zoomin() {
     var myImg = document.getElementById("bigImage");
