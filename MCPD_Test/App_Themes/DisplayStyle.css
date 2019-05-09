@@ -95,7 +95,7 @@ body {
     border: 5px solid #6191a1;
     border-radius: 5px;
     overflow: hidden;
-   
+    box-shadow: 10px 10px 4px -5px rgba(138,138,138,0.49);
 }
 
 
@@ -217,11 +217,10 @@ table.blueTable tr:last-child:hover {
         background-color: #6191a1;
         color: white;
     }
+
     
 .dragscroll{
     background-color:transparent;
     min-height: 100%; 
 }
-.dragscroll img{
-    
-}
+
