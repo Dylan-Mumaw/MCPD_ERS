@@ -27,3 +27,14 @@ There are four pages that make up the ERS:
 •	Display (where building selection/viewing is done)
 •	Maintenance (Admin page)
 
+Technology Utilized
+ASP.NET: Utilized for building the web application framework.
+C#: Used for both back-end logic and handling server-side operations.
+JavaScript: Employed to create interactive front-end features, allowing for seamless image display and
+manipulation, providing a smooth user experience.
+HTML: Used for structuring the web pages.
+CSS: Applied for styling and ensuring the application is visually appealing.
+SQL: Managed the database interactions and data storage.
+SQL Server: Served as the database management system, handling complex queries and data storage efficiently.
+
+Note: Repository was cloned due to changing accounts after graduation. Changes/pull requests are not reflected. 
