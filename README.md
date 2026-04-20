@@ -1,3 +1,5 @@
+Note: Repository was cloned due to changing accounts after graduation. Changes/pull requests are not reflected.
+
 # MCPD_ERS
 
 CNIT485 Final Project.
