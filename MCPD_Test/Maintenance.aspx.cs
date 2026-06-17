@@ -624,6 +624,8 @@ public partial class Maintenance : System.Web.UI.Page
                 fu.SaveAs(AppDomain.CurrentDomain.BaseDirectory + "\\\\LocationPhotos\\\\" + buildingTypeAndName[0] + "\\\\" +
                     buildingTypeAndName[1] + "\\\\" + fu.FileName);
             }
+            GridViewPictures.DataBind();
+            Response.Redirect(Request.RawUrl);
         }
     }
 
